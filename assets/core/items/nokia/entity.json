@@ -1,0 +1,8 @@
+{
+    "name": "Nokia",
+    "components": [
+        "items/_shared/item"
+    ],
+    "variables": [],
+    "spriteID": "items/nokia/sprite"
+}

@@ -1,0 +1,15 @@
+{
+    "animations": [
+        {
+            "name": "idle",
+            "atlasPrefix": "idle",
+            "frameRate": 4,
+            "looped": true,
+            "offset": [
+                32.0,
+                58.0
+            ]
+        }
+    ],
+    "defaultAnim": "idle"
+}
