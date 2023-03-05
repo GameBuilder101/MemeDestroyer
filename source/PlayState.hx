@@ -1,7 +1,9 @@
 package;
 
 import entity.Entity;
+import flixel.FlxBasic;
 import flixel.FlxState;
+import flixel.util.FlxSort;
 
 class PlayState extends FlxState
 {
@@ -18,9 +20,9 @@ class PlayState extends FlxState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		sort(function(order:Int, Obj1:MySprite, Obj2:MySprite):Int
+		sort(function(order:Int, value1:FlxBasic, value2:FlxBasic):Int
 		{
-			return FlxSort.byValues(order, Obj1.zDepth, Obj2.zDepth);
+			return FlxSort.byY(order, cast value1, cast value2);
 		}, FlxSort.ASCENDING);
 	}
 }

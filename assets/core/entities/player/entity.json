@@ -20,6 +20,10 @@
         {
             "name": "dodgeCool",
             "value": 0.6
+        },
+        {
+            "name": "handsSpriteID",
+            "value": "entities/player/hands"
         }
     ],
     "spriteID": "entities/player/sprite"

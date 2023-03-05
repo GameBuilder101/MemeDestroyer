@@ -1,8 +1,15 @@
-// Requires variables dodgeSpeed:Float, dodgeDuration:Float, dodgeCool:Float
+// Requires variables dodgeSpeed:Float, dodgeDuration:Float, dodgeCool:Float, handsSpriteID:String
 
 var currentDodgeDirection:Point;
 var currentDodgeTime:Float = 0.0;
 var currentDodgeCool:Float = 0.0;
+var hands:AssetSprite;
+
+function onLoaded()
+{
+	hands = new AssetSprite(this.x, this.y, null, handsSpriteID);
+	this.add(hands);
+}
 
 function onUpdate(elapsed:Float)
 {
@@ -38,6 +45,7 @@ function onUpdate(elapsed:Float)
 	if (Controls.moveRight.check())
 		direction.point.x++;
 	comp("movement").call("move", [direction, false, elapsed]);
+	this.flipX = this.x > FlxG.mouse.x;
 
 	// Dodging input
 	if (Controls.dodge.check())
