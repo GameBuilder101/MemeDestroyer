@@ -106,6 +106,8 @@ class AssetSprite extends FlxSprite
 	override function updateAnimation(elapsed:Float)
 	{
 		super.updateAnimation(elapsed);
+		if (animation.name == null)
+			return;
 		if (animOffsets.exists(animation.name))
 		{
 			var offset:Array<Float> = animOffsets[animation.name];

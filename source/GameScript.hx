@@ -9,6 +9,7 @@ class GameScript extends Script
 	{
 		set("Entity", entity.Entity);
 		set("EntityRegistry", entity.EntityRegistry);
+		set("PlayState", PlayState);
 		set("Controls", Controls);
 	}
 }

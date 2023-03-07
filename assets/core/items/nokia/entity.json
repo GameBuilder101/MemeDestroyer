@@ -1,5 +1,8 @@
 {
     "name": "Nokia",
+    "tags": [
+        "pickup"
+    ],
     "components": [
         "items/_shared/item"
     ],

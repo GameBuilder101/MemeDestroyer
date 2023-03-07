@@ -50,6 +50,9 @@ function onUpdate(elapsed:Float)
 	// Dodging input
 	if (Controls.dodge.check())
 		dodge(direction);
+
+	// Pick-ups
+	collide("pickup");
 }
 
 // Dodges towards the given direction
@@ -76,4 +79,11 @@ function finishDodge()
 function isDodging():Bool
 {
 	return currentDodgeTime > 0.0;
+}
+
+function onCollide(tag:String, entity:Entity)
+{
+	if (tag != "pickup")
+		continue;
+	trace("AMONGUS!!!!!!!!!!");
 }

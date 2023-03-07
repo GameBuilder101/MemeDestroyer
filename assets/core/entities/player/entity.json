@@ -1,5 +1,8 @@
 {
     "name": "Player",
+    "tags": [
+        "player"
+    ],
     "components": [
         "entities/_shared/movement",
         "entities/player/controller"

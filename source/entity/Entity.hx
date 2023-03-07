@@ -1,5 +1,6 @@
 package entity;
 
+import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 import gbc.graphics.AssetSprite;
 import gbc.scripting.ComponentSystem;
@@ -8,6 +9,7 @@ import gbc.scripting.Script;
 typedef EntityData =
 {
 	name:String,
+	tags:Array<String>,
 	components:Array<String>,
 	variables:Array<Dynamic>,
 	spriteID:String
@@ -17,6 +19,9 @@ class Entity extends FlxSpriteGroup
 {
 	/** The entity display name. **/
 	public var name(default, null):String;
+
+	/** Used for collision detection. **/
+	public var tags(default, null):Array<String> = [];
 
 	public var components(default, null):ComponentSystem;
 
@@ -53,7 +58,10 @@ class Entity extends FlxSpriteGroup
 		}
 
 		components.startAll();
+
 		components.setAll("this", this);
+		components.setAll("state", cast(FlxG.state, PlayState));
+		components.setAll("collide", collide);
 		if (mainSprite != null)
 			components.setAll("animation", mainSprite.animation);
 		else
@@ -65,7 +73,6 @@ class Entity extends FlxSpriteGroup
 			for (variable in data.variables)
 				components.setAll(variable.name, variable.value);
 		}
-
 		components.callAll("onLoaded");
 	}
 
@@ -73,5 +80,22 @@ class Entity extends FlxSpriteGroup
 	{
 		super.update(elapsed);
 		components.callAll("onUpdate", [elapsed]);
+	}
+
+	/** Collides this entity with any entities of the given tag. **/
+	public function collide(tag:String)
+	{
+		if (mainSprite == null)
+			return;
+		var entities:Array<Entity> = cast(FlxG.state, PlayState).getEntities(tag);
+		for (entity in entities)
+		{
+			if (entity.mainSprite == null) // If the given entity has no main sprite to collide
+				continue;
+			FlxG.collide(mainSprite, entity.mainSprite, function(obj1:Dynamic, obj2:Dynamic)
+			{
+				components.callAll("onCollide", [tag, obj2]);
+			});
+		}
 	}
 }
