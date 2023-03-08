@@ -52,7 +52,6 @@ class PlayState extends FlxState
 				entitiesByTag.set(tag, new Array<Entity>());
 			entitiesByTag[tag].push(entity);
 		}
-		trace(entitiesByTag);
 	}
 
 	/** Use this function before destroying an entity to remove it. **/

@@ -40,6 +40,7 @@ class Entity extends FlxSpriteGroup
 	public function load(data:EntityData)
 	{
 		name = data.name;
+		tags = data.tags;
 		components = new ComponentSystem();
 		components.loadFrom(data.components, function(path:String):Script
 		{
@@ -61,7 +62,7 @@ class Entity extends FlxSpriteGroup
 
 		components.setAll("this", this);
 		components.setAll("state", cast(FlxG.state, PlayState));
-		components.setAll("collide", collide);
+		components.setAll("overlap", overlap);
 		if (mainSprite != null)
 			components.setAll("animation", mainSprite.animation);
 		else
@@ -82,19 +83,19 @@ class Entity extends FlxSpriteGroup
 		components.callAll("onUpdate", [elapsed]);
 	}
 
-	/** Collides this entity with any entities of the given tag. **/
-	public function collide(tag:String)
+	/** Check for an overlap of this entity with any entities of the given tag. **/
+	public function overlap(tag:String)
 	{
 		if (mainSprite == null)
 			return;
 		var entities:Array<Entity> = cast(FlxG.state, PlayState).getEntities(tag);
 		for (entity in entities)
 		{
-			if (entity.mainSprite == null) // If the given entity has no main sprite to collide
+			if (entity.mainSprite == null) // If the given entity has no main sprite to overlap
 				continue;
-			FlxG.collide(mainSprite, entity.mainSprite, function(obj1:Dynamic, obj2:Dynamic)
+			FlxG.overlap(mainSprite, entity.mainSprite, function(obj1:Dynamic, obj2:Dynamic)
 			{
-				components.callAll("onCollide", [tag, obj2]);
+				components.callAll("onOverlap", [tag, obj2]);
 			});
 		}
 	}

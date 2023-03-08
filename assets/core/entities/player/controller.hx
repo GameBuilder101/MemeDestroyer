@@ -3,6 +3,9 @@
 var currentDodgeDirection:Point;
 var currentDodgeTime:Float = 0.0;
 var currentDodgeCool:Float = 0.0;
+
+// The interactable the player is currently in-range of
+var interactable:Entity;
 var hands:AssetSprite;
 
 function onLoaded()
@@ -51,8 +54,11 @@ function onUpdate(elapsed:Float)
 	if (Controls.dodge.check())
 		dodge(direction);
 
-	// Pick-ups
-	collide("pickup");
+	// Interactables
+	var oldInteractable:Entity = interactable;
+	overlap("interactable");
+	if (oldInteractable != interactable)
+		oldInteractable.exitInteractRange(this);
 }
 
 // Dodges towards the given direction
@@ -81,9 +87,10 @@ function isDodging():Bool
 	return currentDodgeTime > 0.0;
 }
 
-function onCollide(tag:String, entity:Entity)
+function onOverlap(tag:String, entity:Entity)
 {
-	if (tag != "pickup")
+	if (tag != "interactable" || entity == interactable)
 		continue;
-	trace("AMONGUS!!!!!!!!!!");
+	interactable = entity;
+	entity.components.callAll("enterInteractRange", [this]);
 }
