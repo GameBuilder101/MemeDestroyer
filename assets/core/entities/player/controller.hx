@@ -6,6 +6,7 @@ var currentDodgeCool:Float = 0.0;
 
 // The interactable the player is currently in-range of
 var interactable:Entity;
+var oldInteractable:Entity;
 var hands:AssetSprite;
 
 function onLoaded()
@@ -55,10 +56,11 @@ function onUpdate(elapsed:Float)
 		dodge(direction);
 
 	// Interactables
-	var oldInteractable:Entity = interactable;
+	oldInteractable = interactable;
+	interactable = null;
 	overlap("interactable");
-	if (oldInteractable != interactable)
-		oldInteractable.exitInteractRange(this);
+	if (oldInteractable != interactable && oldInteractable != null)
+		oldInteractable.components.callAll("exitInteractRange", [this]);
 }
 
 // Dodges towards the given direction
@@ -90,7 +92,7 @@ function isDodging():Bool
 function onOverlap(tag:String, entity:Entity)
 {
 	if (tag != "interactable" || entity == interactable)
-		continue;
+		return;
 	interactable = entity;
-	entity.components.callAll("enterInteractRange", [this]);
+	interactable.components.callAll("enterInteractRange", [this]);
 }

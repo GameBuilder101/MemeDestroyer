@@ -24,7 +24,6 @@ function onUpdate(elapsed:Float)
 function enterInteractRange(entity:Entity)
 {
 	interactor = entity;
-	trace("e");
 }
 
 function exitInteractRange(entity:Entity)
@@ -36,6 +35,5 @@ function exitInteractRange(entity:Entity)
 function interact(entity:Entity)
 {
 	if (entity == interactor)
-		this.components.callAll("onInteract", [interactor]);
-	trace("BRUH!!!!!!!!");
+		callAll("onInteract", [interactor]);
 }

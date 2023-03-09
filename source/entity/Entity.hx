@@ -93,9 +93,9 @@ class Entity extends FlxSpriteGroup
 		{
 			if (entity.mainSprite == null) // If the given entity has no main sprite to overlap
 				continue;
-			FlxG.overlap(mainSprite, entity.mainSprite, function(obj1:Dynamic, obj2:Dynamic)
+			FlxG.overlap(mainSprite, entity.mainSprite, function(objectOrGroup1:Dynamic, objectOrGroup2:Dynamic)
 			{
-				components.callAll("onOverlap", [tag, obj2]);
+				components.callAll("onOverlap", [tag, entity]);
 			});
 		}
 	}

@@ -1,14 +1,14 @@
 package;
 
 import entity.Entity;
-import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxState;
+import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.util.FlxSort;
 
 class PlayState extends FlxState
 {
-	var entities:Array<Entity> = [];
+	var entities:FlxTypedSpriteGroup<Entity>;
 
 	/** A map of tags which lists what entities are associated with each
 		tag. Mainly used to increase performance of collision-checking. Note:
@@ -25,6 +25,9 @@ class PlayState extends FlxState
 		super.create();
 		FlxG.worldBounds.set(0.0, 0.0, FlxG.width, FlxG.height);
 
+		entities = new FlxTypedSpriteGroup<Entity>();
+		add(entities);
+
 		player = new Entity(0.0, 0.0, null, PLAYER_ENTITY_ID);
 		addEntity(player);
 
@@ -34,18 +37,14 @@ class PlayState extends FlxState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		// Make further-down things appear on top (to immitate depth)
-		sort(function(order:Int, value1:FlxBasic, value2:FlxBasic):Int
-		{
-			return FlxSort.byY(order, cast value1, cast value2);
-		}, FlxSort.ASCENDING);
+		entities.sort(FlxSort.byY); // Make further-down things appear on top (to immitate depth)
 	}
 
 	/** Use this function to add any entities. **/
 	public function addEntity(entity:Entity)
 	{
 		add(entity);
-		entities.push(entity);
+		entities.add(entity);
 		for (tag in entity.tags)
 		{
 			if (!entitiesByTag.exists(tag)) // Add the key/array pair if it doesn't already exist
@@ -57,8 +56,6 @@ class PlayState extends FlxState
 	/** Use this function before destroying an entity to remove it. **/
 	public function removeEntity(entity:Entity)
 	{
-		if (!entities.contains(entity)) // If the entity was never added to the list
-			return;
 		remove(entity);
 		entities.remove(entity);
 		for (tag in entity.tags)
@@ -79,5 +76,11 @@ class PlayState extends FlxState
 		if (!entitiesByTag.exists(tag))
 			return [];
 		return entitiesByTag[tag];
+	}
+
+	/** Creates and adds an entity of the given ID. **/
+	public function spawn(id:String, x:Float, y:Float)
+	{
+		addEntity(new Entity(x, y, null, id));
 	}
 }
