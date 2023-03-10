@@ -5,7 +5,7 @@
     ],
     "components": [
         "entities/_shared/movement",
-        "entities/_shared/equipper",
+        "entities/player/equipper",
         "entities/player/controller"
     ],
     "variables": [
@@ -28,6 +28,10 @@
         {
             "name": "dodgeCool",
             "value": 0.2
+        },
+        {
+            "name": "dodgeParticleSpriteID",
+            "value": "entities/player/dodge_particle"
         }
     ],
     "spriteID": "entities/player/sprite"

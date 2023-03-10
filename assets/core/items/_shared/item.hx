@@ -1,6 +1,11 @@
-function onInteract(entity:Entity)
+function onInteracted(entity:Entity)
 {
-	if (equipper != null)
-		return;
 	entity.components.callAll("equip", [this]);
 }
+
+function getCanUse():Bool
+{
+	return true;
+}
+
+function onUse(elapsed:Float) {}

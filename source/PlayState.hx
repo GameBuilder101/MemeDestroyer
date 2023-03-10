@@ -3,12 +3,12 @@ package;
 import entity.Entity;
 import flixel.FlxG;
 import flixel.FlxState;
-import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxGroup;
 import flixel.util.FlxSort;
 
 class PlayState extends FlxState
 {
-	var entities:FlxTypedGroup<Entity>;
+	var entities:FlxTypedGroup<Entity> = new FlxTypedGroup<Entity>();
 
 	/** A map of tags which lists what entities are associated with each
 		tag. Mainly used to increase performance of collision-checking. Note:
@@ -20,30 +20,37 @@ class PlayState extends FlxState
 
 	public var player(default, null):Entity;
 
+	/** For miscellaneous effect sprites. **/
+	var effects:FlxGroup = new FlxGroup();
+
 	override function create()
 	{
 		super.create();
 		FlxG.worldBounds.set(0.0, 0.0, FlxG.width, FlxG.height);
 
-		entities = new FlxTypedGroup<Entity>();
 		add(entities);
 
 		player = new Entity(0.0, 0.0, null, PLAYER_ENTITY_ID);
 		addEntity(player);
 
 		addEntity(new Entity(100.0, 100.0, null, "items/nokia")); // Test
+
+		add(effects);
 	}
 
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		// Make further-down things appear on top (to immitate depth)
 		entities.sort(function(order:Int, entity1:Entity, entity2:Entity):Int
 		{
+			// Higher sorting priorities go above
+			if (entity1.sortingPriority != entity2.sortingPriority)
+				return FlxSort.byValues(order, entity1.sortingPriority, entity2.sortingPriority);
 			if (entity1.mainSprite == null)
 				return -1;
 			else if (entity2.mainSprite == null)
 				return 1;
+			// Make further-down things appear on top (to immitate depth)
 			return FlxSort.byValues(order, entity1.y + entity1.mainSprite.height, entity2.y + entity2.mainSprite.height);
 		});
 	}

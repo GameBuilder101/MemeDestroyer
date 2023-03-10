@@ -7,9 +7,10 @@ class GameScript extends Script
 {
 	override function setGameVars()
 	{
+		set("GameScript", GameScript);
+		set("PlayState", PlayState);
 		set("Entity", entity.Entity);
 		set("EntityRegistry", entity.EntityRegistry);
-		set("PlayState", PlayState);
 		set("Controls", Controls);
 	}
 }

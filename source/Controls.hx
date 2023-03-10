@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import gbc.Saver;
 import gbc.input.OverridableAction;
 
@@ -72,5 +73,11 @@ class Controls extends Saver<Array<Dynamic>>
 		super.load();
 		for (i in 0...actions.length)
 			actions[i].loadSave(data[i]);
+	}
+
+	/** Also checks for mouse input. **/
+	public static function checkFire():Bool
+	{
+		return fire.check() || FlxG.mouse.pressed;
 	}
 }

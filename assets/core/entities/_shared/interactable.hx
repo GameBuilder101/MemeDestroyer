@@ -31,3 +31,10 @@ function exitInteractRange(entity:Entity)
 	if (entity == interactor)
 		interactor = null;
 }
+
+function interact(entity:Entity)
+{
+	if (entity != interactor || !this.visible)
+		return;
+	callAll("onInteracted", [entity]);
+}

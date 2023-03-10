@@ -13,5 +13,6 @@
             "looped": false
         }
     ],
-    "defaultAnim": "idle"
+    "defaultAnim": "idle",
+    "antialiasing": false
 }

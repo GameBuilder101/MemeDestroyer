@@ -5,6 +5,15 @@
         "entities/_shared/interactable",
         "items/_shared/item"
     ],
-    "variables": [],
+    "variables": [
+        {
+            "name": "heldSpriteID",
+            "value": "items/nokia/held_sprite"
+        },
+        {
+            "name": "heldSpriteMode",
+            "value": "rotating"
+        }
+    ],
     "spriteID": "items/nokia/sprite"
 }

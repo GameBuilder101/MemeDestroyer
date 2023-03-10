@@ -1,12 +1,20 @@
-// Requires variables dodgeSpeed:Float, dodgeDuration:Float, dodgeCool:Float
+// Requires variables dodgeSpeed:Float, dodgeDuration:Float, dodgeCool:Float, dodgeParticleSpriteID:String
 
 var currentDodgeDirection:Point;
 var currentDodgeTime:Float = 0.0;
 var currentDodgeCool:Float = 0.0;
+var dodgeParticle:AssetSprite;
 
 // The interactable the player is currently in-range of
 var interactable:Entity;
 var oldInteractable:Entity;
+
+function onLoaded()
+{
+	dodgeParticle = new AssetSprite(0.0, 0.0, null, dodgeParticleSpriteID);
+	dodgeParticle.visible = false;
+	state.effects.add(dodgeParticle);
+}
 
 function onUpdate(elapsed:Float)
 {
@@ -28,6 +36,8 @@ function onUpdate(elapsed:Float)
 		if (currentDodgeCool < 0.0)
 			currentDodgeCool = 0.0;
 	}
+
+	dodgeParticle.visible = !dodgeParticle.animation.finished;
 
 	// Directional movement
 	var direction:Point = new Point(0.0, 0.0);
@@ -58,7 +68,7 @@ function onUpdate(elapsed:Float)
 
 	// Interaction
 	if (interactable != null && Controls.interact.check())
-		interactable.components.callAll("onInteract", [this]);
+		interactable.components.callAll("interact", [this]);
 }
 
 // Dodges towards the given direction
@@ -73,6 +83,9 @@ function dodge(direction:Point)
 
 	if (animation.exists("dodge"))
 		animation.play("dodge", true);
+	dodgeParticle.setPosition(this.x, this.y);
+	dodgeParticle.animation.play("spawn", true);
+	dodgeParticle.visible = true;
 }
 
 // Finishes a dodge

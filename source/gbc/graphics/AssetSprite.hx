@@ -96,6 +96,11 @@ class AssetSprite extends FlxSprite
 		}
 	}
 
+	public function loadFromID(id:String)
+	{
+		load(AssetSpriteRegistry.getAsset(id));
+	}
+
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);

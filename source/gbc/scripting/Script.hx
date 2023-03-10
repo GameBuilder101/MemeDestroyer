@@ -181,7 +181,8 @@ class Script
 	/** Set any library-related variables that the script can use. **/
 	function setLibraryVars()
 	{
-		set("Point", gbc.scripting.Point);
+		set("Script", Script);
+		set("Point", Point);
 		set("LibraryManager", gbc.assets.LibraryManager);
 		set("AssetSprite", gbc.graphics.AssetSprite);
 		set("AssetSpriteRegistry", gbc.graphics.AssetSpriteRegistry);

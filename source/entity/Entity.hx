@@ -12,7 +12,8 @@ typedef EntityData =
 	tags:Array<String>,
 	components:Array<String>,
 	variables:Array<Dynamic>,
-	spriteID:String
+	spriteID:String,
+	sortingPriority:Int
 }
 
 class Entity extends FlxSpriteGroup
@@ -26,6 +27,8 @@ class Entity extends FlxSpriteGroup
 	public var components(default, null):ComponentSystem;
 
 	public var mainSprite(default, null):AssetSprite;
+
+	public var sortingPriority:Int;
 
 	public function new(x:Float = 0.0, y:Float = 0.0, data:EntityData = null, id:String = null)
 	{
@@ -42,10 +45,13 @@ class Entity extends FlxSpriteGroup
 		name = data.name;
 		tags = data.tags;
 		components = new ComponentSystem();
-		components.loadFrom(data.components, function(path:String):Script
+		for (path in cast(data.components, Array<Dynamic>))
 		{
-			return GameScriptRegistry.getAsset(path);
-		});
+			components.addNewComponent(path, function(path:String):Script
+			{
+				return GameScriptRegistry.getAsset(path);
+			});
+		}
 
 		if (mainSprite != null) // In case loading data on an already-loaded entity
 		{
@@ -57,6 +63,7 @@ class Entity extends FlxSpriteGroup
 			mainSprite = new AssetSprite(0.0, 0.0, null, data.spriteID);
 			add(mainSprite);
 		}
+		sortingPriority = data.sortingPriority;
 
 		components.startAll();
 
@@ -75,6 +82,11 @@ class Entity extends FlxSpriteGroup
 				components.setAll(variable.name, variable.value);
 		}
 		components.callAll("onLoaded");
+	}
+
+	public function loadFromID(id:String)
+	{
+		load(EntityRegistry.getAsset(id));
 	}
 
 	override function update(elapsed:Float)
