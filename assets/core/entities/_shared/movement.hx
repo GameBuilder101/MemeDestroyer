@@ -8,12 +8,12 @@ function onUpdate(elapsed:Float)
 	// Keep the entity in screen bounds
 	if (this.x < 0.0)
 		this.x = 0.0;
-	if (this.x > FlxG.width)
-		this.x = FlxG.width;
+	if (this.x > FlxG.width - this.mainSprite.width)
+		this.x = FlxG.width - this.mainSprite.width;
 	if (this.y < 0.0)
 		this.y = 0.0;
-	if (this.y > FlxG.height)
-		this.y = FlxG.height;
+	if (this.y > FlxG.height - this.mainSprite.height)
+		this.y = FlxG.height - this.mainSprite.height;
 
 	// Animation logic
 	if ((animation.name == "run" || animation.name == "walk" || animation.name == "idle") || animation.finished)

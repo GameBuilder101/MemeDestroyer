@@ -3,12 +3,12 @@ package;
 import entity.Entity;
 import flixel.FlxG;
 import flixel.FlxState;
-import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.util.FlxSort;
 
 class PlayState extends FlxState
 {
-	var entities:FlxTypedSpriteGroup<Entity>;
+	var entities:FlxTypedGroup<Entity>;
 
 	/** A map of tags which lists what entities are associated with each
 		tag. Mainly used to increase performance of collision-checking. Note:
@@ -25,7 +25,7 @@ class PlayState extends FlxState
 		super.create();
 		FlxG.worldBounds.set(0.0, 0.0, FlxG.width, FlxG.height);
 
-		entities = new FlxTypedSpriteGroup<Entity>();
+		entities = new FlxTypedGroup<Entity>();
 		add(entities);
 
 		player = new Entity(0.0, 0.0, null, PLAYER_ENTITY_ID);
@@ -37,13 +37,20 @@ class PlayState extends FlxState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		entities.sort(FlxSort.byY); // Make further-down things appear on top (to immitate depth)
+		// Make further-down things appear on top (to immitate depth)
+		entities.sort(function(order:Int, entity1:Entity, entity2:Entity):Int
+		{
+			if (entity1.mainSprite == null)
+				return -1;
+			else if (entity2.mainSprite == null)
+				return 1;
+			return FlxSort.byValues(order, entity1.y + entity1.mainSprite.height, entity2.y + entity2.mainSprite.height);
+		});
 	}
 
 	/** Use this function to add any entities. **/
 	public function addEntity(entity:Entity)
 	{
-		add(entity);
 		entities.add(entity);
 		for (tag in entity.tags)
 		{
@@ -56,8 +63,7 @@ class PlayState extends FlxState
 	/** Use this function before destroying an entity to remove it. **/
 	public function removeEntity(entity:Entity)
 	{
-		remove(entity);
-		entities.remove(entity);
+		entities.remove(entity, true);
 		for (tag in entity.tags)
 			entitiesByTag[tag].remove(entity);
 	}

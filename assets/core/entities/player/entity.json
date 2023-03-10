@@ -5,12 +5,17 @@
     ],
     "components": [
         "entities/_shared/movement",
+        "entities/_shared/equipper",
         "entities/player/controller"
     ],
     "variables": [
         {
             "name": "walkSpeed",
             "value": 180.0
+        },
+        {
+            "name": "handsSpriteID",
+            "value": "entities/player/hands"
         },
         {
             "name": "dodgeSpeed",
@@ -22,11 +27,7 @@
         },
         {
             "name": "dodgeCool",
-            "value": 0.6
-        },
-        {
-            "name": "handsSpriteID",
-            "value": "entities/player/hands"
+            "value": 0.2
         }
     ],
     "spriteID": "entities/player/sprite"

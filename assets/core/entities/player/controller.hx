@@ -1,4 +1,4 @@
-// Requires variables dodgeSpeed:Float, dodgeDuration:Float, dodgeCool:Float, handsSpriteID:String
+// Requires variables dodgeSpeed:Float, dodgeDuration:Float, dodgeCool:Float
 
 var currentDodgeDirection:Point;
 var currentDodgeTime:Float = 0.0;
@@ -7,13 +7,6 @@ var currentDodgeCool:Float = 0.0;
 // The interactable the player is currently in-range of
 var interactable:Entity;
 var oldInteractable:Entity;
-var hands:AssetSprite;
-
-function onLoaded()
-{
-	hands = new AssetSprite(this.x, this.y, null, handsSpriteID);
-	this.add(hands);
-}
 
 function onUpdate(elapsed:Float)
 {
@@ -49,18 +42,23 @@ function onUpdate(elapsed:Float)
 	if (Controls.moveRight.check())
 		direction.point.x++;
 	comp("movement").call("move", [direction, false, elapsed]);
-	this.flipX = this.x > FlxG.mouse.x;
 
 	// Dodging input
-	if (Controls.dodge.check())
+	if (Controls.dodge.check() && currentDodgeCool <= 0.0)
 		dodge(direction);
+	else if (!isDodging())
+		this.flipX = this.x > FlxG.mouse.x; // Face the cursor when not dodging
 
-	// Interactables
+	// Interactable range detection
 	oldInteractable = interactable;
 	interactable = null;
 	overlap("interactable");
 	if (oldInteractable != interactable && oldInteractable != null)
 		oldInteractable.components.callAll("exitInteractRange", [this]);
+
+	// Interaction
+	if (interactable != null && Controls.interact.check())
+		interactable.components.callAll("onInteract", [this]);
 }
 
 // Dodges towards the given direction

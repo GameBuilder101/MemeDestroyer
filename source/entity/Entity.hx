@@ -54,7 +54,7 @@ class Entity extends FlxSpriteGroup
 		}
 		if (data.spriteID != null)
 		{
-			mainSprite = new AssetSprite(x, y, null, data.spriteID);
+			mainSprite = new AssetSprite(0.0, 0.0, null, data.spriteID);
 			add(mainSprite);
 		}
 

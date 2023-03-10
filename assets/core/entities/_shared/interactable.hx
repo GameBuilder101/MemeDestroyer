@@ -31,9 +31,3 @@ function exitInteractRange(entity:Entity)
 	if (entity == interactor)
 		interactor = null;
 }
-
-function interact(entity:Entity)
-{
-	if (entity == interactor)
-		callAll("onInteract", [interactor]);
-}
