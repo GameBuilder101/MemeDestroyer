@@ -1,0 +1,16 @@
+{
+    "animations": [
+        {
+            "name": "friendly",
+            "atlasPrefix": "friendly",
+            "frameRate": 8,
+            "looped": true
+        },
+        {
+            "name": "hostile",
+            "atlasPrefix": "hostile",
+            "frameRate": 8,
+            "looped": true
+        }
+    ]
+}

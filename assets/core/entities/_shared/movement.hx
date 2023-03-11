@@ -13,15 +13,15 @@ function onLoaded()
 
 function onUpdate(elapsed:Float)
 {
-	// Keep the entity in screen bounds
-	if (this.x < 0.0)
-		this.x = 0.0;
-	if (this.x > FlxG.width - this.mainSprite.width)
-		this.x = FlxG.width - this.mainSprite.width;
-	if (this.y < 0.0)
-		this.y = 0.0;
-	if (this.y > FlxG.height - this.mainSprite.height)
-		this.y = FlxG.height - this.mainSprite.height;
+	// Keep the entity in world bounds
+	if (this.x < FlxG.worldBounds.left)
+		this.x = FlxG.worldBounds.left;
+	if (this.x > FlxG.worldBounds.right - this.mainSprite.width)
+		this.x = FlxG.worldBounds.right - this.mainSprite.width;
+	if (this.y < FlxG.worldBounds.top)
+		this.y = FlxG.worldBounds.top;
+	if (this.y > FlxG.worldBounds.bottom - this.mainSprite.height)
+		this.y = FlxG.worldBounds.bottom - this.mainSprite.height;
 
 	// Animation logic
 	if ((animation.name == "run" || animation.name == "walk" || animation.name == "idle") || animation.finished)

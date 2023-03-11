@@ -54,7 +54,7 @@ function onUpdate(elapsed:Float)
 		direction.point.x--;
 	if (Controls.moveRight.check())
 		direction.point.x++;
-	comp("movement").call("move", [direction, false, elapsed]);
+	callAll("move", [direction, false, elapsed]);
 
 	// Dodging input
 	if (Controls.dodge.check() && currentDodgeCool <= 0.0)
@@ -67,11 +67,11 @@ function onUpdate(elapsed:Float)
 	interactable = null;
 	overlap("interactable");
 	if (oldInteractable != interactable && oldInteractable != null)
-		oldInteractable.components.callAll("exitInteractRange", [this]);
+		oldInteractable.callAll("exitInteractRange", [this]);
 
 	// Interaction
 	if (interactable != null && Controls.interact.check())
-		interactable.components.callAll("interact", [this]);
+		interactable.callAll("interact", [this]);
 }
 
 // Dodges towards the given direction
@@ -110,5 +110,5 @@ function onOverlap(tag:String, entity:Entity)
 	if (tag != "interactable" || entity == interactable)
 		return;
 	interactable = entity;
-	interactable.components.callAll("enterInteractRange", [this]);
+	interactable.callAll("enterInteractRange", [this]);
 }

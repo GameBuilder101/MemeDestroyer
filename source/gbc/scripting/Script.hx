@@ -139,19 +139,15 @@ class Script
 		set("FlxState", flixel.FlxState);
 		set("FlxSubState", flixel.FlxSubState);
 		set("FlxAnimation", flixel.animation.FlxAnimation);
-		set("PostProcess", flixel.effects.postprocess.PostProcess);
 		set("FlxGraphic", flixel.graphics.FlxGraphic);
 		set("FlxAtlasFrames", flixel.graphics.frames.FlxAtlasFrames);
 		set("FlxAngle", flixel.math.FlxAngle);
 		set("FlxMath", flixel.math.FlxMath);
-		set("FlxRandom", flixel.math.FlxRandom);
 		set("FlxRect", flixel.math.FlxRect);
 		set("FlxText", flixel.text.FlxText);
 		set("FlxEase", flixel.tweens.FlxEase);
 		set("FlxTween", flixel.tweens.FlxTween);
 		set("FlxGradient", flixel.util.FlxGradient);
-		set("FlxTimer", flixel.util.FlxTimer);
-		set("FlxTrail", flixel.addons.effects.FlxTrail);
 
 		// Add useful functions
 

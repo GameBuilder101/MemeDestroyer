@@ -4,7 +4,11 @@
             "name": "idle",
             "atlasPrefix": "idle",
             "frameRate": 4,
-            "looped": true
+            "looped": true,
+            "offset": [
+                16.0,
+                16.0
+            ]
         }
     ],
     "defaultAnim": "idle"

@@ -9,7 +9,7 @@ class ComponentSystem
 
 	function addComponent(id:String, component:Script)
 	{
-		component.set("comp", getComponent);
+		component.set("getComponent", getComponent);
 		component.set("setAll", setAll);
 		component.set("callAll", callAll);
 		components.set(id, component);

@@ -4,19 +4,31 @@
             "name": "idle",
             "atlasPrefix": "idle",
             "frameRate": 4,
-            "looped": true
+            "looped": true,
+            "offset": [
+                16.0,
+                16.0
+            ]
         },
         {
             "name": "walk",
             "atlasPrefix": "move",
             "frameRate": 8,
-            "looped": true
+            "looped": true,
+            "offset": [
+                16.0,
+                16.0
+            ]
         },
         {
             "name": "dodge",
             "atlasPrefix": "dodge",
             "frameRate": 16,
-            "looped": false
+            "looped": false,
+            "offset": [
+                16.0,
+                16.0
+            ]
         }
     ],
     "defaultAnim": "idle"

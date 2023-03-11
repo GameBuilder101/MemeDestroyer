@@ -1,12 +1,11 @@
-// The default hands sprite
-var hands:AssetSprite;
-var handsMode:String;
-
 // The currently-equipped item entity
 var equipped:Entity;
 
 // The currently-equipped item component
 var equippedItem:GameScript;
+
+// The default hands sprite
+var hands:AssetSprite;
 
 function onLoaded()
 {
@@ -16,21 +15,23 @@ function onLoaded()
 
 function onUpdate(elapsed:Float)
 {
-	// Hands animation modes/angles
-	switch (handsMode)
+	if (equippedItem != null)
 	{
-		default:
-		case "idle":
-			hands.angle = 0.0;
-		case "rotating":
-			hands.angle = FlxAngle.angleBetweenPoint(this, FlxG.mouse.getPosition(), true);
-			if (this.flipX)
-				hands.angle -= 180.0;
-	}
+		// Hands sprite animation modes/angles
+		switch (equippedItem.get("heldSpriteMode"))
+		{
+			default:
+				hands.angle = 0.0;
+			case "rotating":
+				hands.angle = FlxAngle.angleBetweenPoint(this, FlxG.mouse.getPosition(), true);
+				if (this.flipX)
+					hands.angle -= 180.0;
+		}
 
-	// Use input
-	if (equippedItem != null && Controls.checkFire())
-		attemptUse(elapsed);
+		// Use input
+		if (Controls.checkFire())
+			attemptUse(elapsed);
+	}
 
 	if (hands.animation.name != "idle" && hands.animation.finished && hands.animation.exists("idle"))
 		hands.animation.play("idle", true);
@@ -46,10 +47,8 @@ function equip(entity:Entity)
 	equipped.setPosition(this.x, this.y);
 	this.add(equipped);
 
-	equippedItem = equipped.components.getComponent("item");
-	// Load the hands sprite
-	hands.loadFromID(equippedItem.get("heldSpriteID"));
-	handsMode = equippedItem.get("heldSpriteMode");
+	equippedItem = equipped.getComponent("item");
+	equippedItem.call("onEquipped", [getComponent("equipper")]);
 }
 
 function unequip()
@@ -59,19 +58,25 @@ function unequip()
 	this.remove(equipped);
 	state.addEntity(equipped);
 	equipped.visible = true;
+
+	equippedItem.call("onUnequipped");
+
 	equipped = null;
 	equippedItem = null;
 
 	hands.loadFromID(handsSpriteID);
-	handsMode = null;
+	hands.angle = 0.0;
 }
 
 // Attempts to use the equipped item
 function attemptUse(elapsed:Float)
 {
-	if (!equippedItem.call("getCanUse", [this])) // Return if can't be used
+	if (!equippedItem.call("getCanUse")) // Return if can't be used
 		return;
-	equippedItem.call("onUse", [elapsed, this]);
-	if (hands.animation.exists("use"))
-		hands.animation.play("use", true);
+	equippedItem.call("onUse", [elapsed]);
+}
+
+function getHands():AssetSprite
+{
+	return hands;
 }

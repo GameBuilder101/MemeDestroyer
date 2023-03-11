@@ -13,6 +13,7 @@ typedef EntityData =
 	components:Array<String>,
 	variables:Array<Dynamic>,
 	spriteID:String,
+	hitboxSize:Array<Float>,
 	sortingPriority:Int
 }
 
@@ -63,6 +64,13 @@ class Entity extends FlxSpriteGroup
 			mainSprite = new AssetSprite(0.0, 0.0, null, data.spriteID);
 			add(mainSprite);
 		}
+
+		if (data.hitboxSize != null)
+		{
+			mainSprite.width = data.hitboxSize[0];
+			mainSprite.height = data.hitboxSize[1];
+		}
+
 		sortingPriority = data.sortingPriority;
 
 		components.startAll();
@@ -93,6 +101,21 @@ class Entity extends FlxSpriteGroup
 	{
 		super.update(elapsed);
 		components.callAll("onUpdate", [elapsed]);
+	}
+
+	public function getComponent(id:String):Script
+	{
+		return components.getComponent(id);
+	}
+
+	public function setAll(name:String, value:Dynamic)
+	{
+		components.setAll(name, value);
+	}
+
+	public function callAll(name:String, args:Array<Dynamic> = null)
+	{
+		components.callAll(name, args);
 	}
 
 	/** Check for an overlap of this entity with any entities of the given tag. **/

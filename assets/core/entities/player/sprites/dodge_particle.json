@@ -4,7 +4,11 @@
             "name": "spawn",
             "atlasPrefix": "spawn",
             "frameRate": 16,
-            "looped": false
+            "looped": false,
+            "offset": [
+                16.0,
+                16.0
+            ]
         }
     ]
 }

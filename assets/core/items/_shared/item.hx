@@ -1,4 +1,9 @@
 // Requires variables altEquipSoundID:String, heldSpriteID:String, heldSpriteMode:String, useDelay:Float, useSoundID:String
+// The component equipping this item
+var equipper:GameScript;
+var equipperHands:AssetSprite;
+
+// The always-played equip sound
 var equipSound:AssetSound;
 var altEquipSound:AssetSound;
 
@@ -25,20 +30,43 @@ function onUpdate(elapsed:Float)
 
 function onInteracted(entity:Entity)
 {
-	entity.components.callAll("equip", [this]);
+	entity.callAll("equip", [this]);
+}
+
+function onEquipped(component:GameScript)
+{
+	if (equipper != null)
+		return;
+	equipper = component;
+	equipperHands = equipper.call("getHands");
+	equipperHands.loadFromID(heldSpriteID);
+
 	equipSound.play();
 	if (altEquipSound != null)
 		altEquipSound.play();
 }
 
-function getCanUse(entity:Entity):Bool
+function onUnequipped()
+{
+	if (equipper == null)
+		return;
+	equipper = null;
+	equipperHands = null;
+
+	currentUseDelay = 0.0;
+}
+
+function getCanUse():Bool
 {
 	return currentUseDelay <= 0.0;
 }
 
-function onUse(elapsed:Float, entity:Entity)
+function onUse(elapsed:Float)
 {
 	currentUseDelay = useDelay;
+
+	if (equipperHands.animation.exists("use"))
+		equipperHands.animation.play("use", true);
 	if (useSound != null)
 		useSound.play();
 }
