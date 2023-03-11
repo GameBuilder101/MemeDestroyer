@@ -1,9 +1,10 @@
-// Requires variables dodgeSpeed:Float, dodgeDuration:Float, dodgeCool:Float, dodgeParticleSpriteID:String
+// Requires variables dodgeSpeed:Float, dodgeDuration:Float, dodgeCool:Float
 
 var currentDodgeDirection:Point;
 var currentDodgeTime:Float = 0.0;
 var currentDodgeCool:Float = 0.0;
 var dodgeParticle:AssetSprite;
+var dodgeSound:AssetSound;
 
 // The interactable the player is currently in-range of
 var interactable:Entity;
@@ -11,9 +12,11 @@ var oldInteractable:Entity;
 
 function onLoaded()
 {
-	dodgeParticle = new AssetSprite(0.0, 0.0, null, dodgeParticleSpriteID);
+	dodgeParticle = new AssetSprite(0.0, 0.0, null, "entities/player/sprites/dodge_particle");
 	dodgeParticle.visible = false;
 	state.effects.add(dodgeParticle);
+
+	dodgeSound = AssetSoundRegistry.getAsset("entities/player/sounds/dodge");
 }
 
 function onUpdate(elapsed:Float)
@@ -86,6 +89,8 @@ function dodge(direction:Point)
 	dodgeParticle.setPosition(this.x, this.y);
 	dodgeParticle.animation.play("spawn", true);
 	dodgeParticle.visible = true;
+
+	dodgeSound.play();
 }
 
 // Finishes a dodge

@@ -130,6 +130,7 @@ class Script
 	/** Set any engine-related variables that the script can use. **/
 	function setEngineVars()
 	{
+		set("Application", Application);
 		set("FlxBasic", flixel.FlxBasic);
 		set("FlxCamera", flixel.FlxCamera);
 		set("FlxG", FlxG);
@@ -141,8 +142,6 @@ class Script
 		set("PostProcess", flixel.effects.postprocess.PostProcess);
 		set("FlxGraphic", flixel.graphics.FlxGraphic);
 		set("FlxAtlasFrames", flixel.graphics.frames.FlxAtlasFrames);
-		set("FlxFrame", flixel.graphics.frames.FlxFrame);
-		set("FlxFramesCollection", flixel.graphics.frames.FlxFramesCollection);
 		set("FlxAngle", flixel.math.FlxAngle);
 		set("FlxMath", flixel.math.FlxMath);
 		set("FlxRandom", flixel.math.FlxRandom);
@@ -152,7 +151,7 @@ class Script
 		set("FlxTween", flixel.tweens.FlxTween);
 		set("FlxGradient", flixel.util.FlxGradient);
 		set("FlxTimer", flixel.util.FlxTimer);
-		set("Application", Application);
+		set("FlxTrail", flixel.addons.effects.FlxTrail);
 
 		// Add useful functions
 

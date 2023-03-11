@@ -1,7 +1,15 @@
-// Requires variables walkSpeed:Float, runSpeed:Float
+// Requires variables walkSpeed:Float, runSpeed:Float, footstepSoundID:String, footstepDelay:Float
 
 var isWalking:Bool = false;
 var isRunning:Bool = false;
+var footstepSound:AssetSound;
+var currentFootstepDelay:Float;
+
+function onLoaded()
+{
+	if (footstepSoundID != null)
+		footstepSound = AssetSoundRegistry.getAsset(footstepSoundID);
+}
 
 function onUpdate(elapsed:Float)
 {
@@ -30,6 +38,20 @@ function onUpdate(elapsed:Float)
 		}
 		else if (animation.name != "idle" && animation.exists("idle"))
 			animation.play("idle");
+	}
+
+	// Footstep sound
+	if (isWalking || isRunning)
+		currentFootstepDelay += elapsed;
+	else
+		currentFootstepDelay = 0.0;
+
+	if ((isWalking && currentFootstepDelay >= footstepDelay)
+		|| (isRunning && currentFootstepDelay >= footstepDelay * (runSpeed / walkSpeed)))
+	{
+		if (footstepSound != null)
+			footstepSound.play();
+		currentFootstepDelay = 0.0;
 	}
 }
 

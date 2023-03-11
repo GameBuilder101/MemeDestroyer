@@ -14,8 +14,12 @@
             "value": 180.0
         },
         {
-            "name": "handsSpriteID",
-            "value": "entities/player/hands"
+            "name": "footstepSoundID",
+            "value": "entities/player/sounds/footstep"
+        },
+        {
+            "name": "footstepDelay",
+            "value": 0.5
         },
         {
             "name": "dodgeSpeed",
@@ -27,12 +31,8 @@
         },
         {
             "name": "dodgeCool",
-            "value": 0.2
-        },
-        {
-            "name": "dodgeParticleSpriteID",
-            "value": "entities/player/dodge_particle"
+            "value": 0.25
         }
     ],
-    "spriteID": "entities/player/sprite"
+    "spriteID": "entities/player/sprites/main"
 }

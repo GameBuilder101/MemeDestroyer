@@ -11,13 +11,13 @@ class AssetSoundRegistry extends Registry<AssetSound>
 {
 	public function parse(data:Dynamic):AssetSound
 	{
-		if (data != null)
+		if (data.desc != null)
 		{
 			var variants:Array<AssetSoundVariant> = [];
 			var i:Int = 0;
-			for (variant in cast(data.desc, Array<Dynamic>))
+			for (volume in cast(data.desc, Array<Dynamic>))
 			{
-				variants.push({sound: data.sounds[i], volume: variant.volume});
+				variants.push({sound: data.sounds[i], volume: volume});
 				i++;
 			}
 			return new AssetSound(variants);
@@ -29,14 +29,10 @@ class AssetSoundRegistry extends Registry<AssetSound>
 
 	public function export(item:AssetSound, path:String)
 	{
-		var variants:Array<Dynamic> = [];
-		var i:Int = 0;
+		var volumes:Array<Float> = [];
 		for (variant in item.variants)
-		{
-			variants.push({path: path + "_" + i, volume: variant.volume});
-			i++;
-		}
-		var desc:String = Json.stringify(variants);
+			volumes.push(variant.volume);
+		var desc:String = Json.stringify(volumes);
 		FileManager.writeJson(path, desc);
 	}
 
@@ -44,8 +40,11 @@ class AssetSoundRegistry extends Registry<AssetSound>
 	{
 		var desc:Dynamic = FileManager.getParsedJson(path);
 		var sounds:Array<Sound> = [];
-		for (variant in cast(desc, Array<Dynamic>))
-			sounds.push(FileManager.getSound(variant.path));
+		if (desc != null)
+		{
+			for (i in 0...cast(desc, Array<Dynamic>).length)
+				sounds.push(FileManager.getSound(path + "_" + i));
+		}
 		return parse({
 			sound: FileManager.getSound(path),
 			sounds: sounds,

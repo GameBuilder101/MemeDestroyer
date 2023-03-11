@@ -1,4 +1,3 @@
-// Requires variables handsSpriteID:String
 // The default hands sprite
 var hands:AssetSprite;
 var handsMode:String;
@@ -11,7 +10,7 @@ var equippedItem:GameScript;
 
 function onLoaded()
 {
-	hands = new AssetSprite(this.x, this.y, null, handsSpriteID);
+	hands = new AssetSprite(this.x, this.y, null, "entities/player/sprites/hands");
 	this.add(hands);
 }
 
@@ -30,14 +29,10 @@ function onUpdate(elapsed:Float)
 	}
 
 	// Use input
-	if (Controls.checkFire())
-	{
-		equippedItem.call("onUse", [elapsed]);
-		if (hands.animation.exists("use"))
-			hands.animation.play("use");
-	}
+	if (equippedItem != null && Controls.checkFire())
+		attemptUse(elapsed);
 
-	if (hands.animation.name == "use" && hands.animation.finished && hands.animation.exists("idle"))
+	if (hands.animation.name != "idle" && hands.animation.finished && hands.animation.exists("idle"))
 		hands.animation.play("idle", true);
 }
 
@@ -65,7 +60,18 @@ function unequip()
 	state.addEntity(equipped);
 	equipped.visible = true;
 	equipped = null;
+	equippedItem = null;
 
 	hands.loadFromID(handsSpriteID);
 	handsMode = null;
+}
+
+// Attempts to use the equipped item
+function attemptUse(elapsed:Float)
+{
+	if (!equippedItem.call("getCanUse", [this])) // Return if can't be used
+		return;
+	equippedItem.call("onUse", [elapsed, this]);
+	if (hands.animation.exists("use"))
+		hands.animation.play("use", true);
 }

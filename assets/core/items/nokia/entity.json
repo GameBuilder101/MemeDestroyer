@@ -7,13 +7,25 @@
     ],
     "variables": [
         {
+            "name": "altEquipSoundID",
+            "value": "items/nokia/sounds/equip"
+        },
+        {
             "name": "heldSpriteID",
-            "value": "items/nokia/held_sprite"
+            "value": "items/nokia/sprites/held"
         },
         {
             "name": "heldSpriteMode",
             "value": "rotating"
+        },
+        {
+            "name": "useDelay",
+            "value": 1.0
+        },
+        {
+            "name": "useSoundID",
+            "value": "items/nokia/sounds/use"
         }
     ],
-    "spriteID": "items/nokia/sprite"
+    "spriteID": "items/nokia/sprites/main"
 }

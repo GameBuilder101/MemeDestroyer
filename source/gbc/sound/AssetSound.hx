@@ -21,7 +21,7 @@ class AssetSound
 	/** Returns a random sound variant. **/
 	public function getVariant():AssetSoundVariant
 	{
-		return variants[cast(Math.random() * variants.length)];
+		return variants[Math.floor(Math.random() * variants.length)];
 	}
 
 	/** Plays a random sound variant using FlxG.sound. **/
