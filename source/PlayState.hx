@@ -36,6 +36,8 @@ class PlayState extends FlxState
 		addEntity(new Entity(100.0, 100.0, null, "items/nokia")); // Test
 
 		add(effects);
+
+		add(new gbc.graphics.AssetSprite(0.0, 0.0, "ui/hud/health_bar"));
 	}
 
 	override function update(elapsed:Float)
