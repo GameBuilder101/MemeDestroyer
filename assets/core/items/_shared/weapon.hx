@@ -9,5 +9,7 @@ function onEquipped(component:GameScript)
 
 function onUse(elapsed:Float)
 {
-	equipper.get("this").getComponent("shooter").fire(projectileID);
+	trace(equipper);
+	trace(equipper.get("this"));
+	equipper.get("this").callAll("fire", [projectileID]);
 }

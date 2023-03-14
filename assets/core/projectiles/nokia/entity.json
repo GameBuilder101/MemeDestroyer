@@ -10,5 +10,6 @@
             "value": 1.0
         }
     ],
-    "spriteID": "projectiles/nokia/sprites/main"
+    "spriteID": "projectiles/nokia/sprites/main",
+    "sortingPriority": 32
 }

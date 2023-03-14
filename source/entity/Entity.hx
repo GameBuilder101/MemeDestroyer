@@ -19,6 +19,9 @@ typedef EntityData =
 
 class Entity extends FlxSpriteGroup
 {
+	/** The ID this entity was created with. Null if created dynamically. **/
+	public var id(default, null):String;
+
 	/** The entity display name. **/
 	public var name(default, null):String;
 
@@ -37,7 +40,7 @@ class Entity extends FlxSpriteGroup
 		if (data != null)
 			load(data);
 		else if (id != null)
-			load(EntityRegistry.getAsset(id));
+			loadFromID(id);
 	}
 
 	/** Loads all values from the given data. **/
@@ -94,6 +97,7 @@ class Entity extends FlxSpriteGroup
 
 	public function loadFromID(id:String)
 	{
+		this.id = id;
 		load(EntityRegistry.getAsset(id));
 	}
 
@@ -113,9 +117,9 @@ class Entity extends FlxSpriteGroup
 		components.setAll(name, value);
 	}
 
-	public function callAll(name:String, args:Array<Dynamic> = null)
+	public function callAll(name:String, args:Array<Dynamic> = null):Dynamic
 	{
-		components.callAll(name, args);
+		return components.callAll(name, args);
 	}
 
 	/** Check for an overlap of this entity with any entities of the given tag. **/

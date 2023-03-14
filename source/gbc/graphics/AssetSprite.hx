@@ -46,7 +46,7 @@ class AssetSprite extends FlxSprite
 		if (data != null)
 			load(data);
 		else if (id != null)
-			load(AssetSpriteRegistry.getAsset(id));
+			loadFromID(id);
 	}
 
 	/** Loads all values from the given data. **/

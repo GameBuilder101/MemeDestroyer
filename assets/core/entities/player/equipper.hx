@@ -48,7 +48,7 @@ function equip(entity:Entity)
 	this.add(equipped);
 
 	equippedItem = equipped.getComponent("item");
-	equippedItem.call("onEquipped", [getComponent("equipper")]);
+	equipped.callAll("onEquipped", [getComponent("equipper")]);
 }
 
 function unequip()
@@ -59,7 +59,7 @@ function unequip()
 	state.addEntity(equipped);
 	equipped.visible = true;
 
-	equippedItem.call("onUnequipped");
+	equipped.callAll("onUnequipped");
 
 	equipped = null;
 	equippedItem = null;
@@ -73,7 +73,7 @@ function attemptUse(elapsed:Float)
 {
 	if (!equippedItem.call("getCanUse")) // Return if can't be used
 		return;
-	equippedItem.call("onUse", [elapsed]);
+	equipped.callAll("onUse", [elapsed]);
 }
 
 function getHands():AssetSprite

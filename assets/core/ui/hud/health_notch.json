@@ -1,0 +1,16 @@
+{
+    "animations": [
+        {
+            "name": "back",
+            "atlasPrefix": "back",
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "fill",
+            "atlasPrefix": "fill",
+            "frameRate": 4,
+            "looped": true
+        }
+    ]
+}

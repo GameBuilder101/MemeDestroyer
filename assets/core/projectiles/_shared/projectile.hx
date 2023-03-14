@@ -13,15 +13,15 @@ function onLoaded()
 
 function onUpdate()
 {
-	this.x += FlxMath.cos(fireAngle * FlxAngle.TO_RAD) * fireSpeed * fireVelocity;
-	this.y += FlxMath.sin(fireAngle * FlxAngle.TO_RAD) * fireSpeed * fireVelocity;
+	this.x += FlxMath.fastCos(fireAngle * FlxAngle.TO_RAD) * fireSpeed * fireVelocity;
+	this.y += FlxMath.fastSin(fireAngle * FlxAngle.TO_RAD) * fireSpeed * fireVelocity;
 
 	// If the projectile leaves the bounds, kill it
 	if (this.x < FlxG.worldBounds.left - 32.0
 		|| this.x > FlxG.worldBounds.right + 32.0 - this.mainSprite.width
 		|| this.y < FlxG.worldBounds.top - 32.0
 		|| this.y > FlxG.worldBounds.bottom + 32.0 - this.mainSprite.height)
-		killProjectile();
+		callAll("killProjectile");
 }
 
 function fire(team:String, x:Float, y:Float, angle:Float, velocity:Float = 1.0)
@@ -32,12 +32,11 @@ function fire(team:String, x:Float, y:Float, angle:Float, velocity:Float = 1.0)
 	fireAngle = angle;
 	fireVelocity = velocity;
 
-	this.setPosition(x, y);
-	this.angle = fireAngle;
+	this.revive();
+	this.setPosition(fireX, fireY);
+	this.mainSprite.angle = fireAngle;
 	if (animation.exists("team_" + fireTeam))
 		animation.play("team_" + fireTeam);
-
-	this.revive();
 }
 
 function killProjectile()

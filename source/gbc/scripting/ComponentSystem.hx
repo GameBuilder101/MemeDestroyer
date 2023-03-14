@@ -48,9 +48,19 @@ class ComponentSystem
 			component.set(name, value);
 	}
 
-	public function callAll(name:String, args:Array<Dynamic> = null)
+	/** Calls all functions of the given name and returns the value output
+		by the final script (but only if it isn't null).
+	**/
+	public function callAll(name:String, args:Array<Dynamic> = null):Dynamic
 	{
+		var result:Dynamic = null;
+		var finalResult:Dynamic = null;
 		for (component in components)
-			component.call(name, args);
+		{
+			result = component.call(name, args);
+			if (result != null)
+				finalResult = result;
+		}
+		return finalResult;
 	}
 }
