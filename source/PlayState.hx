@@ -60,6 +60,8 @@ class PlayState extends FlxState
 	/** Use this function to add any entities. **/
 	public function addEntity(entity:Entity)
 	{
+		if (entities.members.contains(entity))
+			return;
 		entities.add(entity);
 		for (tag in entity.tags)
 		{

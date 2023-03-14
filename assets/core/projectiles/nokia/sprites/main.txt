@@ -1,2 +1,2 @@
-friendly0 = 0 0 32 32
-hostile0 = 32 0 32 32
+team_friendly0 = 0 0 32 32
+team_hostile0 = 32 0 32 32

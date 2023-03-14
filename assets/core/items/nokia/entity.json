@@ -3,7 +3,8 @@
     "tags": [],
     "components": [
         "entities/_shared/interactable",
-        "items/_shared/item"
+        "items/_shared/item",
+        "items/_shared/weapon"
     ],
     "variables": [
         {
@@ -25,6 +26,10 @@
         {
             "name": "useSoundID",
             "value": "items/nokia/sounds/use"
+        },
+        {
+            "name": "projectileID",
+            "value": "projectiles/nokia"
         }
     ],
     "spriteID": "items/nokia/sprites/main"

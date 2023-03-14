@@ -1,0 +1,14 @@
+{
+    "name": "Nokia (Projectile)",
+    "tags": [],
+    "components": [
+        "projectiles/_shared/projectile"
+    ],
+    "variables": [
+        {
+            "name": "fireSpeed",
+            "value": 1.0
+        }
+    ],
+    "spriteID": "projectiles/nokia/sprites/main"
+}

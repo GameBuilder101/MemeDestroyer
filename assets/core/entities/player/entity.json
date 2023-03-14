@@ -5,6 +5,7 @@
     ],
     "components": [
         "entities/_shared/movement",
+        "entities/_shared/shooter",
         "entities/player/equipper",
         "entities/player/controller"
     ],
@@ -20,6 +21,10 @@
         {
             "name": "footstepDelay",
             "value": 0.5
+        },
+        {
+            "name": "team",
+            "value": "friendly"
         },
         {
             "name": "dodgeSpeed",
