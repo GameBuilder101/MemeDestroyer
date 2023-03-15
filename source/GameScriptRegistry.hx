@@ -9,7 +9,7 @@ class GameScriptRegistry extends Registry<GameScript>
 {
 	public function parse(data:Dynamic):GameScript
 	{
-		if (data == null)
+		if (data == null || data.script == null)
 			return null;
 		return new GameScript(data.script, data.name);
 	}

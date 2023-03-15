@@ -17,10 +17,11 @@ function onUpdate()
 	this.y += FlxMath.fastSin(fireAngle * FlxAngle.TO_RAD) * fireSpeed * fireVelocity;
 
 	// If the projectile leaves the bounds, kill it
-	if (this.x < FlxG.worldBounds.left - 32.0
+	if ((this.x < FlxG.worldBounds.left - 32.0
 		|| this.x > FlxG.worldBounds.right + 32.0 - this.mainSprite.width
 		|| this.y < FlxG.worldBounds.top - 32.0
 		|| this.y > FlxG.worldBounds.bottom + 32.0 - this.mainSprite.height)
+		&& this.alive)
 		callAll("killProjectile");
 }
 

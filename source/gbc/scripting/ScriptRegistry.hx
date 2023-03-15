@@ -9,7 +9,7 @@ class ScriptRegistry extends Registry<Script>
 {
 	public function parse(data:Dynamic):Script
 	{
-		if (data == null)
+		if (data == null || data.script == null)
 			return null;
 		return new Script(data.script, data.name);
 	}

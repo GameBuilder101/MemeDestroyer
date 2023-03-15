@@ -1,15 +1,12 @@
 // Requires variables projectileID:String
-// The component equipping this item
-var equipper:GameScript;
+var equipper:Entity;
 
-function onEquipped(component:GameScript)
+function onEquipped(entity:Entity)
 {
-	equipper = component;
+	equipper = entity;
 }
 
 function onUse(elapsed:Float)
 {
-	trace(equipper);
-	trace(equipper.get("this"));
-	equipper.get("this").callAll("fire", [projectileID]);
+	equipper.callAll("fire", [projectileID, equipper.callAll("getLookAngle"), 1.0]);
 }

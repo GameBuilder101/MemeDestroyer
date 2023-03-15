@@ -7,7 +7,7 @@
     "variables": [
         {
             "name": "fireSpeed",
-            "value": 1.0
+            "value": 3.5
         }
     ],
     "spriteID": "projectiles/nokia/sprites/main",

@@ -16,14 +16,16 @@ class ComponentSystem
 	}
 
 	/**
+		@param cl The type of script.
 		@param getAsset The function used to retrieve the scripts from a path.
 	**/
-	public function addNewComponent(path:String, getAsset:String->Script)
+	public function addNewComponent(path:String, cl:Class<Dynamic>, getAsset:String->Script)
 	{
 		var id:String = path.substring(path.lastIndexOf("/") + 1, path.length);
 		id = id.substring(path.lastIndexOf("\\") + 1, path.length);
 		// Create a new, duplicate script from the registry one
-		addComponent(id, Reflect.copy(getAsset(path)));
+		var asset:Script = getAsset(path);
+		addComponent(id, Type.createInstance(cl, [asset.script, asset.name]));
 	}
 
 	public function removeComponent(id:String)

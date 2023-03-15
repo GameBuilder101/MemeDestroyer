@@ -51,7 +51,7 @@ class Entity extends FlxSpriteGroup
 		components = new ComponentSystem();
 		for (path in cast(data.components, Array<Dynamic>))
 		{
-			components.addNewComponent(path, function(path:String):Script
+			components.addNewComponent(path, GameScript, function(path:String):Script
 			{
 				return GameScriptRegistry.getAsset(path);
 			});
@@ -76,8 +76,6 @@ class Entity extends FlxSpriteGroup
 
 		sortingPriority = data.sortingPriority;
 
-		components.startAll();
-
 		components.setAll("this", this);
 		components.setAll("state", cast(FlxG.state, PlayState));
 		components.setAll("overlap", overlap);
@@ -92,6 +90,8 @@ class Entity extends FlxSpriteGroup
 			for (variable in data.variables)
 				components.setAll(variable.name, variable.value);
 		}
+
+		components.startAll();
 		components.callAll("onLoaded");
 	}
 

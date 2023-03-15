@@ -1,9 +1,6 @@
 // The currently-equipped item entity
 var equipped:Entity;
 
-// The currently-equipped item component
-var equippedItem:GameScript;
-
 // The default hands sprite
 var hands:AssetSprite;
 
@@ -15,15 +12,16 @@ function onLoaded()
 
 function onUpdate(elapsed:Float)
 {
-	if (equippedItem != null)
+	if (equipped != null)
 	{
-		// Hands sprite animation modes/angles
-		switch (equippedItem.get("heldSpriteMode"))
+		/* Hands sprite animation modes/angles must be done here so that flipping is
+			detected properly */
+		switch (equipped.callAll("getHeldSpriteMode"))
 		{
 			default:
 				hands.angle = 0.0;
 			case "rotating":
-				hands.angle = FlxAngle.angleBetweenPoint(this, FlxG.mouse.getPosition(), true);
+				hands.angle = this.callAll("getLookAngle");
 				if (this.flipX)
 					hands.angle -= 180.0;
 		}
@@ -47,8 +45,7 @@ function equip(entity:Entity)
 	equipped.setPosition(this.x, this.y);
 	this.add(equipped);
 
-	equippedItem = equipped.getComponent("item");
-	equipped.callAll("onEquipped", [getComponent("equipper")]);
+	equipped.callAll("onEquipped", [this]);
 }
 
 function unequip()
@@ -62,7 +59,6 @@ function unequip()
 	equipped.callAll("onUnequipped");
 
 	equipped = null;
-	equippedItem = null;
 
 	hands.loadFromID(handsSpriteID);
 	hands.angle = 0.0;
@@ -71,7 +67,7 @@ function unequip()
 // Attempts to use the equipped item
 function attemptUse(elapsed:Float)
 {
-	if (!equippedItem.call("getCanUse")) // Return if can't be used
+	if (!equipped.callAll("getCanUse")) // Return if can't be used
 		return;
 	equipped.callAll("onUse", [elapsed]);
 }

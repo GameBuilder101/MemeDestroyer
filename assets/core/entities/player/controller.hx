@@ -74,6 +74,11 @@ function onUpdate(elapsed:Float)
 		interactable.callAll("interact", [this]);
 }
 
+function getLookAngle():Float
+{
+	return FlxAngle.angleBetweenPoint(this, FlxG.mouse.getPosition(), true);
+}
+
 // Dodges towards the given direction
 function dodge(direction:Point)
 {
