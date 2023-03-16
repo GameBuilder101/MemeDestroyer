@@ -1,14 +1,14 @@
 {
     "animations": [
         {
-            "name": "back",
-            "atlasPrefix": "back",
+            "name": "empty",
+            "atlasPrefix": "empty",
             "frameRate": 4,
             "looped": true
         },
         {
-            "name": "fill",
-            "atlasPrefix": "fill",
+            "name": "filled",
+            "atlasPrefix": "filled",
             "frameRate": 4,
             "looped": true
         }
