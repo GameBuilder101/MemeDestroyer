@@ -24,8 +24,12 @@
             "value": 0.5
         },
         {
-            "name": "maxHealth",
+            "name": "initialMaxHealth",
             "value": 5.0
+        },
+        {
+            "name": "healthRounding",
+            "value": true
         },
         {
             "name": "healthColor",

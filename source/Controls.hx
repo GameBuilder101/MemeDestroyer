@@ -24,13 +24,13 @@ class Controls extends Saver<Array<Dynamic>>
 	{
 		actions = [];
 
-		moveUp = new OverridableAction("moveUp", "Move Up", PRESSED, 2, [UP, W], [LEFT_STICK_DIGITAL_UP, null]);
+		moveUp = new OverridableAction("moveUp", "Move Up", PRESSED, 2, [UP, W], [LEFT_STICK_DIGITAL_UP, NONE]);
 		actions.push(moveUp);
-		moveDown = new OverridableAction("moveDown", "Move Down", PRESSED, 2, [DOWN, S], [LEFT_STICK_DIGITAL_DOWN, null]);
+		moveDown = new OverridableAction("moveDown", "Move Down", PRESSED, 2, [DOWN, S], [LEFT_STICK_DIGITAL_DOWN, NONE]);
 		actions.push(moveDown);
-		moveLeft = new OverridableAction("moveLeft", "Move Left", PRESSED, 2, [LEFT, A], [LEFT_STICK_DIGITAL_LEFT, null]);
+		moveLeft = new OverridableAction("moveLeft", "Move Left", PRESSED, 2, [LEFT, A], [LEFT_STICK_DIGITAL_LEFT, NONE]);
 		actions.push(moveLeft);
-		moveRight = new OverridableAction("moveRight", "Move Right", PRESSED, 2, [RIGHT, D], [LEFT_STICK_DIGITAL_RIGHT, null]);
+		moveRight = new OverridableAction("moveRight", "Move Right", PRESSED, 2, [RIGHT, D], [LEFT_STICK_DIGITAL_RIGHT, NONE]);
 		actions.push(moveRight);
 
 		fire = new OverridableAction("fire", "Fire", PRESSED, 1, [F], [RIGHT_TRIGGER]);

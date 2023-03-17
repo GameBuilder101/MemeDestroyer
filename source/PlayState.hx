@@ -39,6 +39,8 @@ class PlayState extends FlxState
 	/** Used primarily for player health. **/
 	public var healthNotches(default, null):FlxTypedSpriteGroup<FlxTypedSpriteGroup<AssetSprite>>;
 
+	var prevHealthNotchesHealth:Int = -1;
+
 	override function create()
 	{
 		super.create();
@@ -100,9 +102,9 @@ class PlayState extends FlxState
 		});
 
 		if (boss != null)
-			updateHealthBar(boss.callAll("getHealth"), boss.callAll("getMaxHealth"), FlxColor.fromString(boss.callAll("getHealthColor")));
+			updateHealthBar(boss.callAll("getHealth"), boss.callAll("getMaxHealth"), boss.callAll("getHealthColor"));
 		if (player != null)
-			updateHealthNotches(player.callAll("getHealth"), player.callAll("getMaxHealth"), FlxColor.fromString(player.callAll("getHealthColor")));
+			updateHealthNotches(player.callAll("getHealth"), player.callAll("getMaxHealth"), player.callAll("getHealthColor"));
 	}
 
 	/** Use this function to add any entities. **/
@@ -160,6 +162,7 @@ class PlayState extends FlxState
 		var healthInt:Int = Math.ceil(health);
 		var maxHealthInt:Int = Math.ceil(maxHealth);
 
+		var prevLength:Int = healthNotches.members.length;
 		// Make sure there are the correct number of health notches
 		while (healthNotches.members.length < maxHealthInt) // Add new health notches to match
 			createHealthNotch();
@@ -167,16 +170,25 @@ class PlayState extends FlxState
 			healthNotches.remove(healthNotches.members[0]);
 
 		// Update the positions
-		for (i in 0...healthNotches.length)
-			healthNotches.members[i].setPosition(healthNotches.x + (i - (healthNotches.members.length * 0.5)) * healthNotches.members[i].width,
-				healthNotches.y);
+		if (healthNotches.members.length != prevLength)
+		{
+			for (i in 0...healthNotches.length)
+				healthNotches.members[i].setPosition(healthNotches.x + (i - (healthNotches.members.length * 0.5)) * healthNotches.members[i].width,
+					healthNotches.y);
+		}
 
 		// Update the graphics
-		for (i in 0...healthNotches.length)
+		if (healthNotches.members.length != prevLength || healthInt != prevHealthNotchesHealth)
 		{
-			healthNotches.members[i].members[1].visible = i < healthInt;
-			healthNotches.members[i].members[1].color = color;
+			for (i in 0...healthNotches.length)
+			{
+				healthNotches.members[i].members[1].visible = i < healthInt;
+				healthNotches.members[i].members[1].color = color;
+			}
 		}
+		healthBarLabel.color = color;
+
+		prevHealthNotchesHealth = healthInt;
 	}
 
 	function createHealthNotch()
