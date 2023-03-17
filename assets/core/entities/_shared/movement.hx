@@ -28,15 +28,15 @@ function onUpdate(elapsed:Float)
 	{
 		if (isRunning)
 		{
-			if (animation.name != "run" && animation.exists("run"))
+			if (animation.exists("run"))
 				animation.play("run");
 		}
 		else if (isWalking)
 		{
-			if (animation.name != "walk" && animation.exists("walk"))
+			if (animation.exists("walk"))
 				animation.play("walk");
 		}
-		else if (animation.name != "idle" && animation.exists("idle"))
+		else if (animation.exists("idle"))
 			animation.play("idle");
 	}
 

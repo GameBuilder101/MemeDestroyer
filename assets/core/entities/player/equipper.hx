@@ -31,8 +31,8 @@ function onUpdate(elapsed:Float)
 			attemptUse(elapsed);
 	}
 
-	if (hands.animation.name != "idle" && hands.animation.finished && hands.animation.exists("idle"))
-		hands.animation.play("idle", true);
+	if (hands.animation.finished && hands.animation.exists("idle"))
+		hands.animation.play("idle");
 }
 
 function equip(entity:Entity)

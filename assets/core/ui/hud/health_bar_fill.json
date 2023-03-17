@@ -1,0 +1,6 @@
+{
+    "shaderID": "shader_types/fill",
+    "shaderArgs": {
+        "direction": 3
+    }
+}

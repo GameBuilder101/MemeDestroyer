@@ -24,9 +24,7 @@ class ShaderTypeRegistry extends Registry<ShaderType>
 
 	function load(path:String):ShaderType
 	{
-		return parse({
-			desc: FileManager.getParsedJson(path)
-		});
+		return parse(FileManager.getParsedJson(path));
 	}
 
 	public static function getAsset(id:String):ShaderType

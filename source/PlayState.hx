@@ -9,6 +9,7 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 import gbc.graphics.AssetSprite;
+import shaders.FillShader;
 
 class PlayState extends FlxState
 {
@@ -36,7 +37,7 @@ class PlayState extends FlxState
 	var healthBarLabel:FlxText;
 
 	/** Used primarily for player health. **/
-	public var healthNotches(default, null):FlxTypedSpriteGroup<AssetSprite>;
+	public var healthNotches(default, null):FlxTypedSpriteGroup<FlxTypedSpriteGroup<AssetSprite>>;
 
 	override function create()
 	{
@@ -51,25 +52,28 @@ class PlayState extends FlxState
 
 		// Add the health bar sprites
 		healthBar = new FlxSpriteGroup();
+		healthBar.screenCenter();
+		healthBar.y = FlxG.height;
 		add(healthBar);
 
 		healthBarBack = new AssetSprite(0.0, 0.0, null, "ui/hud/health_bar_back");
+		healthBarBack.setPosition(-healthBarBack.width / 2.0, -healthBarBack.height);
 		healthBar.add(healthBarBack);
-		healthBar.screenCenter();
-		healthBar.y = FlxG.height - healthBarBack.height;
 
 		healthBarFill = new AssetSprite(0.0, 0.0, null, "ui/hud/health_bar_fill");
+		healthBarFill.setPosition(-healthBarFill.width / 2.0, -healthBarFill.height);
 		add(healthBarFill);
 		healthBar.add(healthBarFill);
 
-		healthBarLabel = new FlxText(0.0, -healthBar.height + 16.0, healthBar.width, "Meme Name");
+		healthBarLabel = new FlxText(0.0, 0.0, healthBar.width, "Meme Name");
+		healthBarLabel.setPosition(-healthBarLabel.width / 2.0, -healthBar.height - 16.0);
 		healthBarLabel.setFormat("Edit Undo BRK", 20, FlxColor.WHITE, CENTER, SHADOW, FlxColor.BLACK);
 		healthBar.add(healthBarLabel);
 
 		// Add the health notches sprites
-		healthNotches = new FlxTypedSpriteGroup<AssetSprite>();
+		healthNotches = new FlxTypedSpriteGroup<FlxTypedSpriteGroup<AssetSprite>>();
 		healthNotches.screenCenter();
-		healthNotches.y = healthBarBack.height; // Assume the health notches have the same height
+		healthNotches.y = 0.0;
 		add(healthNotches);
 
 		// Add the player
@@ -95,7 +99,10 @@ class PlayState extends FlxState
 			return FlxSort.byValues(order, entity1.y + entity1.mainSprite.height, entity2.y + entity2.mainSprite.height);
 		});
 
-		updateHealthNotches(3.0, 5.0);
+		if (boss != null)
+			updateHealthBar(boss.callAll("getHealth"), boss.callAll("getMaxHealth"), FlxColor.fromString(boss.callAll("getHealthColor")));
+		if (player != null)
+			updateHealthNotches(player.callAll("getHealth"), player.callAll("getMaxHealth"), FlxColor.fromString(player.callAll("getHealthColor")));
 	}
 
 	/** Use this function to add any entities. **/
@@ -142,28 +149,41 @@ class PlayState extends FlxState
 		addEntity(new Entity(x, y, null, id));
 	}
 
-	public function updateHealthNotches(health:Float, maxHealth:Float)
+	public function updateHealthBar(health:Float, maxHealth:Float, color:FlxColor = FlxColor.WHITE)
+	{
+		cast(healthBarFill.shader, FillShader).setProgress(health / maxHealth);
+		healthBarFill.color = color;
+	}
+
+	public function updateHealthNotches(health:Float, maxHealth:Float, color:FlxColor = FlxColor.WHITE)
 	{
 		var healthInt:Int = Math.ceil(health);
 		var maxHealthInt:Int = Math.ceil(maxHealth);
 
 		// Make sure there are the correct number of health notches
 		while (healthNotches.members.length < maxHealthInt) // Add new health notches to match
-			healthNotches.add(new AssetSprite(0.0, 0.0, null, "ui/hud/health_notch"));
+			createHealthNotch();
 		while (healthNotches.members.length > maxHealthInt) // Remove health notches to match
 			healthNotches.remove(healthNotches.members[0]);
 
 		// Update the positions
 		for (i in 0...healthNotches.length)
-			healthNotches.members[i].setPosition((i - (healthNotches.length * 0.5)) * healthNotches.members[i].width, 0.0);
+			healthNotches.members[i].setPosition(healthNotches.x + (i - (healthNotches.members.length * 0.5)) * healthNotches.members[i].width,
+				healthNotches.y);
 
 		// Update the graphics
 		for (i in 0...healthNotches.length)
 		{
-			if (i > healthInt)
-				healthNotches.members[i].animation.play("empty");
-			else
-				healthNotches.members[i].animation.play("filled");
+			healthNotches.members[i].members[1].visible = i < healthInt;
+			healthNotches.members[i].members[1].color = color;
 		}
+	}
+
+	function createHealthNotch()
+	{
+		var notch:FlxTypedSpriteGroup<AssetSprite> = new FlxTypedSpriteGroup<AssetSprite>();
+		notch.add(new AssetSprite(0.0, 0.0, null, "ui/hud/health_notch_back"));
+		notch.add(new AssetSprite(0.0, 0.0, null, "ui/hud/health_notch_fill"));
+		healthNotches.add(notch);
 	}
 }
