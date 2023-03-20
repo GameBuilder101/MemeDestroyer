@@ -155,6 +155,7 @@ class PlayState extends FlxState
 	{
 		cast(healthBarFill.shader, FillShader).setProgress(health / maxHealth);
 		healthBarFill.color = color;
+		healthBarLabel.color = color;
 	}
 
 	public function updateHealthNotches(health:Float, maxHealth:Float, color:FlxColor = FlxColor.WHITE)
@@ -186,7 +187,6 @@ class PlayState extends FlxState
 				healthNotches.members[i].members[1].color = color;
 			}
 		}
-		healthBarLabel.color = color;
 
 		prevHealthNotchesHealth = healthInt;
 	}
