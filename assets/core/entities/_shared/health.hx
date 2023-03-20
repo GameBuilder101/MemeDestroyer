@@ -1,4 +1,4 @@
-// Requires variables initialMaxHealth:Float, healthColor:String
+// Requires variables initialMaxHealth:Float, roundHealth:Bool, healthColor:String
 
 var health:Float;
 var maxHealth:Float;
@@ -16,7 +16,10 @@ function getHealth():Float
 
 function setHealth(value:Float)
 {
-	health = value;
+	if (roundHealth)
+		health = Math.round(value);
+	else
+		health = value;
 	if (health < 0.0)
 		health = 0.0;
 	else if (health > maxHealth)
@@ -30,7 +33,10 @@ function getMaxHealth():Float
 
 function setMaxHealth(value:Float)
 {
-	health = value;
+	if (roundHealth)
+		maxHealth = Math.round(value);
+	else
+		maxHealth = value;
 	if (health > maxHealth)
 		health = maxHealth;
 }

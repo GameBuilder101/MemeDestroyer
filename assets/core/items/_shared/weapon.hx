@@ -1,12 +1,9 @@
 // Requires variables projectileID:String
-var equipper:Entity;
-
-function onEquipped(entity:Entity)
+function onUsed(equipper:Entity)
 {
-	equipper = entity;
-}
-
-function onUse(elapsed:Float)
-{
-	equipper.callAll("fire", [projectileID, equipper.callAll("getLookAngle"), 1.0]);
+	equipper.getComponent("shooter").call("fire", [
+		projectileID,
+		FlxAngle.angleBetweenPoint(this, FlxG.mouse.getPosition(), true),
+		1.0
+	]);
 }

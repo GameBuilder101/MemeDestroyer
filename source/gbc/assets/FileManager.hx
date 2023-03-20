@@ -87,7 +87,7 @@ class FileManager
 		var source:BitmapData = BitmapData.fromFile(path + ".png");
 		if (source == null)
 			return null;
-		var graphic:FlxGraphic = FlxGraphic.fromBitmapData(source, true, path, false);
+		var graphic:FlxGraphic = FlxGraphic.fromBitmapData(source, false, path);
 		graphic.persist = true;
 		return graphic;
 	}

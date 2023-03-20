@@ -7,11 +7,16 @@ var dodgeParticle:AssetSprite;
 var dodgeSound:AssetSound;
 
 // The interactable the player is currently in-range of
-var interactable:Entity;
-var oldInteractable:Entity;
+var interactable:GameScript;
+var oldInteractable:GameScript;
+
+// The movement component
+var movement:GameScript;
 
 function onLoaded()
 {
+	movement = getComponent("movement");
+
 	dodgeParticle = new AssetSprite(0.0, 0.0, null, "entities/player/sprites/dodge_particle");
 	dodgeParticle.visible = false;
 	state.effects.add(dodgeParticle);
@@ -54,7 +59,7 @@ function onUpdate(elapsed:Float)
 		direction.point.x--;
 	if (Controls.moveRight.check())
 		direction.point.x++;
-	callAll("move", [direction, false, elapsed]);
+	movement.call("move", [direction, false, elapsed]);
 
 	// Dodging input
 	if (Controls.dodge.check() && currentDodgeCool <= 0.0)
@@ -67,11 +72,11 @@ function onUpdate(elapsed:Float)
 	interactable = null;
 	overlap("interactable");
 	if (oldInteractable != interactable && oldInteractable != null)
-		oldInteractable.callAll("exitInteractRange", [this]);
+		oldInteractable.call("exitInteractRange", [this]);
 
 	// Interaction
 	if (interactable != null && Controls.interact.check())
-		interactable.callAll("interact", [this]);
+		interactable.call("interact", [this]);
 }
 
 function getLookAngle():Float
@@ -112,8 +117,8 @@ function isDodging():Bool
 
 function onOverlap(tag:String, entity:Entity)
 {
-	if (tag != "interactable" || entity == interactable)
+	if (tag != "interactable" || entity.getComponent("interactable") == interactable)
 		return;
-	interactable = entity;
-	interactable.callAll("enterInteractRange", [this]);
+	interactable = entity.getComponent("interactable");
+	interactable.call("enterInteractRange", [this]);
 }

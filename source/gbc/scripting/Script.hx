@@ -119,11 +119,8 @@ class Script
 	/** Set any Haxe-related variables that the script can use. **/
 	function setHaxeVars()
 	{
-		set("Date", Date);
-		set("DateTools", DateTools);
 		set("Math", Math);
 		set("Std", Std);
-		set("StringTools", StringTools);
 		set("Json", haxe.Json);
 	}
 
@@ -132,15 +129,11 @@ class Script
 	{
 		set("Application", Application);
 		set("FlxBasic", flixel.FlxBasic);
-		set("FlxCamera", flixel.FlxCamera);
 		set("FlxG", FlxG);
 		set("FlxObject", flixel.FlxObject);
 		set("FlxSprite", FlxSprite);
-		set("FlxState", flixel.FlxState);
-		set("FlxSubState", flixel.FlxSubState);
 		set("FlxAnimation", flixel.animation.FlxAnimation);
 		set("FlxGraphic", flixel.graphics.FlxGraphic);
-		set("FlxAtlasFrames", flixel.graphics.frames.FlxAtlasFrames);
 		set("FlxAngle", flixel.math.FlxAngle);
 		set("FlxMath", flixel.math.FlxMath);
 		set("FlxRect", flixel.math.FlxRect);

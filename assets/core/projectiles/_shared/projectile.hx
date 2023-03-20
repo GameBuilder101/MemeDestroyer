@@ -22,7 +22,7 @@ function onUpdate()
 		|| this.y < FlxG.worldBounds.top - 32.0
 		|| this.y > FlxG.worldBounds.bottom + 32.0 - this.mainSprite.height)
 		&& this.alive)
-		callAll("killProjectile");
+		this.kill();
 }
 
 function fire(team:String, x:Float, y:Float, angle:Float, velocity:Float = 1.0)
@@ -38,9 +38,4 @@ function fire(team:String, x:Float, y:Float, angle:Float, velocity:Float = 1.0)
 	this.mainSprite.angle = fireAngle;
 	if (animation.exists("team_" + fireTeam))
 		animation.play("team_" + fireTeam);
-}
-
-function killProjectile()
-{
-	this.kill();
 }

@@ -1,4 +1,5 @@
 // Requires variables altEquipSoundID:String, heldSpriteID:String, heldSpriteMode:String, useDelay:Float, useSoundID:String
+var equipper:Entity;
 var equipperHands:AssetSprite;
 
 // The always-played equip sound
@@ -28,14 +29,15 @@ function onUpdate(elapsed:Float)
 
 function onInteracted(entity:Entity)
 {
-	entity.callAll("equip", [this]);
+	entity.getComponent("equipper").call("equip", [this]);
 }
 
 function onEquipped(entity:Entity)
 {
-	if (equipperHands != null)
+	if (equipper != null || entity == equipper)
 		return;
-	equipperHands = entity.callAll("getHands");
+	equipper = entity;
+	equipperHands = entity.getComponent("equipper").call("getHands");
 	equipperHands.loadFromID(heldSpriteID);
 
 	equipSound.play();
@@ -50,8 +52,9 @@ function getHeldSpriteMode():String
 
 function onUnequipped()
 {
-	if (equipperHands == null)
+	if (equipper == null)
 		return;
+	equipper = null;
 	equipperHands = null;
 
 	currentUseDelay = 0.0;
@@ -70,4 +73,6 @@ function onUse(elapsed:Float)
 		equipperHands.animation.play("use", true);
 	if (useSound != null)
 		useSound.play();
+
+	callAll("onUsed", [equipper]);
 }

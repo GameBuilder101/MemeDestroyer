@@ -29,17 +29,11 @@ class PlayState extends FlxState
 	/** For miscellaneous effect sprites. **/
 	var effects:FlxGroup;
 
-	/** Used primarily for bosses. **/
-	public var healthBar(default, null):FlxSpriteGroup;
+	/** Health indicator for player. **/
+	public var playerHealth(default, null):HealthNotches;
 
-	var healthBarBack:AssetSprite;
-	var healthBarFill:AssetSprite;
-	var healthBarLabel:FlxText;
-
-	/** Used primarily for player health. **/
-	public var healthNotches(default, null):FlxTypedSpriteGroup<FlxTypedSpriteGroup<AssetSprite>>;
-
-	var prevHealthNotchesHealth:Int = -1;
+	/** Health indicator for bosses. **/
+	public var bossHealth(default, null):HealthBar;
 
 	override function create()
 	{
@@ -52,31 +46,17 @@ class PlayState extends FlxState
 		effects = new FlxGroup();
 		add(effects);
 
-		// Add the health bar sprites
-		healthBar = new FlxSpriteGroup();
-		healthBar.screenCenter();
-		healthBar.y = FlxG.height;
-		add(healthBar);
+		// Add the health notches
+		playerHealth = new HealthNotches();
+		playerHealth.screenCenter();
+		playerHealth.y = -48.0;
+		add(playerHealth);
 
-		healthBarBack = new AssetSprite(0.0, 0.0, null, "ui/hud/health_bar_back");
-		healthBarBack.setPosition(-healthBarBack.width / 2.0, -healthBarBack.height);
-		healthBar.add(healthBarBack);
-
-		healthBarFill = new AssetSprite(0.0, 0.0, null, "ui/hud/health_bar_fill");
-		healthBarFill.setPosition(-healthBarFill.width / 2.0, -healthBarFill.height);
-		add(healthBarFill);
-		healthBar.add(healthBarFill);
-
-		healthBarLabel = new FlxText(0.0, 0.0, healthBar.width, "Meme Name");
-		healthBarLabel.setPosition(-healthBarLabel.width / 2.0, -healthBar.height - 16.0);
-		healthBarLabel.setFormat("Edit Undo BRK", 20, FlxColor.WHITE, CENTER, SHADOW, FlxColor.BLACK);
-		healthBar.add(healthBarLabel);
-
-		// Add the health notches sprites
-		healthNotches = new FlxTypedSpriteGroup<FlxTypedSpriteGroup<AssetSprite>>();
-		healthNotches.screenCenter();
-		healthNotches.y = 0.0;
-		add(healthNotches);
+		// Add the health bar
+		bossHealth = new HealthBar();
+		bossHealth.screenCenter();
+		bossHealth.y = FlxG.height;
+		add(bossHealth);
 
 		// Add the player
 		player = new Entity(0.0, 0.0, null, PLAYER_ENTITY_ID);
@@ -100,11 +80,6 @@ class PlayState extends FlxState
 			// Make further-down things appear on top (to immitate depth)
 			return FlxSort.byValues(order, entity1.y + entity1.mainSprite.height, entity2.y + entity2.mainSprite.height);
 		});
-
-		if (boss != null)
-			updateHealthBar(boss.callAll("getHealth"), boss.callAll("getMaxHealth"), boss.callAll("getHealthColor"));
-		if (player != null)
-			updateHealthNotches(player.callAll("getHealth"), player.callAll("getMaxHealth"), player.callAll("getHealthColor"));
 	}
 
 	/** Use this function to add any entities. **/
@@ -149,53 +124,5 @@ class PlayState extends FlxState
 	public function spawn(id:String, x:Float, y:Float)
 	{
 		addEntity(new Entity(x, y, null, id));
-	}
-
-	public function updateHealthBar(health:Float, maxHealth:Float, color:FlxColor = FlxColor.WHITE)
-	{
-		cast(healthBarFill.shader, FillShader).setProgress(health / maxHealth);
-		healthBarFill.color = color;
-		healthBarLabel.color = color;
-	}
-
-	public function updateHealthNotches(health:Float, maxHealth:Float, color:FlxColor = FlxColor.WHITE)
-	{
-		var healthInt:Int = Math.ceil(health);
-		var maxHealthInt:Int = Math.ceil(maxHealth);
-
-		var prevLength:Int = healthNotches.members.length;
-		// Make sure there are the correct number of health notches
-		while (healthNotches.members.length < maxHealthInt) // Add new health notches to match
-			createHealthNotch();
-		while (healthNotches.members.length > maxHealthInt) // Remove health notches to match
-			healthNotches.remove(healthNotches.members[0]);
-
-		// Update the positions
-		if (healthNotches.members.length != prevLength)
-		{
-			for (i in 0...healthNotches.length)
-				healthNotches.members[i].setPosition(healthNotches.x + (i - (healthNotches.members.length * 0.5)) * healthNotches.members[i].width,
-					healthNotches.y);
-		}
-
-		// Update the graphics
-		if (healthNotches.members.length != prevLength || healthInt != prevHealthNotchesHealth)
-		{
-			for (i in 0...healthNotches.length)
-			{
-				healthNotches.members[i].members[1].visible = i < healthInt;
-				healthNotches.members[i].members[1].color = color;
-			}
-		}
-
-		prevHealthNotchesHealth = healthInt;
-	}
-
-	function createHealthNotch()
-	{
-		var notch:FlxTypedSpriteGroup<AssetSprite> = new FlxTypedSpriteGroup<AssetSprite>();
-		notch.add(new AssetSprite(0.0, 0.0, null, "ui/hud/health_notch_back"));
-		notch.add(new AssetSprite(0.0, 0.0, null, "ui/hud/health_notch_fill"));
-		healthNotches.add(notch);
 	}
 }
