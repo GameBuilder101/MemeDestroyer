@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
@@ -13,12 +14,12 @@ class HealthNotches extends FlxSpriteGroup implements IIndicator
 	/* Used to track updates to the current value. */
 	var prevValue:Int = -1;
 
+	var indicatorColor:FlxColor = FlxColor.WHITE;
+
 	public function new(x:Float = 0.0, y:Float = 0.0)
 	{
 		super(x, y);
-
-		label = new FlxText(0.0, 0.0, width);
-		label.setPosition(-label.width / 2.0, -height - 16.0);
+		label = new FlxText(FlxG.width / 2.0, 0.0, FlxG.width);
 		label.setFormat("Edit Undo BRK", 20, FlxColor.WHITE, CENTER, SHADOW, FlxColor.BLACK);
 		add(label);
 	}
@@ -39,7 +40,7 @@ class HealthNotches extends FlxSpriteGroup implements IIndicator
 		if (notches.length != prevLength)
 		{
 			for (i in 0...notches.length)
-				notches[i].setPosition(x + (i - (notches.length * 0.5)) * notches[i].width, y);
+				notches[i].setPosition(x + (i - (notches.length * 0.5)) * notches[i].width, y + 20.0);
 		}
 
 		// Update the graphics
@@ -50,17 +51,9 @@ class HealthNotches extends FlxSpriteGroup implements IIndicator
 		}
 
 		prevValue = currentInt;
-	}
 
-	public function setLabel(label:String)
-	{
-		this.label.text = label;
-	}
-
-	public function setIndicatorColor(color:FlxColor)
-	{
-		for (notch in notches)
-			notch.members[1].color = color;
+		// Since new notches may have been added
+		updateIndicatorColor();
 	}
 
 	function createNotch()
@@ -76,5 +69,22 @@ class HealthNotches extends FlxSpriteGroup implements IIndicator
 	{
 		remove(notches[notches.length - 1], true);
 		notches.pop();
+	}
+
+	public function setLabel(label:String)
+	{
+		this.label.text = label;
+	}
+
+	public function setIndicatorColor(color:FlxColor)
+	{
+		indicatorColor = color;
+		updateIndicatorColor();
+	}
+
+	function updateIndicatorColor()
+	{
+		for (notch in notches)
+			notch.members[1].color = indicatorColor;
 	}
 }

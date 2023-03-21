@@ -4,12 +4,7 @@ import entity.Entity;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
-import flixel.group.FlxSpriteGroup;
-import flixel.text.FlxText;
-import flixel.util.FlxColor;
 import flixel.util.FlxSort;
-import gbc.graphics.AssetSprite;
-import shaders.FillShader;
 
 class PlayState extends FlxState
 {
@@ -48,21 +43,21 @@ class PlayState extends FlxState
 
 		// Add the health notches
 		playerHealth = new HealthNotches();
-		playerHealth.screenCenter();
-		playerHealth.y = -48.0;
+		playerHealth.setPosition(FlxG.width / 2.0, -20.0);
 		add(playerHealth);
 
 		// Add the health bar
 		bossHealth = new HealthBar();
 		bossHealth.screenCenter();
-		bossHealth.y = FlxG.height;
+		bossHealth.y = FlxG.height - bossHealth.height;
 		add(bossHealth);
 
 		// Add the player
 		player = new Entity(0.0, 0.0, null, PLAYER_ENTITY_ID);
 		addEntity(player);
 
-		addEntity(new Entity(100.0, 100.0, null, "items/nokia")); // Test
+		addEntity(new Entity(100.0, 100.0, null, "items/nokia"));
+		addEntity(new Entity(200.0, 200.0, null, "entities/test_meme"));
 	}
 
 	override function update(elapsed:Float)
@@ -121,8 +116,10 @@ class PlayState extends FlxState
 	}
 
 	/** Creates and adds an entity of the given ID. **/
-	public function spawn(id:String, x:Float, y:Float)
+	public function spawn(id:String, x:Float, y:Float):Entity
 	{
-		addEntity(new Entity(x, y, null, id));
+		var entity:Entity = new Entity(x, y, null, id);
+		addEntity(entity);
+		return entity;
 	}
 }

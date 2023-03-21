@@ -2,12 +2,17 @@
     "name": "Nokia (Projectile)",
     "tags": [],
     "components": [
-        "projectiles/_shared/projectile"
+        "projectiles/_shared/projectile",
+        "entities/_shared/damager"
     ],
     "variables": [
         {
             "name": "fireSpeed",
             "value": 3.5
+        },
+        {
+            "name": "contactDamage",
+            "value": -3.0
         }
     ],
     "spriteID": "projectiles/nokia/sprites/main",

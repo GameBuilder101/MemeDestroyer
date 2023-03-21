@@ -3,7 +3,7 @@ function onUsed(equipper:Entity)
 {
 	equipper.getComponent("shooter").call("fire", [
 		projectileID,
-		FlxAngle.angleBetweenPoint(this, FlxG.mouse.getPosition(), true),
+		FlxAngle.angleBetweenPoint(equipper, FlxG.mouse.getPosition(), true),
 		1.0
 	]);
 }

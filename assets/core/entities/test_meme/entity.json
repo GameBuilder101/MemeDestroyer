@@ -1,0 +1,37 @@
+{
+    "name": "Test Meme",
+    "tags": [
+        "boss"
+    ],
+    "components": [
+        "entities/_shared/health",
+        "entities/_shared/damager"
+    ],
+    "variables": [
+        {
+            "name": "initialMaxHealth",
+            "value": 100.0
+        },
+        {
+            "name": "initialInvFrames",
+            "value": 0.25
+        },
+        {
+            "name": "roundHealth",
+            "value": false
+        },
+        {
+            "name": "healthColor",
+            "value": "#ff00ff"
+        },
+        {
+            "name": "healthType",
+            "value": "boss"
+        },
+        {
+            "name": "contactDamage",
+            "value": -1.0
+        }
+    ],
+    "spriteID": "entities/test_meme/sprites/main"
+}
