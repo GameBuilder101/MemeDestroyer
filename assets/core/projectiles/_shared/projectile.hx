@@ -33,6 +33,8 @@ function fire(team:String, x:Float, y:Float, angle:Float, velocity:Float = 1.0)
 	fireAngle = angle;
 	fireVelocity = velocity;
 
+	setAll("team", fireTeam);
+
 	this.revive();
 	this.setPosition(fireX, fireY);
 	this.mainSprite.angle = fireAngle;

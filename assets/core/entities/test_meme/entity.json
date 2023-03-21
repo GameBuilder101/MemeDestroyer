@@ -29,6 +29,10 @@
             "value": "boss"
         },
         {
+            "name": "team",
+            "value": "hostile"
+        },
+        {
             "name": "contactDamage",
             "value": -1.0
         }

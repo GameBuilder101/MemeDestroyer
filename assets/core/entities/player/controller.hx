@@ -10,12 +10,14 @@ var dodgeSound:AssetSound;
 var interactable:GameScript;
 var oldInteractable:GameScript;
 
-// The movement component
+// Component caches
 var movement:GameScript;
+var health:GameScript;
 
 function onLoaded()
 {
 	movement = getComponent("movement");
+	health = getComponent("health");
 
 	dodgeParticle = new AssetSprite(0.0, 0.0, null, "entities/player/sprites/dodge_particle");
 	dodgeParticle.visible = false;
@@ -94,6 +96,8 @@ function dodge(direction:Point)
 	currentDodgeTime = dodgeDuration;
 	currentDodgeCool = 0.0;
 
+	health.call("setInvulnerable", [true]);
+
 	if (animation.exists("dodge"))
 		animation.play("dodge", true);
 	dodgeParticle.setPosition(this.x, this.y);
@@ -108,6 +112,8 @@ function finishDodge()
 {
 	currentDodgeTime = 0.0;
 	currentDodgeCool = dodgeCool;
+
+	health.call("setInvulnerable", [false]);
 }
 
 function isDodging():Bool

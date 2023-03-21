@@ -1,4 +1,4 @@
-// Requires variables contactDamage:Float
+// Requires variables contactDamage:Float, team:String
 function onLoaded()
 {
 	this.tags.push("damager");
