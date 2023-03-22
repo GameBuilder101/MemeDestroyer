@@ -1,4 +1,4 @@
-// Requires variables initialMaxHealth:Float, initialInvFrames:Float, roundHealth:Bool, healthColor:String, healthType:String, team:String
+// Requires variables initialMaxHealth:Float, initialInvFrames:Float, roundHealth:Bool, healthColor:String, healthType:String, team:String, hurtSoundID:String, dieSoundID:String
 
 var health:Float;
 var maxHealth:Float;
@@ -9,6 +9,9 @@ var maxInvFrames:Float;
 
 // While invulnerable, this health cannot be damaged (separate from invincibility frames)
 var invulnerable:Bool;
+var healSound:AssetSound;
+var hurtSound:AssetSound;
+var dieSound:AssetSound;
 
 function onLoaded()
 {
@@ -18,19 +21,20 @@ function onLoaded()
 	maxInvFrames = initialInvFrames;
 	invFrames = 0.0;
 
-	if (healthType != null)
+	switch (healthType)
 	{
-		switch (healthType)
-		{
-			case "player":
-				state.playerHealth.setLabel(this.name);
-				state.playerHealth.setIndicatorColor(colorString(healthColor));
-			case "boss":
-				state.bossHealth.setLabel(this.name);
-				state.bossHealth.setIndicatorColor(colorString(healthColor));
-			default:
-		}
+		case "player":
+			state.playerHealth.setLabel(this.name);
+			state.playerHealth.setIndicatorColor(colorString(healthColor));
+		case "boss":
+			state.bossHealth.setLabel(this.name);
+			state.bossHealth.setIndicatorColor(colorString(healthColor));
+		default:
 	}
+
+	healSound = AssetSoundRegistry.getAsset("entities/_shared/sounds/heal");
+	hurtSound = AssetSoundRegistry.getAsset(hurtSoundID);
+	dieSound = AssetSoundRegistry.getAsset(dieSoundID);
 }
 
 function onUpdate(elapsed:Float)
@@ -65,6 +69,8 @@ function getHealth():Float
 
 function setHealth(value:Float)
 {
+	var wasAlive:Bool = getIsAlive();
+
 	if (roundHealth)
 		health = Math.round(value);
 	else
@@ -73,6 +79,13 @@ function setHealth(value:Float)
 		health = 0.0;
 	else if (health > maxHealth)
 		health = maxHealth;
+
+	if (!getIsAlive() && wasAlive) // Death triggering
+	{
+		if (dieSound != null)
+			dieSound.play();
+		callAll("onDie", [value]);
+	}
 }
 
 function getMaxHealth():Float
@@ -87,7 +100,7 @@ function setMaxHealth(value:Float)
 	else
 		maxHealth = value;
 	if (health > maxHealth)
-		health = maxHealth;
+		setHealth(maxHealth);
 }
 
 function getIsAlive()
@@ -105,11 +118,15 @@ function damage(value:Float)
 	{
 		invFrames = maxInvFrames;
 		FlxTween.color(this.mainSprite, 0.4, colorString("#ff0000"), colorString("#ffffff"));
+		if (hurtSound != null)
+			hurtSound.play();
 		callAll("onHurt", [value]);
 	}
 	else
 	{
 		FlxTween.color(this.mainSprite, 0.4, colorString("#00ff00"), colorString("#ffffff"));
+		if (healSound != null)
+			healSound.play();
 		callAll("onHealed", [value]);
 	}
 	setHealth(health + value);

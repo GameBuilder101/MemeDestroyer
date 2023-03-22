@@ -21,6 +21,16 @@
             ]
         },
         {
+            "name": "die",
+            "atlasPrefix": "die",
+            "frameRate": 8,
+            "looped": false,
+            "offset": [
+                16.0,
+                16.0
+            ]
+        },
+        {
             "name": "dodge",
             "atlasPrefix": "dodge",
             "frameRate": 16,

@@ -48,6 +48,14 @@
             "value": "friendly"
         },
         {
+            "name": "hurtSoundID",
+            "value": "entities/player/sounds/hurt"
+        },
+        {
+            "name": "dieSoundID",
+            "value": "entities/player/sounds/die"
+        },
+        {
             "name": "dodgeSpeed",
             "value": 2000.0
         },

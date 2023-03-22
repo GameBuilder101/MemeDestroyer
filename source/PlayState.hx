@@ -50,13 +50,13 @@ class PlayState extends FlxState
 
 		// Add the health notches
 		playerHealth = new HealthNotches();
-		playerHealth.camera = uiCamera;
+		playerHealth.cameras = [uiCamera, worldCamera];
 		playerHealth.setPosition(FlxG.width / 2.0, -20.0);
 		add(playerHealth);
 
 		// Add the health bar
 		bossHealth = new HealthBar();
-		bossHealth.camera = uiCamera;
+		bossHealth.cameras = [uiCamera, worldCamera];
 		bossHealth.screenCenter();
 		bossHealth.y = FlxG.height - bossHealth.height;
 		add(bossHealth);

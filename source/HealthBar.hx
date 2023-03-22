@@ -21,13 +21,13 @@ class HealthBar extends FlxSpriteGroup implements IIndicator
 	{
 		super(x, y);
 
-		back = new AssetSprite(0.0, 20.0, null, "ui/hud/health_bar_back");
+		back = new AssetSprite(0.0, 20.0, null, "ui/hud/sprites/health_bar_back");
 		add(back);
 
-		fill = new AssetSprite(0.0, 20.0, null, "ui/hud/health_bar_fill");
+		fill = new AssetSprite(0.0, 20.0, null, "ui/hud/sprites/health_bar_fill");
 		add(fill);
 
-		cap = new AssetSprite(0.0, 20.0, null, "ui/hud/health_bar_cap");
+		cap = new AssetSprite(0.0, 20.0, null, "ui/hud/sprites/health_bar_cap");
 		add(cap);
 
 		label = new FlxText(0.0, 0.0, width);
@@ -48,7 +48,7 @@ class HealthBar extends FlxSpriteGroup implements IIndicator
 		// Move the cap to match the fill
 		cap.x = fill.x + fill.width * (current / max);
 		if (current > prevCurrent)
-			cap.animation.play("heal")
+			cap.animation.play("heal");
 		else if (current < prevCurrent)
 			cap.animation.play("hurt");
 

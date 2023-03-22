@@ -28,6 +28,13 @@ function onLoaded()
 
 function onUpdate(elapsed:Float)
 {
+	if (!health.call("getIsAlive"))
+	{
+		if (animation.finished)
+			state.removeEntity(this);
+		return;
+	}
+
 	// Dodging animation
 	if (isDodging())
 	{
@@ -81,11 +88,6 @@ function onUpdate(elapsed:Float)
 		interactable.call("interact", [this]);
 }
 
-function getLookAngle():Float
-{
-	return FlxAngle.angleBetweenPoint(this, FlxG.mouse.getPosition(), true);
-}
-
 // Dodges towards the given direction
 function dodge(direction:Point)
 {
@@ -110,6 +112,8 @@ function dodge(direction:Point)
 // Finishes a dodge
 function finishDodge()
 {
+	if (!isDodging())
+		return;
 	currentDodgeTime = 0.0;
 	currentDodgeCool = dodgeCool;
 
@@ -129,7 +133,14 @@ function onOverlap(tag:String, entity:Entity)
 	interactable.call("enterInteractRange", [this]);
 }
 
-function onHurt(vaue:Float)
+function onHurt(value:Float)
 {
-	state.worldCamera.shake(0.5, 0.1);
+	state.worldCamera.shake(0.01, 0.1);
+}
+
+function onDie(value:Float)
+{
+	finishDodge();
+	animation.play("die", true);
+	state.worldCamera.shake(0.01, 0.2);
 }

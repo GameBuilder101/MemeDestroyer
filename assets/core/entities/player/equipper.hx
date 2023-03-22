@@ -1,5 +1,3 @@
-// Requires variables handsSpriteID:String
-
 var equipped:Entity;
 
 // The currently-equipped item component

@@ -6,6 +6,8 @@ import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import gbc.graphics.AssetSprite;
+import gbc.sound.AssetSound;
+import gbc.sound.AssetSoundRegistry;
 
 class HealthNotches extends FlxSpriteGroup implements IIndicator
 {
@@ -18,12 +20,19 @@ class HealthNotches extends FlxSpriteGroup implements IIndicator
 
 	var indicatorColor:FlxColor = FlxColor.WHITE;
 
+	var healSound:AssetSound;
+	var hurtSound:AssetSound;
+
 	public function new(x:Float = 0.0, y:Float = 0.0)
 	{
 		super(x, y);
+
 		label = new FlxText(FlxG.width / 2.0, 0.0, FlxG.width);
 		label.setFormat("Edit Undo BRK", 20, FlxColor.WHITE, CENTER, SHADOW, FlxColor.BLACK);
 		add(label);
+
+		healSound = AssetSoundRegistry.getAsset("ui/hud/sounds/health_notch_heal");
+		hurtSound = AssetSoundRegistry.getAsset("ui/hud/sounds/health_notch_hurt");
 	}
 
 	override function update(elapsed:Float)
@@ -77,6 +86,10 @@ class HealthNotches extends FlxSpriteGroup implements IIndicator
 			}
 		}
 
+		if (currentInt > prevCurrent && healSound != null)
+			healSound.play();
+		else if (currentInt < prevCurrent && hurtSound != null)
+			hurtSound.play();
 		prevCurrent = currentInt;
 
 		// Since new notches may have been added
@@ -86,8 +99,8 @@ class HealthNotches extends FlxSpriteGroup implements IIndicator
 	function createNotch()
 	{
 		var notch:FlxSpriteGroup = new FlxSpriteGroup();
-		notch.add(new AssetSprite(0.0, 0.0, null, "ui/hud/health_notch_back"));
-		notch.add(new AssetSprite(0.0, 0.0, null, "ui/hud/health_notch_fill"));
+		notch.add(new AssetSprite(0.0, 0.0, null, "ui/hud/sprites/health_notch_back"));
+		notch.add(new AssetSprite(0.0, 0.0, null, "ui/hud/sprites/health_notch_fill"));
 		add(notch);
 		notches.push(notch);
 	}
