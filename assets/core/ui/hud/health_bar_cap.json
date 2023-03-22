@@ -1,0 +1,23 @@
+{
+    "animations": [
+        {
+            "name": "idle",
+            "atlasPrefix": "idle",
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "heal",
+            "atlasPrefix": "idle",
+            "frameRate": 16,
+            "looped": false
+        },
+        {
+            "name": "hurt",
+            "atlasPrefix": "hurt",
+            "frameRate": 16,
+            "looped": false
+        }
+    ],
+    "defaultAnim": "idle"
+}

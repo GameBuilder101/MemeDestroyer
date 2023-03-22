@@ -1,13 +1,18 @@
 package;
 
 import entity.Entity;
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 
 class PlayState extends FlxState
 {
+	public var worldCamera(default, null):FlxCamera;
+	public var uiCamera(default, null):FlxCamera;
+
 	var entities:FlxTypedGroup<Entity>;
 
 	/** A map of tags which lists what entities are associated with each
@@ -34,6 +39,8 @@ class PlayState extends FlxState
 	{
 		super.create();
 		FlxG.worldBounds.set(0.0, 0.0, FlxG.width, FlxG.height);
+		worldCamera = FlxG.camera;
+		uiCamera = new FlxCamera();
 
 		entities = new FlxTypedGroup<Entity>();
 		add(entities);
@@ -43,11 +50,13 @@ class PlayState extends FlxState
 
 		// Add the health notches
 		playerHealth = new HealthNotches();
+		playerHealth.camera = uiCamera;
 		playerHealth.setPosition(FlxG.width / 2.0, -20.0);
 		add(playerHealth);
 
 		// Add the health bar
 		bossHealth = new HealthBar();
+		bossHealth.camera = uiCamera;
 		bossHealth.screenCenter();
 		bossHealth.y = FlxG.height - bossHealth.height;
 		add(bossHealth);

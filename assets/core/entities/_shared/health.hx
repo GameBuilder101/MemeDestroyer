@@ -100,13 +100,18 @@ function damage(value:Float)
 {
 	if (value == 0.0 || (value < 0.0 && (invFrames > 0.0 || invulnerable)))
 		return;
+	FlxTween.cancelTweensOf(this.mainSprite);
 	if (value < 0.0)
 	{
 		invFrames = maxInvFrames;
+		FlxTween.color(this.mainSprite, 0.4, colorString("#ff0000"), colorString("#ffffff"));
 		callAll("onHurt", [value]);
 	}
 	else
+	{
+		FlxTween.color(this.mainSprite, 0.4, colorString("#00ff00"), colorString("#ffffff"));
 		callAll("onHealed", [value]);
+	}
 	setHealth(health + value);
 }
 

@@ -128,3 +128,8 @@ function onOverlap(tag:String, entity:Entity)
 	interactable = entity.getComponent("interactable");
 	interactable.call("enterInteractRange", [this]);
 }
+
+function onHurt(vaue:Float)
+{
+	state.worldCamera.shake(0.5, 0.1);
+}

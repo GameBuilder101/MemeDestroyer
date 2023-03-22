@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
@@ -8,11 +9,12 @@ import gbc.graphics.AssetSprite;
 
 class HealthNotches extends FlxSpriteGroup implements IIndicator
 {
-	var label:FlxText;
 	var notches:Array<FlxSpriteGroup> = new Array<FlxSpriteGroup>();
 
-	/* Used to track updates to the current value. */
-	var prevValue:Int = -1;
+	var label:FlxText;
+
+	/* Used to track updates to the values. */
+	var prevCurrent:Int = -1;
 
 	var indicatorColor:FlxColor = FlxColor.WHITE;
 
@@ -22,6 +24,23 @@ class HealthNotches extends FlxSpriteGroup implements IIndicator
 		label = new FlxText(FlxG.width / 2.0, 0.0, FlxG.width);
 		label.setFormat("Edit Undo BRK", 20, FlxColor.WHITE, CENTER, SHADOW, FlxColor.BLACK);
 		add(label);
+	}
+
+	override function update(elapsed:Float)
+	{
+		super.update(elapsed);
+		// If finished a heal/hurt animation, the notches should play an idle animation
+		var fill:FlxSprite;
+		for (notch in notches)
+		{
+			fill = notch.members[1];
+			if (!fill.animation.finished)
+				continue;
+			if (fill.animation.name == "hurt")
+				fill.visible = false;
+			else
+				fill.animation.play("idle");
+		}
 	}
 
 	public function setValues(current:Float, max:Float)
@@ -43,14 +62,22 @@ class HealthNotches extends FlxSpriteGroup implements IIndicator
 				notches[i].setPosition(x + (i - (notches.length * 0.5)) * notches[i].width, y + 20.0);
 		}
 
-		// Update the graphics
-		if (notches.length != prevLength || currentInt != prevValue)
+		// Update the visuals and play animations
+		for (i in 0...notches.length)
 		{
-			for (i in 0...notches.length)
-				notches[i].members[1].visible = i < currentInt;
+			if (i > prevCurrent - 1 && i < currentInt) // If in heal range
+			{
+				notches[i].visible = true;
+				notches[i].members[1].animation.play("heal", true);
+			}
+			else if (i < prevCurrent && i > currentInt - 1) // If in hurt range
+			{
+				notches[i].visible = true;
+				notches[i].members[1].animation.play("hurt", true);
+			}
 		}
 
-		prevValue = currentInt;
+		prevCurrent = currentInt;
 
 		// Since new notches may have been added
 		updateIndicatorColor();
