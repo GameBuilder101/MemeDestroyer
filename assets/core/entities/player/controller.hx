@@ -26,6 +26,11 @@ function onLoaded()
 	dodgeSound = AssetSoundRegistry.getAsset("entities/player/sounds/dodge");
 }
 
+function onRemovedFromPlay()
+{
+	state.effects.remove(dodgeParticle);
+}
+
 function onUpdate(elapsed:Float)
 {
 	if (!health.call("getIsAlive"))
@@ -36,7 +41,7 @@ function onUpdate(elapsed:Float)
 	}
 
 	// Dodging animation
-	if (isDodging())
+	if (getIsDodging())
 	{
 		var scale:Float = dodgeSpeed * elapsed * (currentDodgeTime / dodgeDuration);
 		this.x += currentDodgeDirection.point.x * scale;
@@ -73,7 +78,7 @@ function onUpdate(elapsed:Float)
 	// Dodging input
 	if (Controls.dodge.check() && currentDodgeCool <= 0.0)
 		dodge(direction);
-	else if (!isDodging())
+	else if (!getIsDodging())
 		this.flipX = this.x > FlxG.mouse.x; // Face the cursor when not dodging
 
 	// Interactable range detection
@@ -112,15 +117,13 @@ function dodge(direction:Point)
 // Finishes a dodge
 function finishDodge()
 {
-	if (!isDodging())
-		return;
 	currentDodgeTime = 0.0;
 	currentDodgeCool = dodgeCool;
 
 	health.call("setInvulnerable", [false]);
 }
 
-function isDodging():Bool
+function getIsDodging():Bool
 {
 	return currentDodgeTime > 0.0;
 }
@@ -142,5 +145,5 @@ function onDie(value:Float)
 {
 	finishDodge();
 	animation.play("die", true);
-	state.worldCamera.shake(0.01, 0.2);
+	state.worldCamera.shake(0.015, 1.0);
 }

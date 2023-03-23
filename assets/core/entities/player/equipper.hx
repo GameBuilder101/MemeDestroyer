@@ -6,14 +6,26 @@ var equippedItem:GameScript;
 // The default hands sprite
 var hands:AssetSprite;
 
+// Component caches
+var health:GameScript;
+
 function onLoaded()
 {
+	health = getComponent("health");
+
 	hands = new AssetSprite(this.x, this.y, null, "entities/player/sprites/hands");
 	this.add(hands);
 }
 
 function onUpdate(elapsed:Float)
 {
+	if (hands.animation.finished && hands.animation.exists("idle"))
+		hands.animation.play("idle");
+
+	// Don't allow item usage when dead
+	if (health != null && !health.call("getIsAlive"))
+		return;
+
 	if (equippedItem != null)
 	{
 		/* Hands sprite animation modes/angles must be done here so that flipping is
@@ -32,9 +44,6 @@ function onUpdate(elapsed:Float)
 		if (Controls.checkFire())
 			attemptUse(elapsed);
 	}
-
-	if (hands.animation.finished && hands.animation.exists("idle"))
-		hands.animation.play("idle");
 }
 
 function equip(entity:Entity)

@@ -33,6 +33,14 @@
             "value": "hostile"
         },
         {
+            "name": "hurtSoundID",
+            "value": ""
+        },
+        {
+            "name": "dieSoundID",
+            "value": ""
+        },
+        {
             "name": "contactDamage",
             "value": -1.0
         }

@@ -98,6 +98,8 @@ class PlayState extends FlxState
 				entitiesByTag.set(tag, new Array<Entity>());
 			entitiesByTag[tag].push(entity);
 		}
+
+		entity.onAddedToPlay();
 	}
 
 	/** Use this function before destroying an entity to remove it. **/
@@ -106,6 +108,8 @@ class PlayState extends FlxState
 		entities.remove(entity, true);
 		for (tag in entity.tags)
 			entitiesByTag[tag].remove(entity);
+
+		entity.onRemovedFromPlay();
 	}
 
 	/** Returns the first-added entity with tag. **/

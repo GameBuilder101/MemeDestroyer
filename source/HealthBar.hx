@@ -3,13 +3,14 @@ package;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import flixel_fixed.ui.FlxBar;
 import gbc.graphics.AssetSprite;
-import shaders.FillShader;
+import gbc.graphics.AssetSpriteRegistry;
 
 class HealthBar extends FlxSpriteGroup implements IIndicator
 {
 	var back:AssetSprite;
-	var fill:AssetSprite;
+	var fill:FlxBar;
 	var cap:AssetSprite;
 
 	var label:FlxText;
@@ -24,7 +25,8 @@ class HealthBar extends FlxSpriteGroup implements IIndicator
 		back = new AssetSprite(0.0, 20.0, null, "ui/hud/sprites/health_bar_back");
 		add(back);
 
-		fill = new AssetSprite(0.0, 20.0, null, "ui/hud/sprites/health_bar_fill");
+		fill = new FlxBar(0.0, 20.0, LEFT_TO_RIGHT, cast(back.width, Int), cast(back.height, Int));
+		fill.createImageBar(null, AssetSpriteRegistry.getAsset("ui/hud/sprites/health_bar_fill").graphic, FlxColor.TRANSPARENT);
 		add(fill);
 
 		cap = new AssetSprite(0.0, 20.0, null, "ui/hud/sprites/health_bar_cap");
@@ -44,7 +46,7 @@ class HealthBar extends FlxSpriteGroup implements IIndicator
 
 	public function setValues(current:Float, max:Float)
 	{
-		cast(fill.shader, FillShader).setProgress(current / max);
+		fill.percent = current / max * 100.0;
 		// Move the cap to match the fill
 		cap.x = fill.x + fill.width * (current / max);
 		if (current > prevCurrent)

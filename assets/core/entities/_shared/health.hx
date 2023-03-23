@@ -8,7 +8,7 @@ var invFrames:Float;
 var maxInvFrames:Float;
 
 // While invulnerable, this health cannot be damaged (separate from invincibility frames)
-var invulnerable:Bool;
+var invulnerable:Bool = false;
 var healSound:AssetSound;
 var hurtSound:AssetSound;
 var dieSound:AssetSound;

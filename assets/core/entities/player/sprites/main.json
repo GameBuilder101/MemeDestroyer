@@ -23,7 +23,7 @@
         {
             "name": "die",
             "atlasPrefix": "die",
-            "frameRate": 8,
+            "frameRate": 4,
             "looped": false,
             "offset": [
                 16.0,

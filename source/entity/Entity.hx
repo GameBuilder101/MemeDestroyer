@@ -76,23 +76,23 @@ class Entity extends FlxSpriteGroup
 
 		sortingPriority = data.sortingPriority;
 
-		components.setAll("this", this);
-		components.setAll("state", cast(FlxG.state, PlayState));
-		components.setAll("overlap", overlap);
+		setAll("this", this);
+		setAll("state", cast(FlxG.state, PlayState));
+		setAll("overlap", overlap);
 		if (mainSprite != null)
-			components.setAll("animation", mainSprite.animation);
+			setAll("animation", mainSprite.animation);
 		else
-			components.setAll("animation", null);
+			setAll("animation", null);
 
 		if (data.variables != null)
 		{
 			// The variables array is used to set variables in components
 			for (variable in data.variables)
-				components.setAll(variable.name, variable.value);
+				setAll(variable.name, variable.value);
 		}
 
 		components.startAll();
-		components.callAll("onLoaded");
+		callAll("onLoaded");
 	}
 
 	public function loadFromID(id:String)
@@ -104,7 +104,7 @@ class Entity extends FlxSpriteGroup
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		components.callAll("onUpdate", [elapsed]);
+		callAll("onUpdate", [elapsed]);
 	}
 
 	public function getComponent(id:String):Script
@@ -122,6 +122,18 @@ class Entity extends FlxSpriteGroup
 		return components.callAll(name, args);
 	}
 
+	/** Called when added to PlayState. **/
+	public function onAddedToPlay()
+	{
+		callAll("onAddedToPlay");
+	}
+
+	/** Called when removed from PlayState. **/
+	public function onRemovedFromPlay()
+	{
+		callAll("onRemovedFromPlay");
+	}
+
 	/** Check for an overlap of this entity with any entities of the given tag. **/
 	public function overlap(tag:String)
 	{
@@ -134,7 +146,7 @@ class Entity extends FlxSpriteGroup
 				continue;
 			FlxG.overlap(mainSprite, entity.mainSprite, function(objectOrGroup1:Dynamic, objectOrGroup2:Dynamic)
 			{
-				components.callAll("onOverlap", [tag, entity]);
+				callAll("onOverlap", [tag, entity]);
 			});
 		}
 	}
