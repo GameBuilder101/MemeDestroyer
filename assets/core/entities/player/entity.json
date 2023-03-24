@@ -56,6 +56,10 @@
             "value": "entities/player/sounds/die"
         },
         {
+            "name": "riposteDuration",
+            "value": 0.5
+        },
+        {
             "name": "dodgeSpeed",
             "value": 2000.0
         },

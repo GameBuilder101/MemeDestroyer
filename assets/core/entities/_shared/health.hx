@@ -147,6 +147,11 @@ function setInvulnerable(value:Bool)
 	invulnerable = value;
 }
 
+function getInvulnerable():Bool
+{
+	return invulnerable;
+}
+
 function onOverlap(tag:String, entity:Entity)
 {
 	if (tag != "damager")

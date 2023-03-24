@@ -1,3 +1,5 @@
+// Requires variables riposteDuration:Float
+
 var equipped:Entity;
 
 // The currently-equipped item component
@@ -5,6 +7,12 @@ var equippedItem:GameScript;
 
 // The default hands sprite
 var hands:AssetSprite;
+
+// Used for riposte frames
+var currentRiposteTime:Float = 0.0;
+var riposteParticle:AssetSprite;
+var riposteTriggerSound:AssetSound;
+var riposteUseSound:AssetSound;
 
 // Component caches
 var health:GameScript;
@@ -15,12 +23,29 @@ function onLoaded()
 
 	hands = new AssetSprite(this.x, this.y, null, "entities/player/sprites/hands");
 	this.add(hands);
+
+	riposteParticle = new AssetSprite(0.0, 0.0, null, "entities/player/sprites/riposte_particle");
+	riposteParticle.visible = false;
+	this.add(riposteParticle);
+
+	riposteTriggerSound = AssetSoundRegistry.getAsset("entities/player/sounds/riposte_trigger");
+	riposteUseSound = AssetSoundRegistry.getAsset("entities/player/sounds/riposte_use");
 }
 
 function onUpdate(elapsed:Float)
 {
 	if (hands.animation.finished && hands.animation.exists("idle"))
 		hands.animation.play("idle");
+
+	// Riposte functionality
+	if (currentRiposteTime > 0.0)
+	{
+		currentRiposteTime -= elapsed;
+		if (currentRiposteTime < 0.0)
+			currentRiposteTime = 0.0;
+	}
+
+	riposteParticle.visible = !riposteParticle.animation.finished;
 
 	// Don't allow item usage when dead
 	if (health != null && !health.call("getIsAlive"))
@@ -81,10 +106,36 @@ function attemptUse(elapsed:Float)
 {
 	if (!equippedItem.call("getCanUse")) // Return if can't be used
 		return;
-	equippedItem.call("onUse", [elapsed]);
+	equippedItem.call("onUse", [elapsed, currentRiposteTime > 0.0]);
+	if (currentRiposteTime > 0.0)
+	{
+		currentRiposteTime = 0.0;
+		riposteUseSound.play();
+	}
 }
 
 function getHands():AssetSprite
 {
 	return hands;
+}
+
+// Enables the frames where a riposte can be triggered
+function triggerRiposte()
+{
+	currentRiposteTime = riposteDuration;
+
+	riposteParticle.animation.play("spawn", true);
+	riposteParticle.visible = true;
+
+	riposteTriggerSound.play();
+}
+
+function onOverlap(tag:String, entity:Entity)
+{
+	if (tag != "damager"
+		|| !health.call("getInvulnerable")
+		|| currentRiposteTime > 0.0
+		|| entity.getComponent("damager").get("team") == team)
+		return;
+	triggerRiposte(); // Trigger a riposte when invulnerable and touching a damager
 }

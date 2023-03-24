@@ -65,7 +65,7 @@ function getCanUse():Bool
 	return currentUseDelay <= 0.0;
 }
 
-function onUse(elapsed:Float)
+function onUse(elapsed:Float, riposte:Bool)
 {
 	currentUseDelay = useDelay;
 
@@ -74,5 +74,5 @@ function onUse(elapsed:Float)
 	if (useSound != null)
 		useSound.play();
 
-	callAll("onUsed", [equipper]);
+	callAll("onUsed", [equipper, riposte]);
 }

@@ -8,7 +8,7 @@ function onLoaded()
 }
 
 // Fires a projectile by creating or re-using an entity with the given ID
-function fire(id:String, angle:Float, velocity:Float = 1.0)
+function fire(id:String, angle:Float, riposte:Bool = false)
 {
 	var target:Entity = null;
 	for (projectile in projectiles)
@@ -29,5 +29,5 @@ function fire(id:String, angle:Float, velocity:Float = 1.0)
 	// If the entity were removed at some point, this makes sure it gets added back
 	state.addEntity(target);
 
-	target.getComponent("projectile").call("fire", [team, this.x, this.y, angle, velocity]);
+	target.getComponent("projectile").call("fire", [team, this.x, this.y, angle, riposte]);
 }

@@ -2,13 +2,25 @@
     "animations": [
         {
             "name": "team_friendly",
-            "atlasPrefix": "team_friendly",
+            "atlasPrefix": "team_friendly_normal",
             "frameRate": 8,
             "looped": true
         },
         {
             "name": "team_hostile",
-            "atlasPrefix": "team_hostile",
+            "atlasPrefix": "team_hostile_normal",
+            "frameRate": 8,
+            "looped": true
+        },
+        {
+            "name": "team_friendly_riposte",
+            "atlasPrefix": "team_friendly_riposte",
+            "frameRate": 8,
+            "looped": true
+        },
+        {
+            "name": "team_hostile_riposte",
+            "atlasPrefix": "team_hostile_riposte",
             "frameRate": 8,
             "looped": true
         }

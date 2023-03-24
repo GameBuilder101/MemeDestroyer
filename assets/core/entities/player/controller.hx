@@ -44,7 +44,7 @@ function onUpdate(elapsed:Float)
 		return;
 	}
 
-	// Dodging animation
+	// Dodging functionality
 	if (getIsDodging())
 	{
 		var scale:Float = dodgeSpeed * elapsed * (currentDodgeTime / dodgeDuration);

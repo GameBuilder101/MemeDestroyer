@@ -11,8 +11,12 @@
             "value": 3.5
         },
         {
-            "name": "contactDamage",
+            "name": "damage",
             "value": -3.0
+        },
+        {
+            "name": "riposteMultiplier",
+            "value": 2.0
         }
     ],
     "spriteID": "projectiles/nokia/sprites/main",
