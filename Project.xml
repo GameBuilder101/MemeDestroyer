@@ -14,7 +14,7 @@
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
-	<window width="640" height="384" fps="60" background="#000000" hardware="false" vsync="false"
+	<window width="640" height="384" fps="60" background="#000000" hardware="true" vsync="false"
 		orientation="landscape" fullscreen="false" resizable="true" />
 
 	<!-- _____________________________ Path Settings ____________________________ -->

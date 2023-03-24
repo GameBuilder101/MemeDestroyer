@@ -33,10 +33,14 @@ function onRemovedFromPlay()
 
 function onUpdate(elapsed:Float)
 {
+	// If dying
 	if (!health.call("getIsAlive"))
 	{
-		if (animation.finished)
+		if (animation.finished) // Post-animation death
+		{
 			state.removeEntity(this);
+			state.spawn("entities/death_grave", this.x, this.y);
+		}
 		return;
 	}
 

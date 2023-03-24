@@ -1,0 +1,14 @@
+{
+    "name": "Grave",
+    "tags": [],
+    "components": [
+        "entities/death_grave/animation"
+    ],
+    "variables": [
+        {
+            "name": "fallSpeed",
+            "value": 400.0
+        }
+    ],
+    "spriteID": "entities/death_grave/sprites/main"
+}

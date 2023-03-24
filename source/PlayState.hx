@@ -5,7 +5,6 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
-import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 
 class PlayState extends FlxState
