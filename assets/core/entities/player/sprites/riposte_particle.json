@@ -1,9 +1,19 @@
 {
     "animations": [
         {
-            "name": "spawn",
-            "atlasPrefix": "spawn",
+            "name": "trigger",
+            "atlasPrefix": "trigger",
             "frameRate": 32,
+            "looped": false,
+            "offset": [
+                16.0,
+                16.0
+            ]
+        },
+        {
+            "name": "use",
+            "atlasPrefix": "use",
+            "frameRate": 16,
             "looped": false,
             "offset": [
                 16.0,

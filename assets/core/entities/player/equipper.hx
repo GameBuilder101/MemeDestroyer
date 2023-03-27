@@ -110,6 +110,8 @@ function attemptUse(elapsed:Float)
 	if (currentRiposteTime > 0.0)
 	{
 		currentRiposteTime = 0.0;
+		riposteParticle.animation.play("use", true);
+		riposteParticle.visible = true;
 		riposteUseSound.play();
 	}
 }
@@ -123,10 +125,8 @@ function getHands():AssetSprite
 function triggerRiposte()
 {
 	currentRiposteTime = riposteDuration;
-
-	riposteParticle.animation.play("spawn", true);
+	riposteParticle.animation.play("trigger", true);
 	riposteParticle.visible = true;
-
 	riposteTriggerSound.play();
 }
 

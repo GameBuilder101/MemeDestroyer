@@ -34,6 +34,8 @@ class PlayState extends FlxState
 	/** Health indicator for bosses. **/
 	public var bossHealth(default, null):HealthBar;
 
+	public var deathOverlay(default, null):DeathOverlay;
+
 	override function create()
 	{
 		super.create();
@@ -59,6 +61,11 @@ class PlayState extends FlxState
 		bossHealth.screenCenter();
 		bossHealth.y = FlxG.height - bossHealth.height;
 		add(bossHealth);
+
+		// Add the death overlay
+		deathOverlay = new DeathOverlay();
+		deathOverlay.screenCenter();
+		add(deathOverlay);
 
 		// Add the player
 		player = new Entity(0.0, 0.0, null, PLAYER_ENTITY_ID);
@@ -133,5 +140,11 @@ class PlayState extends FlxState
 		var entity:Entity = new Entity(x, y, null, id);
 		addEntity(entity);
 		return entity;
+	}
+
+	/** Displays the death overlay and re-loads the play state. **/
+	public function deathTransition()
+	{
+		deathOverlay.display();
 	}
 }

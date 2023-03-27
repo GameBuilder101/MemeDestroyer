@@ -1,5 +1,9 @@
-spawn0 = 0 0 64 64
-spawn1 = 64 0 64 64
-spawn2 = 0 64 64 64
-spawn3 = 64 64 64 64
-spawn4 = 0 128 64 64
+trigger0 = 0 0 64 64
+trigger1 = 64 0 64 64
+trigger2 = 128 0 64 64
+trigger3 = 0 64 64 64
+trigger4 = 64 64 64 64
+use0 = 128 64 64 64
+use1 = 0 128 64 64
+use2 = 64 128 64 64
+use3 = 128 128 64 64

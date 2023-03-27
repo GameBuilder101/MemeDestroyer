@@ -6,6 +6,8 @@ import flixel.util.FlxColor;
 import flixel_fixed.ui.FlxBar;
 import gbc.graphics.AssetSprite;
 import gbc.graphics.AssetSpriteRegistry;
+import gbc.sound.AssetSound;
+import gbc.sound.AssetSoundRegistry;
 
 class HealthBar extends FlxSpriteGroup implements IIndicator
 {
@@ -17,6 +19,9 @@ class HealthBar extends FlxSpriteGroup implements IIndicator
 
 	/* Used to track updates to the values. */
 	var prevCurrent:Float = -1.0;
+
+	var healSound:AssetSound;
+	var hurtSound:AssetSound;
 
 	public function new(x:Float = 0.0, y:Float = 0.0)
 	{
@@ -35,6 +40,9 @@ class HealthBar extends FlxSpriteGroup implements IIndicator
 		label = new FlxText(0.0, 0.0, width);
 		label.setFormat("Edit Undo BRK", 20, FlxColor.WHITE, CENTER, SHADOW, FlxColor.BLACK);
 		add(label);
+
+		healSound = AssetSoundRegistry.getAsset("ui/hud/sounds/health_bar_heal");
+		hurtSound = AssetSoundRegistry.getAsset("ui/hud/sounds/health_bar_hurt");
 	}
 
 	override function update(elapsed:Float)
@@ -54,6 +62,10 @@ class HealthBar extends FlxSpriteGroup implements IIndicator
 		else if (current < prevCurrent)
 			cap.animation.play("hurt");
 
+		if (current > prevCurrent && healSound != null)
+			healSound.play();
+		else if (current < prevCurrent && hurtSound != null)
+			hurtSound.play();
 		prevCurrent = current;
 	}
 
