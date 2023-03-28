@@ -4,10 +4,25 @@
         "boss"
     ],
     "components": [
+        "entities/_shared/movement",
         "entities/_shared/health",
-        "entities/_shared/damager"
+        "entities/_shared/damager",
+        "entities/_shared/base_ai",
+        "entities/test_meme/ai"
     ],
     "variables": [
+        {
+            "name": "walkSpeed",
+            "value": 50.0
+        },
+        {
+            "name": "footstepSoundID",
+            "value": ""
+        },
+        {
+            "name": "footstepDelay",
+            "value": 1.0
+        },
         {
             "name": "initialMaxHealth",
             "value": 100.0
@@ -43,6 +58,14 @@
         {
             "name": "contactDamage",
             "value": -1.0
+        },
+        {
+            "name": "turnSpeed",
+            "value": 1.0
+        },
+        {
+            "name": "targetPlayerOnLoaded",
+            "value": true
         }
     ],
     "spriteID": "entities/test_meme/sprites/main"

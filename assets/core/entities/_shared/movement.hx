@@ -3,12 +3,11 @@
 var isWalking:Bool = false;
 var isRunning:Bool = false;
 var footstepSound:AssetSound;
-var currentFootstepDelay:Float;
+var currentFootstepDelay:Float = 0.0;
 
 function onLoaded()
 {
-	if (footstepSoundID != null)
-		footstepSound = AssetSoundRegistry.getAsset(footstepSoundID);
+	footstepSound = AssetSoundRegistry.getAsset(footstepSoundID);
 }
 
 function onUpdate(elapsed:Float)

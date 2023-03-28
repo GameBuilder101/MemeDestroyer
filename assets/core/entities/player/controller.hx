@@ -68,8 +68,6 @@ function onUpdate(elapsed:Float)
 
 	// Directional movement
 	var direction:Point = new Point(0.0, 0.0);
-	direction.point.x = 0.0;
-	direction.point.y = 0.0;
 	if (Controls.moveUp.check())
 		direction.point.y--;
 	if (Controls.moveDown.check())
