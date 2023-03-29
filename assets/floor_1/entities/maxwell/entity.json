@@ -13,7 +13,7 @@
     "variables": [
         {
             "name": "walkSpeed",
-            "value": 80.0
+            "value": 70.0
         },
         {
             "name": "footstepSoundID",
@@ -61,7 +61,7 @@
         },
         {
             "name": "turnSpeed",
-            "value": 110.0
+            "value": 180.0
         }
     ],
     "spriteID": "entities/maxwell/sprites/main"

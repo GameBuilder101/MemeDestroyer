@@ -1,0 +1,15 @@
+{
+    "animations": [
+        {
+            "name": "spawn",
+            "atlasPrefix": "spawn",
+            "frameRate": 8,
+            "looped": false,
+            "offset": [
+                48.0,
+                48.0
+            ]
+        }
+    ],
+    "defaultAnim": "spawn"
+}

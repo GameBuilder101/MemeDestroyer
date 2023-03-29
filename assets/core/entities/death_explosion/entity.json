@@ -1,0 +1,9 @@
+{
+    "name": "Explosion",
+    "tags": [],
+    "components": [
+        "entities/death_explosion/animation"
+    ],
+    "variables": [],
+    "spriteID": "entities/death_explosion/sprites/main"
+}

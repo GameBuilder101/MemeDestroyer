@@ -64,6 +64,16 @@ function getTarget():Entity
 
 function onDie(value:Float)
 {
-	state.worldCamera.shake(0.005, 1.5);
+	state.worldCamera.shake(0.005, 1.0);
 	state.removeEntity(this);
+
+	// Create an explosion effect
+	var explosion:Entity = state.spawn("entities/death_explosion", this.x + this.width / 2.0, this.y + this.height / 2.0);
+
+	// Scale the explosion to match the size of this AI
+	var biggerScale:Float = this.scale.x;
+	if (this.scale.y > biggerScale)
+		biggerScale = this.scale.y;
+	if (explosion.scale.x < biggerScale)
+		explosion.scale.set(biggerScale, biggerScale);
 }
