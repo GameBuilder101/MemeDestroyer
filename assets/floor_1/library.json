@@ -1,5 +1,11 @@
 {
     "name": "Floor 1",
     "description": "Floor 1 Content",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "dependencies": [
+        {
+            "id": "core",
+            "version": "1.0.0"
+        }
+    ]
 }

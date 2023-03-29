@@ -7,7 +7,7 @@ var facing:Float = 0.0;
 
 function onUpdate(elapsed:Float)
 {
-	if (!target.alive)
+	if (target != null && !target.alive)
 		setTarget(null);
 	if (target == null)
 		return;

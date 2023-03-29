@@ -8,12 +8,12 @@
         "entities/_shared/health",
         "entities/_shared/damager",
         "entities/_shared/base_ai",
-        "entities/test_meme/ai"
+        "entities/maxwell/ai"
     ],
     "variables": [
         {
             "name": "walkSpeed",
-            "value": 50.0
+            "value": 80.0
         },
         {
             "name": "footstepSoundID",

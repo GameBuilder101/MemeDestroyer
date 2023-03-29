@@ -10,6 +10,8 @@ class EntityRegistry extends Registry<EntityData>
 {
 	public function parse(data:Dynamic):EntityData
 	{
+		if (data == null)
+			return null;
 		if (data.sortingPriority == null)
 			data.sortingPriority = 0;
 		return data;
