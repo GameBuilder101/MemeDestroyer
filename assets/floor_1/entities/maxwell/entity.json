@@ -1,5 +1,5 @@
 {
-    "name": "Test Meme",
+    "name": "Maxwell the Cat",
     "tags": [
         "boss"
     ],
@@ -37,7 +37,7 @@
         },
         {
             "name": "healthColor",
-            "value": "#ff00ff"
+            "value": "#d3f04c"
         },
         {
             "name": "healthType",
@@ -49,11 +49,11 @@
         },
         {
             "name": "hurtSoundID",
-            "value": ""
+            "value": "entities/maxwell/sounds/hurt"
         },
         {
             "name": "dieSoundID",
-            "value": ""
+            "value": "entities/maxwell/sounds/die"
         },
         {
             "name": "contactDamage",
@@ -61,12 +61,8 @@
         },
         {
             "name": "turnSpeed",
-            "value": 1.0
-        },
-        {
-            "name": "targetPlayerOnLoaded",
-            "value": true
+            "value": 110.0
         }
     ],
-    "spriteID": "entities/test_meme/sprites/main"
+    "spriteID": "entities/maxwell/sprites/main"
 }

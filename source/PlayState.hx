@@ -72,7 +72,7 @@ class PlayState extends FlxState
 		addEntity(player);
 
 		addEntity(new Entity(100.0, 100.0, null, "items/nokia"));
-		addEntity(new Entity(200.0, 200.0, null, "entities/test_meme"));
+		addEntity(new Entity(200.0, 200.0, null, "entities/maxwell"));
 	}
 
 	override function update(elapsed:Float)
@@ -109,12 +109,14 @@ class PlayState extends FlxState
 	}
 
 	/** Use this function before destroying an entity to remove it. **/
-	public function removeEntity(entity:Entity)
+	public function removeEntity(entity:Entity, kill:Bool = true)
 	{
 		entities.remove(entity, true);
 		for (tag in entity.tags)
 			entitiesByTag[tag].remove(entity);
 
+		if (kill)
+			entity.kill();
 		entity.onRemovedFromPlay();
 	}
 

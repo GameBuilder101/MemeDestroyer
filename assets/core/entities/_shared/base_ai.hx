@@ -1,18 +1,14 @@
-// Requires variables turnSpeed:Float, targetPlayerOnLoaded:Bool
+// Requires variables turnSpeed:Float
 // The entity this AI is targeting
 var target:Entity;
 
 // The angle the AI is facing/moving towards
 var facing:Float = 0.0;
 
-function onLoaded()
-{
-	if (targetPlayerOnLoaded)
-		setTarget(state.player);
-}
-
 function onUpdate(elapsed:Float)
 {
+	if (!target.alive)
+		setTarget(null);
 	if (target == null)
 		return;
 
@@ -24,27 +20,21 @@ function onUpdate(elapsed:Float)
 		cause the entity to do a full 360 degree rotation for something that should be a really small
 		rotation */
 	var flip:Bool = checkIfCrossThreshold(facing, targetFacing) || checkIfCrossThreshold(targetFacing, facing);
-
-	if (targetFacing < 0.0 && facing > 0.0 && 180.0 + targetFacing + 180.0 - facing > facing + targetFacing)
-		flip = true;
-	else if (targetFacing > 0.0 && facing)
+	if ((!flip && facing < targetFacing) || (flip && facing > targetFacing))
+	{
+		facing += turnSpeed * elapsed;
+		if (facing > targetFacing)
+			facing = targetFacing;
+	}
+	else if ((!flip && facing > targetFacing) || (flip && facing < targetFacing))
+	{
+		facing -= turnSpeed * elapsed;
 		if (facing < targetFacing)
-		{
-			if (flip)
-				facing -= turnSpeed * elapsed;
-			else
-				facing += turnSpeed * elapsed;
-		}
-		else if (targetFacing > facing)
-		{
-			if (flip)
-				facing += turnSpeed * elapsed;
-			else
-				facing -= turnSpeed * elapsed;
-		}
+			facing = targetFacing;
+	}
 }
 
-function checkIfCrossThreshold(angle1:Float, angle2:Float):Bool
+function checkIfCrossThreshold(angle1:Float, angle2:Float):Boolds
 {
 	return angle1 < 0.0 && angle2 > 0.0 && (180.0 + angle1) + (180.0 - angle2) < angle2 - angle1;
 }
@@ -59,10 +49,7 @@ function getFacing():Float
 function getFacingVector():Point
 {
 	var rad:Float = FlxAngle.asRadians(facing);
-	var vector:Point = new Point();
-	vector.point.x = FlxMath.fastCos(rad);
-	vector.point.y = FlxMath.fastSin(rad);
-	return vector;
+	return new Point(FlxMath.fastCos(rad), FlxMath.fastSin(rad));
 }
 
 function setTarget(entity:Entity)
@@ -73,4 +60,10 @@ function setTarget(entity:Entity)
 function getTarget():Entity
 {
 	return target;
+}
+
+function onDie(value:Float)
+{
+	state.worldCamera.shake(0.005, 1.5);
+	state.removeEntity(this);
 }

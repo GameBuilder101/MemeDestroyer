@@ -77,7 +77,7 @@ function equip(entity:Entity)
 		return;
 	equipped = entity;
 	equipped.visible = false;
-	state.removeEntity(equipped);
+	state.removeEntity(equipped, false);
 	equipped.setPosition(this.x, this.y);
 	this.add(equipped);
 
