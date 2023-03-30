@@ -5,12 +5,21 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
+import gbc.graphics.AssetSprite;
+import level.Level;
 
 class PlayState extends FlxState
 {
-	public var worldCamera(default, null):FlxCamera;
+	public var levelCamera(default, null):FlxCamera;
 	public var uiCamera(default, null):FlxCamera;
+
+	/** The currently-loaded level data. **/
+	public var level(default, null):LevelData;
+
+	/** The sprite for the level background. **/
+	public var background(default, null):AssetSprite;
 
 	var entities:FlxTypedGroup<Entity>;
 
@@ -34,14 +43,17 @@ class PlayState extends FlxState
 	/** Health indicator for bosses. **/
 	public var bossHealth(default, null):HealthBar;
 
-	public var deathOverlay(default, null):DeathOverlay;
+	public var deathOverlay(default, null):NotificationOverlay;
 
 	override function create()
 	{
 		super.create();
 		FlxG.worldBounds.set(0.0, 0.0, FlxG.width, FlxG.height);
-		worldCamera = FlxG.camera;
+		levelCamera = FlxG.camera;
 		uiCamera = new FlxCamera();
+
+		background = new AssetSprite(0.0, 0.0);
+		add(background);
 
 		entities = new FlxTypedGroup<Entity>();
 		add(entities);
@@ -49,30 +61,30 @@ class PlayState extends FlxState
 		effects = new FlxGroup();
 		add(effects);
 
-		// Add the health notches
+		// Add the player health
 		playerHealth = new HealthNotches();
-		playerHealth.cameras = [uiCamera, worldCamera];
+		playerHealth.cameras = [uiCamera, levelCamera];
 		playerHealth.setPosition(FlxG.width / 2.0, -20.0);
 		add(playerHealth);
 
-		// Add the health bar
+		// Add the boss health
 		bossHealth = new HealthBar();
-		bossHealth.cameras = [uiCamera, worldCamera];
+		bossHealth.cameras = [uiCamera, levelCamera];
 		bossHealth.screenCenter();
-		bossHealth.y = FlxG.height - bossHealth.height;
+		bossHealth.y = FlxG.height;
+		bossHealth.visible = false; // The boss health starts hidden by default
 		add(bossHealth);
 
 		// Add the death overlay
-		deathOverlay = new DeathOverlay();
+		deathOverlay = new NotificationOverlay(0.0, 0.0, "ui/hud/sprites/death_overlay", "ui/hud/sounds/death_overlay");
+		deathOverlay.cameras = [uiCamera, levelCamera];
 		deathOverlay.screenCenter();
 		add(deathOverlay);
 
 		// Add the player
 		player = new Entity(0.0, 0.0, null, PLAYER_ENTITY_ID);
+		player.screenCenter();
 		addEntity(player);
-
-		addEntity(new Entity(100.0, 100.0, null, "items/nokia"));
-		addEntity(new Entity(200.0, 200.0, null, "entities/maxwell"));
 	}
 
 	override function update(elapsed:Float)
@@ -90,6 +102,12 @@ class PlayState extends FlxState
 			// Make further-down things appear on top (to immitate depth)
 			return FlxSort.byValues(order, entity1.y + entity1.mainSprite.height, entity2.y + entity2.mainSprite.height);
 		});
+	}
+
+	public function loadLevel(level:LevelData)
+	{
+		this.level = level;
+		background.loadFromID(level.backgroundSpriteID);
 	}
 
 	/** Use this function to add any entities. **/
@@ -142,6 +160,26 @@ class PlayState extends FlxState
 		var entity:Entity = new Entity(x, y, null, id);
 		addEntity(entity);
 		return entity;
+	}
+
+	/** Plays an animation to show the boss health bar. **/
+	public function showBossHealth()
+	{
+		bossHealth.visible = true;
+		FlxTween.cancelTweensOf(bossHealth);
+		FlxTween.linearMotion(bossHealth, bossHealth.x, FlxG.height, bossHealth.x, FlxG.height - bossHealth.height);
+	}
+
+	/** Plays an animation to hide the boss health bar. **/
+	public function hideBossHealth()
+	{
+		FlxTween.cancelTweensOf(bossHealth);
+		FlxTween.linearMotion(bossHealth, bossHealth.x, FlxG.height - bossHealth.height, bossHealth.x, FlxG.height, 1.0, true, {
+			onComplete: function(tween:FlxTween)
+			{
+				bossHealth.visible = false;
+			}
+		});
 	}
 
 	/** Displays the death overlay and re-loads the play state. **/

@@ -1,6 +1,6 @@
 {
-    "name": "Floor 1",
-    "description": "Floor 1 Content",
+    "name": "Overworld",
+    "description": "Overworld content",
     "version": "1.0.0",
     "dependencies": [
         {

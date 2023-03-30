@@ -141,12 +141,12 @@ function onOverlap(tag:String, entity:Entity)
 
 function onHurt(value:Float)
 {
-	state.worldCamera.shake(0.01, 0.1);
+	state.levelCamera.shake(0.01, 0.1);
 }
 
 function onDie(value:Float)
 {
 	finishDodge();
 	animation.play("die", true);
-	state.worldCamera.shake(0.015, 1.0);
+	state.levelCamera.shake(0.015, 1.0);
 }

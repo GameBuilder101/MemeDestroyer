@@ -8,21 +8,22 @@ import gbc.graphics.AssetSprite;
 import gbc.sound.AssetSound;
 import gbc.sound.AssetSoundRegistry;
 
-class DeathOverlay extends FlxSpriteGroup
+/** A notification overlay that plays a Dark-Souls-esque animation. **/
+class NotificationOverlay extends FlxSpriteGroup
 {
 	var mainSprite:AssetSprite;
 
 	var mainSound:AssetSound;
 
-	public function new(x:Float = 0.0, y:Float = 0.0)
+	public function new(x:Float = 0.0, y:Float = 0.0, spriteID:String = "", soundID:String = "")
 	{
 		super(x, y);
 
-		mainSprite = new AssetSprite(0.0, 0.0, null, "ui/hud/sprites/death_overlay");
+		mainSprite = new AssetSprite(0.0, 0.0, null, spriteID);
 		add(mainSprite);
 		mainSprite.visible = false;
 
-		mainSound = AssetSoundRegistry.getAsset("ui/hud/sounds/death_overlay");
+		mainSound = AssetSoundRegistry.getAsset(soundID);
 	}
 
 	/** Plays an animation on the overlay. **/

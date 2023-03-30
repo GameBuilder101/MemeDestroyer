@@ -29,12 +29,19 @@ function onLoaded()
 		case "boss":
 			state.bossHealth.setLabel(this.name);
 			state.bossHealth.setIndicatorColor(colorString(healthColor));
+			state.showBossHealth();
 		default:
 	}
 
 	healSound = AssetSoundRegistry.getAsset("entities/_shared/sounds/heal");
 	hurtSound = AssetSoundRegistry.getAsset(hurtSoundID);
 	dieSound = AssetSoundRegistry.getAsset(dieSoundID);
+}
+
+function onRemovedFromPlay()
+{
+	if (healthType == "boss")
+		state.hideBossHealth();
 }
 
 function onUpdate(elapsed:Float)

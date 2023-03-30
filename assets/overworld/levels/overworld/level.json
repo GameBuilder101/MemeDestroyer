@@ -1,0 +1,35 @@
+{
+    "name": "Overworld",
+    "backgroundSpriteID": "levels/overworld/sprites/main",
+    "initialSpawns": [
+        {
+            "id": "entities/minecraft_tree",
+            "position": [
+                550.0,
+                0.0
+            ],
+            "randomizeX": false,
+            "randomizeY": false
+        },
+        {
+            "id": "entities/minecraft_tree",
+            "position": [
+                16.0,
+                370.0
+            ],
+            "randomizeX": false,
+            "randomizeY": false
+        }
+    ],
+    "bosses": [
+        {
+            "id": "entities/maxwell",
+            "position": [
+                0.0,
+                0.0
+            ],
+            "randomizeX": true,
+            "randomizeY": false
+        }
+    ]
+}

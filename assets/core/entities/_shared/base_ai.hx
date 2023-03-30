@@ -64,7 +64,8 @@ function getTarget():Entity
 
 function onDie(value:Float)
 {
-	state.worldCamera.shake(0.005, 1.0);
+	state.levelCamera.shake(0.005, 1.0);
+	state.levelCamera.flash();
 	state.removeEntity(this);
 
 	// Create an explosion effect
