@@ -31,10 +31,9 @@ class NotificationOverlay extends FlxSpriteGroup
 	{
 		FlxTween.cancelTweensOf(mainSprite);
 		mainSprite.scale.set(1.0, 1.0);
-		mainSprite.color = FlxColor.TRANSPARENT;
 		mainSprite.visible = true;
 		FlxTween.tween(mainSprite, {"scale.x": 1.2, "scale.y": 1.2}, 5.0, {ease: FlxEase.linear});
-		FlxTween.color(mainSprite, 2.5, FlxColor.TRANSPARENT, FlxColor.WHITE, {onComplete: onCompleteFadeIn});
+		FlxTween.color(mainSprite, 2.5, FlxColor.fromString("#ffffff00"), FlxColor.WHITE, {onComplete: onCompleteFadeIn});
 
 		mainSound.play();
 	}
@@ -42,7 +41,7 @@ class NotificationOverlay extends FlxSpriteGroup
 	/** Called when the fade-in is finished. **/
 	function onCompleteFadeIn(tween:FlxTween)
 	{
-		FlxTween.color(mainSprite, 2.5, FlxColor.WHITE, FlxColor.TRANSPARENT, {onComplete: onCompleteFadeOut});
+		FlxTween.color(mainSprite, 2.5, FlxColor.WHITE, FlxColor.fromString("#ffffff00"), {onComplete: onCompleteFadeOut});
 	}
 
 	/** Called when the fade-out is finished. **/

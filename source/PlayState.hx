@@ -6,9 +6,11 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 import gbc.graphics.AssetSprite;
 import level.Level;
+import level.LevelRegistry;
 
 class PlayState extends FlxState
 {
@@ -43,6 +45,8 @@ class PlayState extends FlxState
 	/** Health indicator for bosses. **/
 	public var bossHealth(default, null):HealthBar;
 
+	public var titleOverlay(default, null):TitleOverlay;
+
 	public var deathOverlay(default, null):NotificationOverlay;
 
 	override function create()
@@ -52,8 +56,8 @@ class PlayState extends FlxState
 		levelCamera = FlxG.camera;
 		uiCamera = new FlxCamera();
 
-		// background = new AssetSprite(0.0, 0.0);
-		// add(background);
+		background = new AssetSprite(0.0, 0.0);
+		add(background);
 
 		entities = new FlxTypedGroup<Entity>();
 		add(entities);
@@ -75,19 +79,19 @@ class PlayState extends FlxState
 		bossHealth.visible = false; // The boss health starts hidden by default
 		add(bossHealth);
 
+		// Add the title overlay
+		titleOverlay = new TitleOverlay(0.0, 0.0);
+		titleOverlay.cameras = [uiCamera, levelCamera];
+		titleOverlay.screenCenter();
+		add(titleOverlay);
+
 		// Add the death overlay
 		deathOverlay = new NotificationOverlay(0.0, 0.0, "ui/hud/sprites/death_overlay", "ui/hud/sounds/death_overlay");
 		deathOverlay.cameras = [uiCamera, levelCamera];
 		deathOverlay.screenCenter();
 		add(deathOverlay);
 
-		// Add the player
-		player = new Entity(0.0, 0.0, null, PLAYER_ENTITY_ID);
-		player.screenCenter();
-		addEntity(player);
-
-		addEntity(new Entity(0.0, 0.0, null, "entities/maxwell"));
-		addEntity(new Entity(100.0, 100.0, null, "items/nokia"));
+		loadLevel(null, "levels/overworld");
 	}
 
 	override function update(elapsed:Float)
@@ -107,10 +111,32 @@ class PlayState extends FlxState
 		});
 	}
 
-	public function loadLevel(level:LevelData)
+	public function loadLevel(data:LevelData = null, id:String = null)
 	{
-		this.level = level;
+		// Find the level
+		if (data == null && id != null)
+			data = LevelRegistry.getAsset(id);
+		if (data == null)
+			return;
+		this.level = data;
+
+		// Load the background sprite
 		background.loadFromID(level.backgroundSpriteID);
+
+		// Remove existing entities
+		for (entity in entities.members)
+			removeEntity(entity);
+
+		// Add the player
+		player = new Entity(0.0, 0.0, null, PLAYER_ENTITY_ID);
+		player.screenCenter();
+		addEntity(player);
+
+		// Add initial spawns
+		for (spawn in level.initialSpawns)
+			levelSpawn(spawn);
+
+		titleOverlay.display(data.name, data.subtitle, FlxColor.fromString(data.color));
 	}
 
 	/** Use this function to add any entities. **/
@@ -163,6 +189,18 @@ class PlayState extends FlxState
 		var entity:Entity = new Entity(x, y, null, id);
 		addEntity(entity);
 		return entity;
+	}
+
+	/** Creates and adds an entity based on the data from a level spawn. **/
+	function levelSpawn(spawn:LevelSpawn):Entity
+	{
+		var x:Float = spawn.position[0];
+		if (spawn.randomizeX)
+			x = Math.random() * FlxG.width;
+		var y:Float = spawn.position[1];
+		if (spawn.randomizeY)
+			y = Math.random() * FlxG.height;
+		return this.spawn(spawn.id, x, y);
 	}
 
 	/** Plays an animation to show the boss health bar. **/

@@ -40,7 +40,7 @@ class AssetSprite extends FlxSprite
 	/** Used to apply offsets to animations. **/
 	public var animOffsets:Map<String, Array<Float>> = new Map<String, Array<Float>>();
 
-	public function new(x:Float = 0.0, y:Float = 0.0, data:AssetSpriteData = null, id:String = "")
+	public function new(x:Float = 0.0, y:Float = 0.0, data:AssetSpriteData = null, id:String = null)
 	{
 		super(x, y);
 		if (data != null)
