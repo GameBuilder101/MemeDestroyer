@@ -52,8 +52,8 @@ class PlayState extends FlxState
 		levelCamera = FlxG.camera;
 		uiCamera = new FlxCamera();
 
-		background = new AssetSprite(0.0, 0.0);
-		add(background);
+		// background = new AssetSprite(0.0, 0.0);
+		// add(background);
 
 		entities = new FlxTypedGroup<Entity>();
 		add(entities);
@@ -85,6 +85,9 @@ class PlayState extends FlxState
 		player = new Entity(0.0, 0.0, null, PLAYER_ENTITY_ID);
 		player.screenCenter();
 		addEntity(player);
+
+		addEntity(new Entity(0.0, 0.0, null, "entities/maxwell"));
+		addEntity(new Entity(100.0, 100.0, null, "items/nokia"));
 	}
 
 	override function update(elapsed:Float)
