@@ -16,7 +16,7 @@
         {
             "id": "entities/minecraft_tree",
             "position": [
-                32.0,
+                16.0,
                 220.0
             ],
             "randomizeX": false,

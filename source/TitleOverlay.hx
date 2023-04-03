@@ -69,13 +69,13 @@ class TitleOverlay extends FlxSpriteGroup
 		upperLine.scale.x = 0.0;
 		upperLine.color = color;
 		upperLine.visible = true;
-		FlxTween.tween(upperLine, {"scale.x": 1.0}, 1.5);
+		FlxTween.tween(upperLine, {"scale.x": 1.0}, 1.5, {ease: FlxEase.expoOut});
 
 		FlxTween.cancelTweensOf(lowerLine);
 		lowerLine.scale.x = 0.0;
 		lowerLine.color = color;
 		lowerLine.visible = true;
-		FlxTween.tween(lowerLine, {"scale.x": 1.0}, 1.5);
+		FlxTween.tween(lowerLine, {"scale.x": 1.0}, 1.5, {ease: FlxEase.expoOut});
 	}
 
 	/** Called when the fade-in is finished. **/
@@ -84,10 +84,14 @@ class TitleOverlay extends FlxSpriteGroup
 		fadeOutTimer.start(2.0, function(timer:FlxTimer)
 		{
 			// Fade out everything once the timer completes
+			title.color.alpha = 255;
 			FlxTween.color(title, 1.5, title.color, FlxColor.fromRGB(title.color.red, title.color.green, title.color.blue, 0),
 				{onComplete: onCompleteFadeOut});
+			subtitle.color.alpha = 255;
 			FlxTween.color(subtitle, 1.5, subtitle.color, FlxColor.fromRGB(subtitle.color.red, subtitle.color.green, subtitle.color.blue, 0));
+			upperLine.color.alpha = 255;
 			FlxTween.color(upperLine, 1.5, upperLine.color, FlxColor.fromRGB(upperLine.color.red, upperLine.color.green, upperLine.color.blue, 0));
+			lowerLine.color.alpha = 255;
 			FlxTween.color(lowerLine, 1.5, lowerLine.color, FlxColor.fromRGB(lowerLine.color.red, lowerLine.color.green, lowerLine.color.blue, 0));
 		});
 	}
