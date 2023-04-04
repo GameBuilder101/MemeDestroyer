@@ -1,4 +1,4 @@
-package;
+package ui.hud;
 
 import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
@@ -56,7 +56,7 @@ class CountdownOverlay extends FlxSpriteGroup implements IOverlay
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		if (currentSprite < 0) // If not animating
+		if (currentSprite != sprites.length - 1) // Only shake the final sprite
 			return;
 
 		// Randomly shake the current sprite, making sure it doesn't go too far
@@ -91,6 +91,8 @@ class CountdownOverlay extends FlxSpriteGroup implements IOverlay
 	function animateSprite(index:Int)
 	{
 		currentSprite = index;
+		if (currentSprite == sprites.length - 1 && onComplete != null) // If the final sprite
+			onComplete();
 
 		FlxTween.cancelTweensOf(sprites[index]);
 		sprites[index].scale.set(1.5, 1.5);
@@ -115,8 +117,6 @@ class CountdownOverlay extends FlxSpriteGroup implements IOverlay
 					{
 						sprites[currentSprite].visible = false;
 						currentSprite = -1;
-						if (onComplete != null)
-							onComplete();
 					}
 				});
 			}

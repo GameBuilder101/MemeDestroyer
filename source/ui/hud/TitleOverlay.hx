@@ -1,4 +1,4 @@
-package;
+package ui.hud;
 
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
@@ -7,9 +7,6 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import gbc.graphics.AssetSprite;
-import gbc.graphics.AssetSpriteRegistry;
-import gbc.sound.AssetSound;
-import gbc.sound.AssetSoundRegistry;
 
 class TitleOverlay extends FlxSpriteGroup implements IOverlay
 {

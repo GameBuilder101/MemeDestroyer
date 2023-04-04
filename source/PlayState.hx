@@ -6,11 +6,17 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 import gbc.graphics.AssetSprite;
+import gbc.scripting.ComponentSystem;
+import gbc.scripting.Script;
 import level.Level;
 import level.LevelRegistry;
+import ui.hud.CountdownOverlay;
+import ui.hud.HealthBar;
+import ui.hud.HealthNotches;
+import ui.hud.NotificationOverlay;
+import ui.hud.TitleOverlay;
 
 class PlayState extends FlxState
 {
@@ -19,6 +25,9 @@ class PlayState extends FlxState
 
 	/** The currently-loaded level data. **/
 	public var level(default, null):LevelData;
+
+	/** The components for the currently-loaded level. **/
+	public var components(default, null):ComponentSystem;
 
 	/** The sprite for the level background. **/
 	public var background(default, null):AssetSprite;
@@ -31,10 +40,8 @@ class PlayState extends FlxState
 	**/
 	var entitiesByTag:Map<String, Array<Entity>> = [];
 
-	public static inline final PLAYER_ENTITY_ID = "entities/player";
-
-	public var player(default, null):Entity;
-	public var boss(default, null):Entity;
+	public var player:Entity;
+	public var boss:Entity;
 
 	/** For miscellaneous effect sprites. **/
 	var effects:FlxGroup;
@@ -57,6 +64,8 @@ class PlayState extends FlxState
 		FlxG.worldBounds.set(0.0, 0.0, FlxG.width, FlxG.height);
 		levelCamera = FlxG.camera;
 		uiCamera = new FlxCamera();
+
+		components = new ComponentSystem();
 
 		background = new AssetSprite(0.0, 0.0);
 		add(background);
@@ -88,7 +97,7 @@ class PlayState extends FlxState
 		add(titleOverlay);
 
 		// Add the countdown overlay
-		countdownOverlay = new CountdownOverlay(0.0, 0.0, 0.0, [
+		countdownOverlay = new CountdownOverlay(0.0, 0.0, 0.6, [
 			"ui/hud/sprites/countdown_overlay",
 			"ui/hud/sprites/countdown_overlay",
 			"ui/hud/sprites/countdown_overlay",
@@ -115,6 +124,9 @@ class PlayState extends FlxState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		components.callAll("onUpdate", [elapsed]);
+
 		entities.sort(function(order:Int, entity1:Entity, entity2:Entity):Int
 		{
 			// Higher sorting priorities go above
@@ -138,6 +150,16 @@ class PlayState extends FlxState
 			return;
 		this.level = data;
 
+		// Load all level scripts
+		components = new ComponentSystem();
+		for (path in cast(data.components, Array<Dynamic>))
+		{
+			components.addNewComponent(path, GameScript, function(path:String):Script
+			{
+				return GameScriptRegistry.getAsset(path);
+			});
+		}
+
 		// Load the background sprite
 		background.loadFromID(level.backgroundSpriteID);
 
@@ -145,19 +167,21 @@ class PlayState extends FlxState
 		for (entity in entities.members)
 			removeEntity(entity);
 
-		// Add the player
-		player = new Entity(0.0, 0.0, null, PLAYER_ENTITY_ID);
-		player.screenCenter();
-		addEntity(player);
-
 		// Add initial spawns
 		for (spawn in level.initialSpawns)
 			levelSpawn(spawn);
 
-		titleOverlay.display({title: data.name, subtitle: data.subtitle, color: FlxColor.fromString(data.color)}, function()
+		components.setAll("state", this);
+
+		if (data.variables != null)
 		{
-			countdownOverlay.display(null, null); // Display the fight countdown after the title
-		});
+			// The variables array is used to set variables in components
+			for (variable in data.variables)
+				components.setAll(variable.name, variable.value);
+		}
+
+		components.startAll();
+		components.callAll("onLoaded", [data]);
 	}
 
 	/** Use this function to add any entities. **/

@@ -3,8 +3,8 @@ package level;
 typedef LevelData =
 {
 	name:String,
-	subtitle:String,
-	color:String,
+	components:Array<String>,
+	variables:Array<Dynamic>,
 	backgroundSpriteID:String,
 	initialSpawns:Array<LevelSpawn>,
 	bosses:Array<LevelSpawn>

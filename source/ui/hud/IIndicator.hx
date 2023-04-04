@@ -1,4 +1,4 @@
-package;
+package ui.hud;
 
 import flixel.util.FlxColor;
 

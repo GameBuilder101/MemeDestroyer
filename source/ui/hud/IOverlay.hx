@@ -1,4 +1,4 @@
-package;
+package ui.hud;
 
 /** Interface for things such as title overlays. **/
 interface IOverlay
