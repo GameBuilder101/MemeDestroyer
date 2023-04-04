@@ -3,17 +3,18 @@ package;
 import flixel.group.FlxSpriteGroup;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
 import gbc.graphics.AssetSprite;
 import gbc.sound.AssetSound;
 import gbc.sound.AssetSoundRegistry;
 
 /** A notification overlay that plays a Dark-Souls-esque animation. **/
-class NotificationOverlay extends FlxSpriteGroup
+class NotificationOverlay extends FlxSpriteGroup implements IOverlay
 {
 	var mainSprite:AssetSprite;
 
 	var mainSound:AssetSound;
+
+	var onComplete:Void->Void;
 
 	public function new(x:Float = 0.0, y:Float = 0.0, spriteID:String = "", soundID:String = "")
 	{
@@ -26,15 +27,16 @@ class NotificationOverlay extends FlxSpriteGroup
 		mainSound = AssetSoundRegistry.getAsset(soundID);
 	}
 
-	/** Plays an animation on the overlay. **/
-	public function display()
+	public function display(args:Dynamic, onComplete:Void->Void)
 	{
+		this.onComplete = onComplete;
+
 		FlxTween.cancelTweensOf(mainSprite);
 		mainSprite.scale.set(1.0, 1.0);
-		mainSprite.color = FlxColor.fromRGB(255, 255, 255, 0);
+		mainSprite.alpha = 0.0;
 		mainSprite.visible = true;
 		FlxTween.tween(mainSprite, {"scale.x": 1.2, "scale.y": 1.2}, 5.0, {ease: FlxEase.linear});
-		FlxTween.color(mainSprite, 2.5, FlxColor.fromRGB(255, 255, 255, 0), FlxColor.WHITE, {onComplete: onCompleteFadeIn});
+		FlxTween.tween(mainSprite, {alpha: 1.0}, 2.5, {onComplete: onCompleteFadeIn});
 
 		mainSound.play();
 	}
@@ -42,12 +44,14 @@ class NotificationOverlay extends FlxSpriteGroup
 	/** Called when the fade-in is finished. **/
 	function onCompleteFadeIn(tween:FlxTween)
 	{
-		FlxTween.color(mainSprite, 2.5, FlxColor.WHITE, FlxColor.fromRGB(255, 255, 255, 0), {onComplete: onCompleteFadeOut});
+		FlxTween.tween(mainSprite, {alpha: 0.0}, 2.5, {onComplete: onCompleteFadeOut});
 	}
 
 	/** Called when the fade-out is finished. **/
 	function onCompleteFadeOut(tween:FlxTween)
 	{
 		mainSprite.visible = false;
+		if (onComplete != null)
+			onComplete();
 	}
 }

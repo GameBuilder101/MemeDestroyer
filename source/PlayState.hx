@@ -47,6 +47,8 @@ class PlayState extends FlxState
 
 	public var titleOverlay(default, null):TitleOverlay;
 
+	public var countdownOverlay(default, null):CountdownOverlay;
+
 	public var deathOverlay(default, null):NotificationOverlay;
 
 	override function create()
@@ -84,6 +86,22 @@ class PlayState extends FlxState
 		titleOverlay.cameras = [uiCamera, levelCamera];
 		titleOverlay.screenCenter();
 		add(titleOverlay);
+
+		// Add the countdown overlay
+		countdownOverlay = new CountdownOverlay(0.0, 0.0, 0.0, [
+			"ui/hud/sprites/countdown_overlay",
+			"ui/hud/sprites/countdown_overlay",
+			"ui/hud/sprites/countdown_overlay",
+			"ui/hud/sprites/countdown_overlay"
+		], ["three", "two", "one", "fight"], [
+			"ui/hud/sounds/countdown_three",
+			"ui/hud/sounds/countdown_two",
+			"ui/hud/sounds/countdown_one",
+			"ui/hud/sounds/countdown_fight"
+		]);
+		countdownOverlay.cameras = [uiCamera, levelCamera];
+		countdownOverlay.screenCenter();
+		add(countdownOverlay);
 
 		// Add the death overlay
 		deathOverlay = new NotificationOverlay(0.0, 0.0, "ui/hud/sprites/death_overlay", "ui/hud/sounds/death_overlay");
@@ -136,7 +154,10 @@ class PlayState extends FlxState
 		for (spawn in level.initialSpawns)
 			levelSpawn(spawn);
 
-		titleOverlay.display(data.name, data.subtitle, FlxColor.fromString(data.color));
+		titleOverlay.display({title: data.name, subtitle: data.subtitle, color: FlxColor.fromString(data.color)}, function()
+		{
+			countdownOverlay.display(null, null); // Display the fight countdown after the title
+		});
 	}
 
 	/** Use this function to add any entities. **/
@@ -226,6 +247,9 @@ class PlayState extends FlxState
 	/** Displays the death overlay and re-loads the play state. **/
 	public function deathTransition()
 	{
-		deathOverlay.display();
+		deathOverlay.display(null, function()
+		{
+			FlxG.switchState(new PlayState());
+		});
 	}
 }
