@@ -237,7 +237,7 @@ class PlayState extends FlxState
 	}
 
 	/** Creates and adds an entity based on the data from a level spawn. **/
-	function levelSpawn(spawn:LevelSpawn):Entity
+	public function levelSpawn(spawn:LevelSpawn):Entity
 	{
 		var x:Float = spawn.position[0];
 		if (spawn.randomizeX)

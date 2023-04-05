@@ -2,7 +2,12 @@
 function onLoaded(data:Dynamic)
 {
 	// Display the title
-	state.titleOverlay.display({title: data.name, subtitle: subtitle, color: colorString(titleColor)}, function()
+	state.titleOverlay.display({
+		title: data.name,
+		subtitle: subtitle,
+		color: colorString(titleColor),
+		style: "slow"
+	}, function()
 	{
 		// Display the fight countdown after the title
 		state.countdownOverlay.display(null, function()

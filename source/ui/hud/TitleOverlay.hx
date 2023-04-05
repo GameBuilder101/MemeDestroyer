@@ -1,5 +1,6 @@
 package ui.hud;
 
+import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
@@ -15,6 +16,9 @@ class TitleOverlay extends FlxSpriteGroup implements IOverlay
 
 	var upperLine:AssetSprite;
 	var lowerLine:AssetSprite;
+
+	/** The animation style. **/
+	var style:String;
 
 	/** A timer used to fade out after displaying. **/
 	var fadeOutTimer:FlxTimer;
@@ -44,44 +48,73 @@ class TitleOverlay extends FlxSpriteGroup implements IOverlay
 		fadeOutTimer = new FlxTimer();
 	}
 
-	/** Requires args title:String, subtitle:String, and color:FlxColor. **/
+	/** Requires args title:String, subtitle:String, color:FlxColor, and style:String. **/
 	public function display(args:Dynamic, onComplete:Void->Void)
 	{
 		this.onComplete = onComplete;
+		this.style = args.style;
 
 		fadeOutTimer.cancel();
+
+		var duration:Float = 1.5;
+		if (args.style == "fast")
+			duration = 0.75;
 
 		FlxTween.cancelTweensOf(title);
 		this.title.text = args.title;
 		this.title.color = args.color;
 		this.title.alpha = 0.0;
 		this.title.visible = true;
-		FlxTween.tween(this.title, {alpha: 1.0}, 1.5, {onComplete: onCompleteFadeIn});
+		FlxTween.tween(this.title, {alpha: 1.0}, duration, {onComplete: onCompleteFadeIn});
 
 		FlxTween.cancelTweensOf(subtitle);
 		this.subtitle.text = args.subtitle;
 		this.subtitle.color = args.color;
 		this.subtitle.alpha = 0.0;
 		this.subtitle.visible = true;
-		FlxTween.tween(this.subtitle, {alpha: 1.0}, 1.5);
+		FlxTween.tween(this.subtitle, {alpha: 1.0}, duration);
 
 		FlxTween.cancelTweensOf(upperLine);
-		upperLine.scale.x = 0.0;
 		upperLine.color = args.color;
 		upperLine.visible = true;
-		FlxTween.tween(upperLine, {"scale.x": 1.0}, 1.5, {ease: FlxEase.expoOut});
+		if (args.style == "fast")
+		{
+			upperLine.x = -upperLine.width;
+			upperLine.scale.x = 1.0;
+			FlxTween.tween(upperLine, {x: x}, duration, {ease: FlxEase.expoOut});
+		}
+		else
+		{
+			upperLine.x = x;
+			upperLine.scale.x = 0.0;
+			FlxTween.tween(upperLine, {"scale.x": 1.0}, duration, {ease: FlxEase.expoOut});
+		}
 
 		FlxTween.cancelTweensOf(lowerLine);
-		lowerLine.scale.x = 0.0;
 		lowerLine.color = args.color;
 		lowerLine.visible = true;
-		FlxTween.tween(lowerLine, {"scale.x": 1.0}, 1.5, {ease: FlxEase.expoOut});
+		if (args.style == "fast")
+		{
+			lowerLine.x = FlxG.width;
+			lowerLine.scale.x = 1.0;
+			FlxTween.tween(lowerLine, {x: x}, duration, {ease: FlxEase.expoOut});
+		}
+		else
+		{
+			lowerLine.x = x;
+			lowerLine.scale.x = 0.0;
+			FlxTween.tween(lowerLine, {"scale.x": 1.0}, duration, {ease: FlxEase.expoOut});
+		}
 	}
 
 	/** Called when the fade-in is finished. **/
 	function onCompleteFadeIn(tween:FlxTween)
 	{
-		fadeOutTimer.start(1.6, function(timer:FlxTimer)
+		var duration:Float = 1.6;
+		if (style == "fast")
+			duration = 0.0;
+
+		fadeOutTimer.start(duration, function(timer:FlxTimer)
 		{
 			// Fade out everything once the timer completes
 			FlxTween.tween(title, {alpha: 0.0}, 0.5, {onComplete: onCompleteFadeOut});
