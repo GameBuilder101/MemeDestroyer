@@ -57,7 +57,7 @@ class TitleOverlay extends FlxSpriteGroup implements IOverlay
 		fadeOutTimer.cancel();
 
 		var duration:Float = 1.5;
-		if (args.style == "fast")
+		if (style == "fast")
 			duration = 0.75;
 
 		FlxTween.cancelTweensOf(title);
@@ -76,8 +76,9 @@ class TitleOverlay extends FlxSpriteGroup implements IOverlay
 
 		FlxTween.cancelTweensOf(upperLine);
 		upperLine.color = args.color;
+		upperLine.alpha = 1.0;
 		upperLine.visible = true;
-		if (args.style == "fast")
+		if (style == "fast")
 		{
 			upperLine.x = -upperLine.width;
 			upperLine.scale.x = 1.0;
@@ -92,8 +93,9 @@ class TitleOverlay extends FlxSpriteGroup implements IOverlay
 
 		FlxTween.cancelTweensOf(lowerLine);
 		lowerLine.color = args.color;
+		lowerLine.alpha = 1.0;
 		lowerLine.visible = true;
-		if (args.style == "fast")
+		if (style == "fast")
 		{
 			lowerLine.x = FlxG.width;
 			lowerLine.scale.x = 1.0;
@@ -110,17 +112,25 @@ class TitleOverlay extends FlxSpriteGroup implements IOverlay
 	/** Called when the fade-in is finished. **/
 	function onCompleteFadeIn(tween:FlxTween)
 	{
-		var duration:Float = 1.6;
+		var duration:Float = 2.2;
 		if (style == "fast")
-			duration = 0.0;
+			duration = 1.0;
 
 		fadeOutTimer.start(duration, function(timer:FlxTimer)
 		{
 			// Fade out everything once the timer completes
 			FlxTween.tween(title, {alpha: 0.0}, 0.5, {onComplete: onCompleteFadeOut});
 			FlxTween.tween(subtitle, {alpha: 0.0}, 0.5);
-			FlxTween.tween(upperLine, {alpha: 0.0}, 0.5);
-			FlxTween.tween(lowerLine, {alpha: 0.0}, 0.5);
+			if (style == "fast")
+			{
+				FlxTween.tween(upperLine, {x: FlxG.width}, 0.5, {ease: FlxEase.expoIn});
+				FlxTween.tween(lowerLine, {x: -lowerLine.width}, 0.5, {ease: FlxEase.expoIn});
+			}
+			else
+			{
+				FlxTween.tween(upperLine, {alpha: 0.0}, 0.5);
+				FlxTween.tween(lowerLine, {alpha: 0.0}, 0.5);
+			}
 		});
 	}
 

@@ -48,7 +48,7 @@ function nextRound()
 		title: state.boss.name,
 		subtitle: "Round " + (currentRound + 1),
 		color: colorString(state.boss.getComponent("health").get("healthColor")),
-		style: "slow"
+		style: "fast"
 	}, null);
 }
 

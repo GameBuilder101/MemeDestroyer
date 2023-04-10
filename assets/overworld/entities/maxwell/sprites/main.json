@@ -1,0 +1,35 @@
+{
+    "animations": [
+        {
+            "name": "idle",
+            "atlasPrefix": "idle",
+            "frameRate": 4,
+            "looped": true,
+            "offset": [
+                16.0,
+                16.0
+            ]
+        },
+        {
+            "name": "walk",
+            "atlasPrefix": "move",
+            "frameRate": 4,
+            "looped": true,
+            "offset": [
+                16.0,
+                16.0
+            ]
+        },
+        {
+            "name": "spin",
+            "atlasPrefix": "spin",
+            "frameRate": 16,
+            "looped": true,
+            "offset": [
+                16.0,
+                16.0
+            ]
+        }
+    ],
+    "defaultAnim": "idle"
+}
