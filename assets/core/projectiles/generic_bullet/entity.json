@@ -1,0 +1,24 @@
+{
+    "name": "Bullet",
+    "tags": [],
+    "components": [
+        "projectiles/_shared/projectile",
+        "entities/_shared/damager"
+    ],
+    "variables": [
+        {
+            "name": "fireSpeed",
+            "value": 4.0
+        },
+        {
+            "name": "damage",
+            "value": -1.0
+        },
+        {
+            "name": "riposteMultiplier",
+            "value": 2.0
+        }
+    ],
+    "spriteID": "projectiles/generic_bullet/sprites/main",
+    "sortingPriority": 32
+}

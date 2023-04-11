@@ -6,6 +6,7 @@
     "components": [
         "entities/_shared/movement",
         "entities/_shared/health",
+        "entities/_shared/shooter",
         "entities/_shared/damager",
         "entities/_shared/base_ai",
         "entities/maxwell/ai"
@@ -14,6 +15,10 @@
         {
             "name": "walkSpeed",
             "value": 60.0
+        },
+        {
+            "name": "runSpeed",
+            "value": 130.0
         },
         {
             "name": "footstepSoundID",
@@ -54,6 +59,10 @@
         {
             "name": "dieSoundID",
             "value": "entities/maxwell/sounds/die"
+        },
+        {
+            "name": "riposteDuration",
+            "value": 0.3
         },
         {
             "name": "contactDamage",

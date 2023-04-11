@@ -12,15 +12,30 @@ function onLoaded()
 
 function onUpdate(elapsed:Float)
 {
+	var touchedEdge:Int = -1;
 	// Keep the entity in world bounds
 	if (this.x < FlxG.worldBounds.left)
+	{
 		this.x = FlxG.worldBounds.left;
+		touchedEdge = 0;
+	}
 	else if (this.x > FlxG.worldBounds.right - this.mainSprite.width)
+	{
 		this.x = FlxG.worldBounds.right - this.mainSprite.width;
+		touchedEdge = 1;
+	}
 	if (this.y < FlxG.worldBounds.top)
+	{
 		this.y = FlxG.worldBounds.top;
+		touchedEdge = 2;
+	}
 	else if (this.y > FlxG.worldBounds.bottom - this.mainSprite.height)
+	{
 		this.y = FlxG.worldBounds.bottom - this.mainSprite.height;
+		touchedEdge = 3;
+	}
+	if (touchedEdge >= 0)
+		callAll("onTouchedEdge", [touchedEdge, elapsed]);
 
 	// Animation logic
 	if ((animation.name == "run" || animation.name == "walk" || animation.name == "idle") || animation.finished)
