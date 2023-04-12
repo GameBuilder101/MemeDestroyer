@@ -52,10 +52,16 @@ function getFacingVector():Point
 	return new Point(FlxMath.fastCos(rad), FlxMath.fastSin(rad));
 }
 
-// Returns a perfect vector towards the target
+// Returns a perfect angle towards the target
+function getTargetFacing():Float
+{
+	return FlxAngle.angleBetween(this, target, true);
+}
+
+// Returns a perfect vector towards the target (based on the target facing angle)
 function getTargetFacingVector():Point
 {
-	var rad:Float = FlxAngle.asRadians(FlxAngle.angleBetween(this, target, true));
+	var rad:Float = FlxAngle.asRadians(getTargetFacing());
 	return new Point(FlxMath.fastCos(rad), FlxMath.fastSin(rad));
 }
 

@@ -108,8 +108,7 @@ function dodge(direction:Point)
 
 	health.call("setInvulnerable", [true]);
 
-	if (animation.exists("dodge"))
-		animation.play("dodge", true);
+	animation.play("dodge", true);
 	dodgeParticle.setPosition(this.x, this.y);
 	dodgeParticle.animation.play("spawn", true);
 	dodgeParticle.visible = true;

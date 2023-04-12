@@ -12,7 +12,7 @@
         },
         {
             "name": "walk",
-            "atlasPrefix": "move",
+            "atlasPrefix": "walk",
             "frameRate": 4,
             "looped": true,
             "offset": [
@@ -21,8 +21,8 @@
             ]
         },
         {
-            "name": "spin",
-            "atlasPrefix": "spin",
+            "name": "run",
+            "atlasPrefix": "run",
             "frameRate": 16,
             "looped": true,
             "offset": [

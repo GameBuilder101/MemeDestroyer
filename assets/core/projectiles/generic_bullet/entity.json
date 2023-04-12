@@ -8,7 +8,7 @@
     "variables": [
         {
             "name": "fireSpeed",
-            "value": 4.0
+            "value": 6.0
         },
         {
             "name": "damage",
