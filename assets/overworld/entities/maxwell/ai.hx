@@ -8,9 +8,12 @@ var currentAttackTime:Float = -1.0;
 
 // Spin attack variables
 var spinDir:Point;
+var spinSound:AssetSound;
+var bounceSound:AssetSound;
 
 // Shoot attack variables
 var shootCount:Int;
+var shootSound:AssetSound;
 
 // Component caches
 var movement:GameScript;
@@ -28,6 +31,11 @@ function onLoaded()
 	state.effects.add(warningGlint);
 
 	warningGlintSound = AssetSoundRegistry.getAsset("entities/_shared/sounds/warning_glint");
+
+	spinSound = AssetSoundRegistry.getAsset("entities/maxwell/sounds/spin");
+	bounceSound = AssetSoundRegistry.getAsset("entities/maxwell/sounds/bounce");
+
+	shootSound = AssetSoundRegistry.getAsset("entities/maxwell/sounds/shoot");
 }
 
 function onUpdate(elapsed:Float)
@@ -79,9 +87,8 @@ function onUpdate(elapsed:Float)
 
 function startSpinAttack()
 {
-	currentAttackTime = 3.0;
+	currentAttackTime = 4.0;
 
-	spinDir = baseAI.call("getFacingVector");
 	// Stop moving
 	movement.call("move", [new Point(0.0, 0.0), false, 0.0]);
 
@@ -95,9 +102,14 @@ function startSpinAttack()
 function updateSpinAttack(elapsed:Float)
 {
 	// Give time for the player to prepare before spinning
-	if (currentAttackTime > 2.0)
+	if (currentAttackTime > 3.0)
 	{
 		currentAttackTime -= elapsed;
+		if (currentAttackTime <= 3.0)
+		{
+			spinDir = baseAI.call("getTargetFacingVector");
+			spinSound.play();
+		}
 		return;
 	}
 
@@ -117,6 +129,7 @@ function onTouchedEdge(touchedEdge:Int, elapsed:Float)
 	else
 		spinDir.point.y *= -1.0;
 
+	bounceSound.play();
 	state.levelCamera.shake(0.005, 0.1);
 }
 
@@ -139,5 +152,6 @@ function updateShootAttack(elapsed:Float)
 	{
 		shooter.call("fire", ["projectiles/generic_bullet", baseAI.call("getTargetFacing"), false]);
 		shootCount++;
+		shootSound.play();
 	}
 }

@@ -6,6 +6,5 @@
             "frameRate": 8,
             "looped": false
         }
-    ],
-    "defaultAnim": "spawn"
+    ]
 }

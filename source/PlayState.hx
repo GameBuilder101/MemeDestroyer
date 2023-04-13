@@ -97,7 +97,7 @@ class PlayState extends FlxState
 		add(titleOverlay);
 
 		// Add the countdown overlay
-		countdownOverlay = new CountdownOverlay(0.0, 0.0, 0.6, [
+		countdownOverlay = new CountdownOverlay(0.0, 0.0, 0.4, [
 			"ui/hud/sprites/countdown_overlay",
 			"ui/hud/sprites/countdown_overlay",
 			"ui/hud/sprites/countdown_overlay",

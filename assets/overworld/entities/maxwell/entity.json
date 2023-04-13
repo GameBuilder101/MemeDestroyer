@@ -14,7 +14,7 @@
     "variables": [
         {
             "name": "walkSpeed",
-            "value": 60.0
+            "value": 100.0
         },
         {
             "name": "runSpeed",
