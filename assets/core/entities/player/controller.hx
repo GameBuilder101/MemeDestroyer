@@ -40,7 +40,6 @@ function onUpdate(elapsed:Float)
 		{
 			state.removeEntity(this);
 			state.spawn("entities/death_grave", this.x, this.y);
-			state.deathTransition();
 		}
 		return;
 	}

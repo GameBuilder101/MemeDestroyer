@@ -177,6 +177,7 @@ class Script
 		set("ShaderTypeRegistry", gbc.graphics.ShaderTypeRegistry);
 		set("AssetMusic", gbc.sound.AssetMusic);
 		set("AssetMusicRegistry", gbc.sound.AssetMusicRegistry);
+		set("MusicManager", gbc.sound.MusicManager);
 		set("AssetSound", gbc.sound.AssetSound);
 		set("AssetSoundRegistry", gbc.sound.AssetSoundRegistry);
 	}

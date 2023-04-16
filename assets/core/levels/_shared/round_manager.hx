@@ -6,9 +6,26 @@ var currentRound:Int = -1;
 // The main theme music for the level
 var mainTheme:AssetMusic;
 
+// True when the player has died and the level is ending
+var deathTransitioning:Bool = false;
+
 function onLoaded()
 {
 	mainTheme = AssetMusicRegistry.getAsset(mainThemeID);
+}
+
+function onUpdate(elapsed:Float)
+{
+	if (state.player == null && !deathTransitioning)
+	{
+		deathTransitioning = true;
+
+		MusicManager.fadeOut(1.0);
+		state.deathOverlay.display(null, function()
+		{
+			FlxG.switchState(new PlayState());
+		});
+	}
 }
 
 // Start the rounds
@@ -19,7 +36,7 @@ function start(bossList:Array<Dynamic>)
 	bosses = bossList;
 	nextRound(); // Start the first round
 
-	mainTheme.play();
+	MusicManager.transition(mainTheme, 0.0);
 }
 
 // End the rounds

@@ -203,6 +203,11 @@ class PlayState extends FlxState
 	/** Use this function before destroying an entity to remove it. **/
 	public function removeEntity(entity:Entity, kill:Bool = true)
 	{
+		if (entity == player)
+			player = null;
+		if (entity == boss)
+			boss = null;
+
 		entities.remove(entity, true);
 		for (tag in entity.tags)
 			entitiesByTag[tag].remove(entity);
@@ -265,15 +270,6 @@ class PlayState extends FlxState
 			{
 				bossHealth.visible = false;
 			}
-		});
-	}
-
-	/** Displays the death overlay and re-loads the play state. **/
-	public function deathTransition()
-	{
-		deathOverlay.display(null, function()
-		{
-			FlxG.switchState(new PlayState());
 		});
 	}
 }
