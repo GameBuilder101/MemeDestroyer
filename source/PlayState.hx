@@ -125,7 +125,7 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
-		components.callAll("onUpdate", [elapsed]);
+		components.callAll("onLevelUpdate", [elapsed]);
 
 		entities.sort(function(order:Int, entity1:Entity, entity2:Entity):Int
 		{

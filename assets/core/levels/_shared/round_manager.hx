@@ -14,9 +14,9 @@ function onLoaded()
 	mainTheme = AssetMusicRegistry.getAsset(mainThemeID);
 }
 
-function onUpdate(elapsed:Float)
+function onLevelUpdate(elapsed:Float)
 {
-	if (state.player == null && !deathTransitioning)
+	if (getIsPlaying() && state.player == null && !deathTransitioning)
 	{
 		deathTransitioning = true;
 
