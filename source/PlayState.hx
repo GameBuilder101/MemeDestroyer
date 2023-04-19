@@ -181,7 +181,7 @@ class PlayState extends FlxState
 		}
 
 		components.startAll();
-		components.callAll("onLoaded", [data]);
+		components.callAll("onLoaded");
 	}
 
 	/** Use this function to add any entities. **/

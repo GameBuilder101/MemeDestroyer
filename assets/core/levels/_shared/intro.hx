@@ -1,9 +1,9 @@
-// Requires variables subtitle:String, titleColor:String
-function onLoaded(data:Dynamic)
+// Requires variables title:String, subtitle:String, titleColor:String
+function onLoaded()
 {
 	// Display the title
 	state.titleOverlay.display({
-		title: data.name,
+		title: title,
 		subtitle: subtitle,
 		color: colorString(titleColor),
 		style: "slow"
@@ -12,7 +12,7 @@ function onLoaded(data:Dynamic)
 		// Display the fight countdown after the title
 		state.countdownOverlay.display(null, function()
 		{
-			getComponent("round_manager").call("start", [data.bosses]);
+			getComponent("round_manager").call("start");
 		});
 	});
 

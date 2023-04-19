@@ -6,8 +6,7 @@ typedef LevelData =
 	components:Array<String>,
 	variables:Array<Dynamic>,
 	backgroundSpriteID:String,
-	initialSpawns:Array<LevelSpawn>,
-	bosses:Array<LevelSpawn>
+	initialSpawns:Array<LevelSpawn>
 }
 
 typedef LevelSpawn =

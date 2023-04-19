@@ -16,6 +16,7 @@ import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxGradient;
 import flixel.util.FlxStringUtil;
 
+// This is a fixed version of FlxBar which works with Neko
 // TODO: better handling bars with borders (don't take border into account while drawing its front).
 
 /**

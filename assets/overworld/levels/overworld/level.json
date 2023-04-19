@@ -2,10 +2,32 @@
     "name": "The Overworld",
     "components": [
         "levels/_shared/player_spawn",
-        "levels/_shared/intro",
-        "levels/_shared/round_manager"
+        "levels/_shared/round_manager",
+        "levels/_shared/intro"
     ],
     "variables": [
+        {
+            "name": "bosses",
+            "value": [
+                {
+                    "id": "entities/maxwell",
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "randomizeX": true,
+                    "randomizeY": false
+                }
+            ]
+        },
+        {
+            "name": "mainThemeID",
+            "value": "levels/overworld/music/main_theme"
+        },
+        {
+            "name": "title",
+            "value": "The Overworld"
+        },
         {
             "name": "subtitle",
             "value": "Spawnpoint"
@@ -13,10 +35,6 @@
         {
             "name": "titleColor",
             "value": "#d3f04c"
-        },
-        {
-            "name": "mainThemeID",
-            "value": "levels/overworld/music/main_theme"
         }
     ],
     "backgroundSpriteID": "levels/overworld/sprites/main",
@@ -46,17 +64,6 @@
                 200.0
             ],
             "randomizeX": false,
-            "randomizeY": false
-        }
-    ],
-    "bosses": [
-        {
-            "id": "entities/maxwell",
-            "position": [
-                0.0,
-                0.0
-            ],
-            "randomizeX": true,
             "randomizeY": false
         }
     ]

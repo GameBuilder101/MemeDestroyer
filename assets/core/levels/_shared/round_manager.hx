@@ -1,6 +1,5 @@
-// Requires variables mainThemeID:String
+// Requires variables bosses:Array<Dynamic>, mainThemeID:String
 
-var bosses:Array<Dynamic>;
 var currentRound:Int = -1;
 
 // The main theme music for the level
@@ -29,11 +28,10 @@ function onLevelUpdate(elapsed:Float)
 }
 
 // Start the rounds
-function start(bossList:Array<Dynamic>)
+function start()
 {
 	if (getIsPlaying()) // If already playing
 		end();
-	bosses = bossList;
 	nextRound(); // Start the first round
 
 	MusicManager.transition(mainTheme, 0.0);

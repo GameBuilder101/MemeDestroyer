@@ -1,0 +1,22 @@
+{
+    "name": "Map",
+    "components": [
+        "levels/map/manager"
+    ],
+    "variables": [
+        {
+            "name": "levels",
+            "value": [
+                {
+                    "id": "levels/overworld",
+                    "position": [
+                        320.0,
+                        2000.0
+                    ]
+                }
+            ]
+        }
+    ],
+    "backgroundSpriteID": "levels/map/sprites/main",
+    "initialSpawns": []
+}
