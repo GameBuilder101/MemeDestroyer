@@ -26,6 +26,7 @@ function onLoaded()
 		case "player":
 			state.playerHealth.setLabel(this.name);
 			state.playerHealth.setIndicatorColor(colorString(healthColor));
+			state.showPlayerHealth();
 		case "boss":
 			state.bossHealth.setLabel(this.name);
 			state.bossHealth.setIndicatorColor(colorString(healthColor));
@@ -40,8 +41,14 @@ function onLoaded()
 
 function onRemovedFromPlay()
 {
-	if (healthType == "boss")
-		state.hideBossHealth();
+	switch (healthType)
+	{
+		case "player":
+			state.hidePlayerHealth();
+		case "boss":
+			state.hideBossHealth();
+		default:
+	}
 }
 
 function onUpdate(elapsed:Float)

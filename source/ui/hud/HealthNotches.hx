@@ -26,6 +26,7 @@ class HealthNotches extends FlxSpriteGroup implements IIndicator
 	public function new(x:Float = 0.0, y:Float = 0.0)
 	{
 		super(x, y);
+		scrollFactor.set(0.0, 0.0);
 
 		label = new FlxText(FlxG.width / 2.0, 0.0, FlxG.width);
 		label.setFormat("Edit Undo BRK", 20, FlxColor.WHITE, CENTER, SHADOW, FlxColor.BLACK);

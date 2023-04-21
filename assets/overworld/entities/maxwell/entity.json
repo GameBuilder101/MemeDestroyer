@@ -73,5 +73,9 @@
             "value": 180.0
         }
     ],
+    "hitboxSize": [
+        48.0,
+        48.0
+    ],
     "spriteID": "entities/maxwell/sprites/main"
 }

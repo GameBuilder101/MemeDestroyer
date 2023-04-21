@@ -1,0 +1,13 @@
+{
+    "name": "Meme Destroyer",
+    "tags": [
+        "player"
+    ],
+    "components": [],
+    "variables": [],
+    "hitboxSize": [
+        32.0,
+        48.0
+    ],
+    "spriteID": "entities/player/sprites/main"
+}

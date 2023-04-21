@@ -1,0 +1,23 @@
+{
+    "animations": [
+        {
+            "name": "locked",
+            "atlasPrefix": "locked",
+            "frameRate": 8,
+            "looped": true
+        },
+        {
+            "name": "idle",
+            "atlasPrefix": "idle",
+            "frameRate": 8,
+            "looped": true
+        },
+        {
+            "name": "interactable",
+            "atlasPrefix": "interactable",
+            "frameRate": 8,
+            "looped": true
+        }
+    ],
+    "defaultAnim": "locked"
+}

@@ -20,9 +20,6 @@ import ui.hud.TitleOverlay;
 
 class PlayState extends FlxState
 {
-	public var levelCamera(default, null):FlxCamera;
-	public var uiCamera(default, null):FlxCamera;
-
 	/** The currently-loaded level data. **/
 	public var level(default, null):LevelData;
 
@@ -61,10 +58,6 @@ class PlayState extends FlxState
 	override function create()
 	{
 		super.create();
-		FlxG.worldBounds.set(0.0, 0.0, FlxG.width, FlxG.height);
-		levelCamera = FlxG.camera;
-		uiCamera = new FlxCamera();
-
 		components = new ComponentSystem();
 
 		background = new AssetSprite(0.0, 0.0);
@@ -78,13 +71,12 @@ class PlayState extends FlxState
 
 		// Add the player health
 		playerHealth = new HealthNotches();
-		playerHealth.cameras = [uiCamera, levelCamera];
 		playerHealth.setPosition(FlxG.width / 2.0, -20.0);
+		playerHealth.visible = false; // The player health starts hidden by default
 		add(playerHealth);
 
 		// Add the boss health
 		bossHealth = new HealthBar();
-		bossHealth.cameras = [uiCamera, levelCamera];
 		bossHealth.screenCenter();
 		bossHealth.y = FlxG.height;
 		bossHealth.visible = false; // The boss health starts hidden by default
@@ -92,7 +84,6 @@ class PlayState extends FlxState
 
 		// Add the title overlay
 		titleOverlay = new TitleOverlay(0.0, 0.0);
-		titleOverlay.cameras = [uiCamera, levelCamera];
 		titleOverlay.screenCenter();
 		add(titleOverlay);
 
@@ -108,17 +99,15 @@ class PlayState extends FlxState
 			"ui/hud/sounds/countdown_one",
 			"ui/hud/sounds/countdown_fight"
 		]);
-		countdownOverlay.cameras = [uiCamera, levelCamera];
 		countdownOverlay.screenCenter();
 		add(countdownOverlay);
 
 		// Add the death overlay
 		deathOverlay = new NotificationOverlay(0.0, 0.0, "ui/hud/sprites/death_overlay", "ui/hud/sounds/death_overlay");
-		deathOverlay.cameras = [uiCamera, levelCamera];
 		deathOverlay.screenCenter();
 		add(deathOverlay);
 
-		loadLevel(null, "levels/overworld");
+		loadLevel(null, "levels/map");
 	}
 
 	override function update(elapsed:Float)
@@ -143,6 +132,8 @@ class PlayState extends FlxState
 
 	public function loadLevel(data:LevelData = null, id:String = null)
 	{
+		components.callAll("onUnloaded");
+
 		// Find the level
 		if (data == null && id != null)
 			data = LevelRegistry.getAsset(id);
@@ -162,6 +153,7 @@ class PlayState extends FlxState
 
 		// Load the background sprite
 		background.loadFromID(level.backgroundSpriteID);
+		FlxG.worldBounds.set(background.x, background.y, background.width, background.height);
 
 		// Remove existing entities
 		for (entity in entities.members)
@@ -251,6 +243,26 @@ class PlayState extends FlxState
 		if (spawn.randomizeY)
 			y = Math.random() * FlxG.height;
 		return this.spawn(spawn.id, x, y);
+	}
+
+	/** Plays an animation to show the player health bar. **/
+	public function showPlayerHealth()
+	{
+		playerHealth.visible = true;
+		FlxTween.cancelTweensOf(playerHealth);
+		FlxTween.linearMotion(playerHealth, playerHealth.x, -20.0 - playerHealth.height, playerHealth.x, -20.0);
+	}
+
+	/** Plays an animation to hide the player health bar. **/
+	public function hidePlayerHealth()
+	{
+		FlxTween.cancelTweensOf(playerHealth);
+		FlxTween.linearMotion(playerHealth, playerHealth.x, -20.0, playerHealth.x, -20.0 - playerHealth.height, 1.0, true, {
+			onComplete: function(tween:FlxTween)
+			{
+				playerHealth.visible = false;
+			}
+		});
 	}
 
 	/** Plays an animation to show the boss health bar. **/

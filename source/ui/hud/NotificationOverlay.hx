@@ -19,6 +19,7 @@ class NotificationOverlay extends FlxSpriteGroup implements IOverlay
 	public function new(x:Float = 0.0, y:Float = 0.0, spriteID:String = "", soundID:String = "")
 	{
 		super(x, y);
+		scrollFactor.set(0.0, 0.0);
 
 		mainSprite = new AssetSprite(0.0, 0.0, null, spriteID);
 		add(mainSprite);

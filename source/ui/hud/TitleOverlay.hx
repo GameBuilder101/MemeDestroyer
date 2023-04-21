@@ -28,6 +28,7 @@ class TitleOverlay extends FlxSpriteGroup implements IOverlay
 	public function new(x:Float = 0.0, y:Float = 0.0)
 	{
 		super(x, y);
+		scrollFactor.set(0.0, 0.0);
 
 		upperLine = new AssetSprite(0.0, 0.0, "ui/hud/sprites/title_line");
 		upperLine.visible = false;

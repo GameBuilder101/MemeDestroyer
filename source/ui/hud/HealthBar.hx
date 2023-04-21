@@ -26,6 +26,7 @@ class HealthBar extends FlxSpriteGroup implements IIndicator
 	public function new(x:Float = 0.0, y:Float = 0.0)
 	{
 		super(x, y);
+		scrollFactor.set(0.0, 0.0);
 
 		back = new AssetSprite(0.0, 20.0, null, "ui/hud/sprites/health_bar_back");
 		add(back);

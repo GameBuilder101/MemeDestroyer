@@ -130,7 +130,7 @@ function onTouchedEdge(touchedEdge:Int, elapsed:Float)
 		spinDir.point.y *= -1.0;
 
 	bounceSound.play();
-	state.levelCamera.shake(0.005, 0.1);
+	FlxG.camera.shake(0.005, 0.1);
 }
 
 function startShootAttack()

@@ -12,6 +12,19 @@
                     "position": [
                         320.0,
                         2000.0
+                    ],
+                    "connections": [
+                        1
+                    ]
+                },
+                {
+                    "id": "levels/overworld",
+                    "position": [
+                        200.0,
+                        1800.0
+                    ],
+                    "connections": [
+                        0
                     ]
                 }
             ]

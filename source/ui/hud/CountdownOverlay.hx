@@ -29,6 +29,7 @@ class CountdownOverlay extends FlxSpriteGroup implements IOverlay
 	public function new(x:Float = 0.0, y:Float = 0.0, delayDuration:Float, spriteIDs:Array<String>, animations:Array<String>, soundIDs:Array<String>)
 	{
 		super(x, y);
+		scrollFactor.set(0.0, 0.0);
 
 		// Create all needed sprites
 		var i:Int = 0;
