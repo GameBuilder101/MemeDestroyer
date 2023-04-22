@@ -107,7 +107,7 @@ class PlayState extends FlxState
 		deathOverlay.screenCenter();
 		add(deathOverlay);
 
-		loadLevel(null, "levels/map");
+		loadLevel(null, "levels/overworld");
 	}
 
 	override function update(elapsed:Float)
