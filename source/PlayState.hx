@@ -1,7 +1,6 @@
 package;
 
 import entity.Entity;
-import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
@@ -107,7 +106,7 @@ class PlayState extends FlxState
 		deathOverlay.screenCenter();
 		add(deathOverlay);
 
-		loadLevel(null, "levels/overworld");
+		loadLevel(null, "levels/map");
 	}
 
 	override function update(elapsed:Float)

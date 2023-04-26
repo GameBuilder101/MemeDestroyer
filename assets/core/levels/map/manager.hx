@@ -21,10 +21,11 @@ function onLoaded()
 function onLevelUpdate(elapsed:Float)
 {
 	// Make the camera follow the player
-	FlxG.camera.y = -player.y + FlxG.camera.height / 2.0;
+	FlxG.camera.scroll.y = player.y - FlxG.camera.height / 2.0;
+
 	// Stop the camera from going past the map
-	if (FlxG.camera.y < -(state.background.height - FlxG.camera.height))
-		FlxG.camera.y = -(state.background.height - FlxG.camera.height);
-	else if (FlxG.camera.y > 0.0)
-		FlxG.camera.y = 0.0;
+	if (FlxG.camera.scroll.y < 0.0)
+		FlxG.camera.scroll.y = 0.0;
+	else if (FlxG.camera.scroll.y > state.background.height - FlxG.camera.height)
+		FlxG.camera.scroll.y = state.background.height - FlxG.camera.height;
 }

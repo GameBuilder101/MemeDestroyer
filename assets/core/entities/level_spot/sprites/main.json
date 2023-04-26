@@ -4,19 +4,31 @@
             "name": "locked",
             "atlasPrefix": "locked",
             "frameRate": 8,
-            "looped": true
+            "looped": true,
+            "offset": [
+                32.0,
+                0.0
+            ]
         },
         {
             "name": "idle",
             "atlasPrefix": "idle",
             "frameRate": 8,
-            "looped": true
+            "looped": true,
+            "offset": [
+                32.0,
+                0.0
+            ]
         },
         {
             "name": "interactable",
             "atlasPrefix": "interactable",
             "frameRate": 8,
-            "looped": true
+            "looped": true,
+            "offset": [
+                32.0,
+                0.0
+            ]
         }
     ],
     "defaultAnim": "locked"
