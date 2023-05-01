@@ -1,5 +1,8 @@
 // Requires variables levels:Array<Dynamic>
 var player:Entity;
+
+// The index of the current level
+var currentLevel:Int = 0;
 var spots:Array;
 
 function onLoaded()
@@ -20,6 +23,15 @@ function onLoaded()
 
 function onLevelUpdate(elapsed:Float)
 {
+	if (Controls.moveUp.check() && levels[currentLevel].connections[0] >= 0)
+		currentLevel = levels[currentLevel].connections[0];
+	if (Controls.moveDown.check())
+		direction.point.y++;
+	if (Controls.moveLeft.check())
+		direction.point.x--;
+	if (Controls.moveRight.check())
+		direction.point.x++;
+
 	// Make the camera follow the player
 	FlxG.camera.scroll.y = player.y - FlxG.camera.height / 2.0;
 
