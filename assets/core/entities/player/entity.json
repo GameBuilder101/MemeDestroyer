@@ -8,7 +8,8 @@
         "entities/_shared/health",
         "entities/_shared/shooter",
         "entities/player/equipper",
-        "entities/player/controller"
+        "entities/player/controller",
+        "entities/player/saver"
     ],
     "variables": [
         {

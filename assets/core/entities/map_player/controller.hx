@@ -1,5 +1,6 @@
 var moving:Bool;
-var moveTarget:Point;
+var movePosition:Point;
+var initialPosition:Point;
 
 // Component caches
 var movement:GameScript;
@@ -14,18 +15,23 @@ function onUpdate(elapsed:Float)
 	if (!moving)
 		return;
 
-	var angle:Float = FlxAngle.angleBetweenPoint(this, moveTarget.point, true);
+	var position = new Point(this.x, this.y);
+	var angle:Float = position.radiansTo(movePosition);
 	var direction:Point = new Point(FlxMath.fastCos(angle), FlxMath.fastSin(angle));
 	movement.call("move", [direction, false, elapsed]);
-	if (this.x > moveTarget.point.x - 8.0 && this.x < moveTarget.point.x + 8.0 && this.y > moveTarget.point.y - 8.0 && this.y < moveTarget.point.y + 8.0)
+	// If the entity has moved beyond the target position
+	if (position.dist(initialPosition) > movePosition.dist(initialPosition))
 	{
-		moving = false; // Stop moving when within decent range of the target
-		movement.call("move", [new Point(0.0, 0.0), false, 0.0]);
+		moving = false;
+		this.x = movePosition.getX();
+		this.y = movePosition.getY();
+		movement.call("move", [new Point(0.0, 0.0), false, 0.0]); // Stop moving
 	}
 }
 
 function moveTo(position:Point)
 {
 	moving = true;
-	moveTarget = position;
+	movePosition = position;
+	initialPosition = new Point(this.x, this.y);
 }

@@ -6,8 +6,8 @@
             "frameRate": 8,
             "looped": true,
             "offset": [
-                32.0,
-                0.0
+                16.0,
+                8.0
             ]
         },
         {
@@ -16,8 +16,8 @@
             "frameRate": 8,
             "looped": true,
             "offset": [
-                32.0,
-                0.0
+                16.0,
+                8.0
             ]
         },
         {
@@ -26,8 +26,8 @@
             "frameRate": 8,
             "looped": true,
             "offset": [
-                32.0,
-                0.0
+                16.0,
+                8.0
             ]
         }
     ],

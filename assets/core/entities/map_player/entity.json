@@ -1,7 +1,7 @@
 {
     "name": "Meme Destroyer",
     "tags": [
-        "player"
+        "map_player"
     ],
     "components": [
         "entities/_shared/movement",
@@ -10,7 +10,7 @@
     "variables": [
         {
             "name": "walkSpeed",
-            "value": 180.0
+            "value": 300.0
         },
         {
             "name": "footstepSoundID",

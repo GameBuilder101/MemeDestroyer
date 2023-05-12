@@ -14,7 +14,6 @@ function onLoaded()
 	for (level in levels)
 	{
 		spot = state.spawn("entities/level_spot", level.position[0], level.position[1]);
-		spot.getComponent("spot").set("level", LevelRegistry.getAsset(level.id));
 		spots.push(spot);
 	}
 
@@ -23,14 +22,22 @@ function onLoaded()
 
 function onLevelUpdate(elapsed:Float)
 {
+	var prevLevel:Int = currentLevel;
 	if (Controls.moveUp.check() && levels[currentLevel].connections[0] >= 0)
 		currentLevel = levels[currentLevel].connections[0];
-	if (Controls.moveDown.check())
-		direction.point.y++;
-	if (Controls.moveLeft.check())
-		direction.point.x--;
-	if (Controls.moveRight.check())
-		direction.point.x++;
+	if (Controls.moveDown.check() && levels[currentLevel].connections[1] >= 0)
+		currentLevel = levels[currentLevel].connections[1];
+	if (Controls.moveLeft.check() && levels[currentLevel].connections[2] >= 0)
+		currentLevel = levels[currentLevel].connections[2];
+	if (Controls.moveRight.check() && levels[currentLevel].connections[3] >= 0)
+		currentLevel = levels[currentLevel].connections[3];
+
+	if (currentLevel != prevLevel)
+	{
+		spots[prevLevel].mainSprite.animation.play("locked");
+		spots[currentLevel].mainSprite.animation.play("interactable");
+		player.getComponent("controller").call("moveTo", [new Point(spots[currentLevel].x, spots[currentLevel].y)]);
+	}
 
 	// Make the camera follow the player
 	FlxG.camera.scroll.y = player.y - FlxG.camera.height / 2.0;

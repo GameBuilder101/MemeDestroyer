@@ -4,9 +4,13 @@ import flixel.FlxG;
 import gbc.Saver;
 import gbc.input.OverridableAction;
 
+using StringTools;
+
 /** Allows for an edit-able control scheme system. **/
 class Controls extends Saver<Array<Dynamic>>
 {
+	static inline final DEFAULT_SAVE_PATH:String = "controls";
+
 	public static var instance:Controls = new Controls();
 
 	public static var moveUp(default, null):OverridableAction;
@@ -43,11 +47,6 @@ class Controls extends Saver<Array<Dynamic>>
 		super();
 	}
 
-	function getSaverID():String
-	{
-		return "controls";
-	}
-
 	function getSaverMethod():SaverMethod
 	{
 		return JSON;
@@ -61,16 +60,22 @@ class Controls extends Saver<Array<Dynamic>>
 		return data;
 	}
 
-	override function save()
+	override function save(path:String = null)
 	{
+		if (path == null || path == "")
+			path = DEFAULT_SAVE_PATH;
+
 		for (i in 0...actions.length)
 			data[i] = actions[i].toSave();
-		super.save();
+		super.save(path);
 	}
 
-	override function load()
+	override function load(path:String = null)
 	{
-		super.load();
+		if (path == null || path == "")
+			path = DEFAULT_SAVE_PATH;
+
+		super.load(path);
 		for (i in 0...actions.length)
 			actions[i].loadSave(data[i]);
 	}

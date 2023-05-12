@@ -73,7 +73,7 @@ function move(direction:Point, running:Bool, elapsed:Float)
 {
 	isWalking = false;
 	isRunning = false;
-	if (direction.point.x == 0.0 && direction.point.y == 0.0)
+	if (direction.getX() == 0.0 && direction.getY() == 0.0)
 		return;
 	isWalking = !running;
 	isRunning = running;
@@ -81,17 +81,17 @@ function move(direction:Point, running:Bool, elapsed:Float)
 	direction.normalize(); // Prevent diagonal movement from being faster
 	if (running)
 	{
-		this.x += direction.point.x * runSpeed * elapsed;
-		this.y += direction.point.y * runSpeed * elapsed;
+		this.x += direction.getX() * runSpeed * elapsed;
+		this.y += direction.getY() * runSpeed * elapsed;
 	}
 	else
 	{
-		this.x += direction.point.x * walkSpeed * elapsed;
-		this.y += direction.point.y * walkSpeed * elapsed;
+		this.x += direction.getX() * walkSpeed * elapsed;
+		this.y += direction.getY() * walkSpeed * elapsed;
 	}
 
-	if (direction.point.x != 0.0)
-		this.flipX = direction.point.x < 0.0;
+	if (direction.getX() != 0.0)
+		this.flipX = direction.getX() < 0.0;
 
 	onUpdate(elapsed);
 }

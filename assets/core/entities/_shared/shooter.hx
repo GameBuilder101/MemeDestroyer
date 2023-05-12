@@ -29,5 +29,5 @@ function fire(id:String, angle:Float, riposte:Bool = false)
 	// If the entity were removed at some point, this makes sure it gets added back
 	state.addEntity(target);
 
-	target.getComponent("projectile").call("fire", [team, this.x, this.y, angle, riposte]);
+	target.getComponent("projectile").call("fire", [team, new Point(this.x, this.y), angle, riposte]);
 }

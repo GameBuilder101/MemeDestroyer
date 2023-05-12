@@ -1,7 +1,6 @@
 // Requires variables fireSpeed:Float, damage:Float, riposteMultiplier:Float
 var fireTeam:String;
-var fireX:Float;
-var fireY:Float;
+var firePos:Point;
 var fireAngle:Float;
 
 function onLoaded()
@@ -12,8 +11,8 @@ function onLoaded()
 
 function onUpdate()
 {
-	this.x += FlxMath.fastCos(fireAngle * FlxAngle.TO_RAD) * fireSpeed;
-	this.y += FlxMath.fastSin(fireAngle * FlxAngle.TO_RAD) * fireSpeed;
+	this.x += FlxMath.fastCos(FlxAngle.asRadians(fireAngle)) * fireSpeed;
+	this.y += FlxMath.fastSin(FlxAngle.asRadians(fireAngle)) * fireSpeed;
 
 	// If the projectile leaves the bounds, kill it
 	if ((this.x < FlxG.worldBounds.left - 32.0
@@ -24,11 +23,10 @@ function onUpdate()
 		this.kill();
 }
 
-function fire(team:String, x:Float, y:Float, angle:Float, riposte:Bool = false)
+function fire(team:String, pos:Point, angle:Float, riposte:Bool = false)
 {
 	fireTeam = team;
-	fireX = x;
-	fireY = y;
+	firePos = pos;
 	fireAngle = angle;
 
 	setAll("team", fireTeam);
@@ -39,7 +37,7 @@ function fire(team:String, x:Float, y:Float, angle:Float, riposte:Bool = false)
 		setAll("contactDamage", damage);
 
 	this.revive();
-	this.setPosition(fireX, fireY);
+	this.setPosition(firePos.getX(), firePos.getY());
 	this.mainSprite.angle = fireAngle;
 	// Play the appropriate animation
 	if (riposte && animation.exists("team_" + fireTeam + "_riposte"))
@@ -48,5 +46,5 @@ function fire(team:String, x:Float, y:Float, angle:Float, riposte:Bool = false)
 		animation.play("team_" + fireTeam);
 
 	// For adittional components to add functionality
-	callAll("onFired", [team, x, y, angle, riposte]);
+	callAll("onFired", [team, pos, angle, riposte]);
 }

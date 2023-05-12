@@ -48,8 +48,8 @@ function onUpdate(elapsed:Float)
 	if (getIsDodging())
 	{
 		var scale:Float = dodgeSpeed * elapsed * (currentDodgeTime / dodgeDuration);
-		this.x += currentDodgeDirection.point.x * scale;
-		this.y += currentDodgeDirection.point.y * scale;
+		this.x += currentDodgeDirection.getX() * scale;
+		this.y += currentDodgeDirection.getY() * scale;
 
 		currentDodgeTime -= elapsed;
 		if (currentDodgeTime <= 0.0)
@@ -98,7 +98,7 @@ function onUpdate(elapsed:Float)
 // Dodges towards the given direction
 function dodge(direction:Point)
 {
-	if (direction.point.x == 0.0 && direction.point.y == 0.0)
+	if (direction.getX() == 0.0 && direction.getY() == 0.0)
 		return;
 	direction.normalize(); // Prevent diagonal movement from being faster
 	currentDodgeDirection = direction;

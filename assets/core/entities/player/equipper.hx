@@ -101,6 +101,11 @@ function unequip()
 	hands.angle = 0.0;
 }
 
+function getEquippedItem():Entity
+{
+	return equipped;
+}
+
 // Attempts to use the equipped item
 function attemptUse(elapsed:Float)
 {
