@@ -1,7 +1,7 @@
 {
     "name": "Meme Destroyer",
     "tags": [
-        "map_player"
+        "player"
     ],
     "components": [
         "entities/_shared/movement",

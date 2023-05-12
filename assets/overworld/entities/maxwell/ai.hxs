@@ -38,6 +38,11 @@ function onLoaded()
 	shootSound = AssetSoundRegistry.getAsset("entities/maxwell/sounds/shoot");
 }
 
+function onRemovedFromPlay()
+{
+	state.effects.remove(warningGlint);
+}
+
 function onUpdate(elapsed:Float)
 {
 	warningGlint.visible = !warningGlint.animation.finished;

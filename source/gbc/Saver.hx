@@ -11,7 +11,7 @@ abstract class Saver<T:Dynamic>
 
 	public function new()
 	{
-		resetToDefault();
+		data = getDefaultData();
 		load();
 	}
 
@@ -19,11 +19,6 @@ abstract class Saver<T:Dynamic>
 	abstract function getSaverMethod():SaverMethod;
 
 	abstract function getDefaultData():T;
-
-	public inline function resetToDefault()
-	{
-		data = getDefaultData();
-	}
 
 	/** Saves the data to be re-loaded the next time the game is started.
 		@param path Either the file path or the name of the field saved to FlxG.save.

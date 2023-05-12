@@ -1,6 +1,8 @@
 {
     "name": "Nokia",
-    "tags": [],
+    "tags": [
+        "item"
+    ],
     "components": [
         "entities/_shared/interactable",
         "items/_shared/item",

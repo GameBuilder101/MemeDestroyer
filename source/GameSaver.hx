@@ -8,7 +8,6 @@ import sys.FileSystem;
 class GameSaver extends Saver<GameSave>
 {
 	static inline final SAVES_DIRECTORY:String = "saves";
-	static inline final DEFAULT_SAVE_PATH:String = SAVES_DIRECTORY + "/game_save_";
 
 	public static var instance:GameSaver = new GameSaver();
 
@@ -22,36 +21,38 @@ class GameSaver extends Saver<GameSave>
 
 	function getDefaultData():GameSave
 	{
-		return {name: null, date: null, gameData: {}};
+		return {name: "game", date: null, gameData: {}};
 	}
 
 	override function save(path:String = null)
 	{
 		if (path == null || path == "")
-			path = DEFAULT_SAVE_PATH;
+			path = SAVES_DIRECTORY + "/0";
+		data.date = Date.now() + "";
 		super.save(path);
 	}
 
 	override function load(path:String = null)
 	{
 		if (path == null || path == "")
-			path = DEFAULT_SAVE_PATH;
+		{
+			path = SAVES_DIRECTORY + "/0";
+			currentID = 0;
+		}
 		super.load(path);
 	}
 
 	/** Saves the game using an ID. **/
-	public function saveGame(id:Int, name:String = null)
+	public inline function saveGame(id:Int)
 	{
-		if (name != null)
-			data.name = name;
-		data.date = Date.now() + "";
-		save(DEFAULT_SAVE_PATH + id);
+		save(SAVES_DIRECTORY + "/" + id);
 	}
 
 	/** Loads the game using an ID. **/
-	public function loadGame(id:Int)
+	public inline function loadGame(id:Int)
 	{
-		load(DEFAULT_SAVE_PATH + id);
+		load(SAVES_DIRECTORY + "/" + id);
+		currentID = id;
 	}
 
 	/** Returns the IDs of all saves in the save directory. **/
@@ -62,7 +63,7 @@ class GameSaver extends Saver<GameSave>
 		for (id in FileSystem.readDirectory(SAVES_DIRECTORY))
 		{
 			parsed = Std.parseInt(id);
-			if (parsed != null)
+			if (parsed >= 0)
 				ids.push(parsed);
 		}
 		return ids;
@@ -71,26 +72,26 @@ class GameSaver extends Saver<GameSave>
 	/** Returns the save data for a particular save. Null if the save doesn't exist. **/
 	public inline function getSave(id:Int):GameSave
 	{
-		return FileManager.getParsedJson(DEFAULT_SAVE_PATH + id);
+		return FileManager.getParsedJson(SAVES_DIRECTORY + "/" + id);
 	}
 
 	/** Finds an ID for a new game save. **/
 	public inline function findNewSaveID():Int
 	{
 		var id:Int = 0;
-		while (FileSystem.exists(DEFAULT_SAVE_PATH + id))
+		while (FileSystem.exists(SAVES_DIRECTORY + "/" + id))
 			id++;
 		return id;
 	}
 
 	/** Creates a new game save by finding an avaliable ID. **/
-	public function saveNewGame(name:String)
+	public inline function saveNewGame()
 	{
-		saveGame(findNewSaveID(), name);
+		saveGame(findNewSaveID());
 	}
 
 	/** Saves the game using the current ID. **/
-	public function saveCurrentGame()
+	public inline function saveCurrentGame()
 	{
 		saveGame(currentID);
 	}
