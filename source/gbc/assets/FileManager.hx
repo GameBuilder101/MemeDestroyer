@@ -72,13 +72,13 @@ class FileManager
 	/** @param path The path excluding the file extension. **/
 	public static inline function getHScript(path:String):String
 	{
-		return getRaw(path + ".hx");
+		return getRaw(path + ".hxs");
 	}
 
 	/** @param path The path excluding the file extension. **/
 	public static inline function writeHScript(path:String, contents:String)
 	{
-		writeRaw(path + ".hx", contents);
+		writeRaw(path + ".hxs", contents);
 	}
 
 	/** @param path The path excluding the file extension. **/

@@ -20,7 +20,7 @@ function onLoaded()
 	player.setPosition(spots[0].x, spots[0].y);
 }
 
-function onLevelUpdate(elapsed:Float)
+function onUpdate(elapsed:Float)
 {
 	var prevLevel:Int = currentLevel;
 	if (Controls.moveUp.check() && levels[currentLevel].connections[0] >= 0)

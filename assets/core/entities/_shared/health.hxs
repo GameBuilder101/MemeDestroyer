@@ -1,4 +1,4 @@
-// Requires variables initialMaxHealth:Float, initialInvFrames:Float, roundHealth:Bool, healthColor:String, healthType:String, team:String, hurtSoundID:String, dieSoundID:String
+// Requires variables initialMaxHealth:Float, initialInvFrames:Float, roundHealth:Bool, healthColor:String, team:String, hurtSoundID:String, dieSoundID:String
 
 var health:Float;
 var maxHealth:Float;
@@ -21,51 +21,13 @@ function onLoaded()
 	maxInvFrames = initialInvFrames;
 	invFrames = 0.0;
 
-	switch (healthType)
-	{
-		case "player":
-			state.playerHealth.setLabel(this.name);
-			state.playerHealth.setIndicatorColor(colorString(healthColor));
-			state.showPlayerHealth();
-		case "boss":
-			state.bossHealth.setLabel(this.name);
-			state.bossHealth.setIndicatorColor(colorString(healthColor));
-			state.showBossHealth();
-		default:
-	}
-
 	healSound = AssetSoundRegistry.getAsset("entities/_shared/sounds/heal");
 	hurtSound = AssetSoundRegistry.getAsset(hurtSoundID);
 	dieSound = AssetSoundRegistry.getAsset(dieSoundID);
 }
 
-function onRemovedFromPlay()
-{
-	switch (healthType)
-	{
-		case "player":
-			state.hidePlayerHealth();
-		case "boss":
-			state.hideBossHealth();
-		default:
-	}
-}
-
 function onUpdate(elapsed:Float)
 {
-	// Update the health bar (if there is one for this entity)
-	if (healthType != null)
-	{
-		switch (healthType)
-		{
-			case "player":
-				state.playerHealth.setValues(health, maxHealth);
-			case "boss":
-				state.bossHealth.setValues(health, maxHealth);
-			default:
-		}
-	}
-
 	// Tick down invincibility frames
 	if (invFrames > 0.0)
 		invFrames -= elapsed;

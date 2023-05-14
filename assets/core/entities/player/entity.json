@@ -4,22 +4,14 @@
         "player"
     ],
     "components": [
-        "entities/_shared/movement",
         "entities/_shared/health",
         "entities/_shared/shooter",
         "entities/player/equipper",
         "entities/player/controller",
+        "entities/_shared/movement",
         "entities/player/saver"
     ],
     "variables": [
-        {
-            "name": "walkSpeed",
-            "value": 180.0
-        },
-        {
-            "name": "footstepSoundID",
-            "value": "entities/player/sounds/footstep"
-        },
         {
             "name": "footstepDelay",
             "value": 0.5
@@ -39,10 +31,6 @@
         {
             "name": "healthColor",
             "value": "#ff0000"
-        },
-        {
-            "name": "healthType",
-            "value": "player"
         },
         {
             "name": "team",
@@ -71,6 +59,14 @@
         {
             "name": "dodgeCool",
             "value": 0.25
+        },
+        {
+            "name": "walkSpeed",
+            "value": 180.0
+        },
+        {
+            "name": "footstepSoundID",
+            "value": "entities/player/sounds/footstep"
         }
     ],
     "hitboxSize": [

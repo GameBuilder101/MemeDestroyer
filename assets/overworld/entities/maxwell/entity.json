@@ -4,22 +4,14 @@
         "boss"
     ],
     "components": [
-        "entities/_shared/movement",
         "entities/_shared/health",
         "entities/_shared/shooter",
         "entities/_shared/damager",
         "entities/_shared/base_ai",
-        "entities/maxwell/ai"
+        "entities/maxwell/ai",
+        "entities/_shared/movement"
     ],
     "variables": [
-        {
-            "name": "walkSpeed",
-            "value": 100.0
-        },
-        {
-            "name": "runSpeed",
-            "value": 300.0
-        },
         {
             "name": "footstepSoundID",
             "value": ""
@@ -45,10 +37,6 @@
             "value": "#d3f04c"
         },
         {
-            "name": "healthType",
-            "value": "boss"
-        },
-        {
             "name": "team",
             "value": "hostile"
         },
@@ -71,6 +59,14 @@
         {
             "name": "turnSpeed",
             "value": 180.0
+        },
+        {
+            "name": "walkSpeed",
+            "value": 100.0
+        },
+        {
+            "name": "runSpeed",
+            "value": 300.0
         }
     ],
     "hitboxSize": [

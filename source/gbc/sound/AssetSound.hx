@@ -1,7 +1,7 @@
 package gbc.sound;
 
 import flixel.FlxG;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import openfl.media.Sound;
 
 /** An asset-sound can have volume and variant properties defined

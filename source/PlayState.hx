@@ -2,22 +2,17 @@ package;
 
 import entity.Entity;
 import flixel.FlxG;
-import flixel.FlxState;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup;
-import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 import gbc.graphics.AssetSprite;
 import gbc.scripting.ComponentSystem;
 import gbc.scripting.Script;
 import level.Level;
 import level.LevelRegistry;
-import ui.hud.CountdownOverlay;
-import ui.hud.HealthBar;
-import ui.hud.HealthNotches;
-import ui.hud.NotificationOverlay;
-import ui.hud.TitleOverlay;
 
-class PlayState extends FlxState
+/** The play state can load a level and contains entities. **/
+class PlayState extends FlxTransitionableState
 {
 	/** The currently-loaded level data. **/
 	public var level(default, null):LevelData;
@@ -36,23 +31,8 @@ class PlayState extends FlxState
 	**/
 	var entitiesByTag:Map<String, Array<Entity>> = [];
 
-	public var player:Entity;
-	public var boss:Entity;
-
 	/** For miscellaneous effect sprites. **/
 	var effects:FlxGroup;
-
-	/** Health indicator for player. **/
-	public var playerHealth(default, null):HealthNotches;
-
-	/** Health indicator for bosses. **/
-	public var bossHealth(default, null):HealthBar;
-
-	public var titleOverlay(default, null):TitleOverlay;
-
-	public var countdownOverlay(default, null):CountdownOverlay;
-
-	public var deathOverlay(default, null):NotificationOverlay;
 
 	override function create()
 	{
@@ -68,52 +48,14 @@ class PlayState extends FlxState
 		effects = new FlxGroup();
 		add(effects);
 
-		// Add the player health
-		playerHealth = new HealthNotches();
-		playerHealth.setPosition(FlxG.width / 2.0, -20.0);
-		playerHealth.visible = false; // The player health starts hidden by default
-		add(playerHealth);
-
-		// Add the boss health
-		bossHealth = new HealthBar();
-		bossHealth.screenCenter();
-		bossHealth.y = FlxG.height;
-		bossHealth.visible = false; // The boss health starts hidden by default
-		add(bossHealth);
-
-		// Add the title overlay
-		titleOverlay = new TitleOverlay(0.0, 0.0);
-		titleOverlay.screenCenter();
-		add(titleOverlay);
-
-		// Add the countdown overlay
-		countdownOverlay = new CountdownOverlay(0.0, 0.0, 0.4, [
-			"ui/hud/sprites/countdown_overlay",
-			"ui/hud/sprites/countdown_overlay",
-			"ui/hud/sprites/countdown_overlay",
-			"ui/hud/sprites/countdown_overlay"
-		], ["three", "two", "one", "fight"], [
-			"ui/hud/sounds/countdown_three",
-			"ui/hud/sounds/countdown_two",
-			"ui/hud/sounds/countdown_one",
-			"ui/hud/sounds/countdown_fight"
-		]);
-		countdownOverlay.screenCenter();
-		add(countdownOverlay);
-
-		// Add the death overlay
-		deathOverlay = new NotificationOverlay(0.0, 0.0, "ui/hud/sprites/death_overlay", "ui/hud/sounds/death_overlay");
-		deathOverlay.screenCenter();
-		add(deathOverlay);
-
-		loadLevel(null, "levels/map");
+		loadLevel(null, "levels/overworld");
 	}
 
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
-		components.callAll("onLevelUpdate", [elapsed]);
+		components.callAll("onUpdate", [elapsed]);
 
 		entities.sort(function(order:Int, entity1:Entity, entity2:Entity):Int
 		{
@@ -127,6 +69,13 @@ class PlayState extends FlxState
 			// Make further-down things appear on top (to immitate depth)
 			return FlxSort.byValues(order, entity1.y + entity1.mainSprite.height, entity2.y + entity2.mainSprite.height);
 		});
+	}
+
+	override function destroy()
+	{
+		for (entity in entities)
+			entity.onRemovedFromPlay();
+		super.destroy();
 	}
 
 	public function loadLevel(data:LevelData = null, id:String = null)
@@ -192,19 +141,16 @@ class PlayState extends FlxState
 	}
 
 	/** Use this function before destroying an entity to remove it. **/
-	public function removeEntity(entity:Entity, kill:Bool = true)
+	public function removeEntity(entity:Entity, kill:Bool = true, destroy:Bool = false)
 	{
-		if (entity == player)
-			player = null;
-		if (entity == boss)
-			boss = null;
-
 		entities.remove(entity, true);
 		for (tag in entity.tags)
 			entitiesByTag[tag].remove(entity);
 
 		if (kill)
 			entity.kill();
+		if (destroy)
+			entity.destroy();
 		entity.onRemovedFromPlay();
 	}
 
@@ -242,45 +188,5 @@ class PlayState extends FlxState
 		if (spawn.randomizeY)
 			y = Math.random() * FlxG.height;
 		return this.spawn(spawn.id, x, y);
-	}
-
-	/** Plays an animation to show the player health bar. **/
-	public function showPlayerHealth()
-	{
-		playerHealth.visible = true;
-		FlxTween.cancelTweensOf(playerHealth);
-		FlxTween.linearMotion(playerHealth, playerHealth.x, -20.0 - playerHealth.height, playerHealth.x, -20.0);
-	}
-
-	/** Plays an animation to hide the player health bar. **/
-	public function hidePlayerHealth()
-	{
-		FlxTween.cancelTweensOf(playerHealth);
-		FlxTween.linearMotion(playerHealth, playerHealth.x, -20.0, playerHealth.x, -20.0 - playerHealth.height, 1.0, true, {
-			onComplete: function(tween:FlxTween)
-			{
-				playerHealth.visible = false;
-			}
-		});
-	}
-
-	/** Plays an animation to show the boss health bar. **/
-	public function showBossHealth()
-	{
-		bossHealth.visible = true;
-		FlxTween.cancelTweensOf(bossHealth);
-		FlxTween.linearMotion(bossHealth, bossHealth.x, FlxG.height, bossHealth.x, FlxG.height - bossHealth.height);
-	}
-
-	/** Plays an animation to hide the boss health bar. **/
-	public function hideBossHealth()
-	{
-		FlxTween.cancelTweensOf(bossHealth);
-		FlxTween.linearMotion(bossHealth, bossHealth.x, FlxG.height - bossHealth.height, bossHealth.x, FlxG.height, 1.0, true, {
-			onComplete: function(tween:FlxTween)
-			{
-				bossHealth.visible = false;
-			}
-		});
 	}
 }

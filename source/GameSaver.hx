@@ -21,7 +21,7 @@ class GameSaver extends Saver<GameSave>
 
 	function getDefaultData():GameSave
 	{
-		return {name: "game", date: null, gameData: {}};
+		return {name: "game", date: null, data: []};
 	}
 
 	override function save(path:String = null)
@@ -40,6 +40,44 @@ class GameSaver extends Saver<GameSave>
 			currentID = 0;
 		}
 		super.load(path);
+	}
+
+	/** Sets a value to be remembered/used later. **/
+	public function setGameData(key:String, value:Dynamic)
+	{
+		for (gameData in data.data)
+		{
+			if (gameData.key == key)
+			{
+				gameData.value = value;
+				return;
+			}
+		}
+		data.data.push({key: key, value: value});
+	}
+
+	/** Removes a value that was remembered. **/
+	public function removeGameData(key:String)
+	{
+		for (gameData in data.data)
+		{
+			if (gameData.key == key)
+			{
+				data.data.remove(gameData);
+				return;
+			}
+		}
+	}
+
+	/** Returns a value that was remembered. **/
+	public function getGameData(key:String):Dynamic
+	{
+		for (gameData in data.data)
+		{
+			if (gameData.key == key)
+				return gameData.value;
+		}
+		return null;
 	}
 
 	/** Saves the game using an ID. **/
@@ -101,5 +139,11 @@ typedef GameSave =
 {
 	name:String,
 	date:String,
-	gameData:Dynamic
+	data:Array<GameData>
+}
+
+typedef GameData =
+{
+	key:String,
+	value:Dynamic
 }

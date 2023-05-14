@@ -2,7 +2,7 @@
 function onLoaded()
 {
 	// Display the title
-	state.titleOverlay.display({
+	getComponent("round_manager").call("getHud").titleOverlay.display({
 		title: title,
 		subtitle: subtitle,
 		color: colorString(titleColor),
@@ -10,7 +10,7 @@ function onLoaded()
 	}, function()
 	{
 		// Display the fight countdown after the title
-		state.countdownOverlay.display(null, function()
+		getComponent("round_manager").call("getHud").countdownOverlay.display(null, function()
 		{
 			getComponent("round_manager").call("start");
 		});

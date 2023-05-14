@@ -1,0 +1,106 @@
+// Requires variables bosses:Array<Dynamic>, mainThemeID:String
+
+var hud:Hud;
+
+var player:Entity;
+var playerHealth:GameScript = null;
+var boss:Entity;
+var bossHealth:GameScript = null;
+var currentRound:Int = -1;
+
+// The main theme music for the level
+var mainTheme:AssetMusic;
+
+// True when the player has died and the level is ending
+var deathTransitioning:Bool = false;
+
+function onLoaded()
+{
+	hud = new Hud();
+	state.add(hud);
+
+	player = state.spawn("entities/player");
+	playerHealth = player.getComponent("health");
+	player.screenCenter();
+
+	hud.playerHealth.setLabel(player.name);
+	hud.playerHealth.setIndicatorColor(colorString(playerHealth.get("healthColor")));
+	hud.showPlayerHealth();
+
+	mainTheme = AssetMusicRegistry.getAsset(mainThemeID);
+}
+
+function onUpdate(elapsed:Float)
+{
+	if (playerHealth != null)
+		hud.playerHealth.setValues(playerHealth.call("getHealth"), playerHealth.call("getMaxHealth"));
+	if (bossHealth != null)
+		hud.bossHealth.setValues(bossHealth.call("getHealth"), bossHealth.call("getMaxHealth"));
+
+	// Death functionality
+	if (getIsPlaying() && !player.alive && !deathTransitioning)
+	{
+		deathTransitioning = true;
+
+		MusicManager.fadeOut(1.0);
+		hud.deathOverlay.display(null, function()
+		{
+			FlxG.switchState(new PlayState());
+		});
+	}
+
+	// Next round functionality
+	if (getIsPlaying() && boss != null && !boss.alive)
+		nextRound();
+}
+
+function getHud():Hud
+{
+	return hud;
+}
+
+// Start the rounds
+function start()
+{
+	if (getIsPlaying()) // If already playing
+		end();
+	nextRound(); // Start the first round
+
+	MusicManager.transition(mainTheme, 0.0);
+}
+
+// End the rounds
+function end()
+{
+	currentRound = -1;
+}
+
+function getIsPlaying()
+{
+	return currentRound >= 0;
+}
+
+// Starts the next round
+function nextRound()
+{
+	currentRound++;
+	if (currentRound == bosses.length)
+	{
+		end();
+		return;
+	}
+
+	boss = state.levelSpawn(bosses[currentRound]);
+	bossHealth = boss.getComponent("health");
+
+	hud.bossHealth.setLabel(boss.name);
+	hud.bossHealth.setIndicatorColor(colorString(bossHealth.get("healthColor")));
+	hud.showBossHealth();
+
+	hud.titleOverlay.display({
+		title: boss.name,
+		subtitle: "Round " + (currentRound + 1),
+		color: colorString(bossHealth.get("healthColor")),
+		style: "fast"
+	}, null);
+}

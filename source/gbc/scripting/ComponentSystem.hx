@@ -3,7 +3,8 @@ package gbc.scripting;
 /** A basic component system for scripts. **/
 class ComponentSystem
 {
-	public var components:Map<String, Script> = new Map<String, Script>();
+	/** Uses an array instead of a map so order can be retained. **/
+	public var components:Array<ComponentSystemEntry> = [];
 
 	public function new() {}
 
@@ -12,7 +13,7 @@ class ComponentSystem
 		component.set("getComponent", getComponent);
 		component.set("setAll", setAll);
 		component.set("callAll", callAll);
-		components.set(id, component);
+		components.push({id: id, component: component});
 	}
 
 	/**
@@ -30,24 +31,33 @@ class ComponentSystem
 
 	public function removeComponent(id:String)
 	{
-		components.remove(id);
+		for (entry in components)
+		{
+			if (entry.id == id)
+				components.remove(entry);
+		}
 	}
 
 	public function getComponent(id:String)
 	{
-		return components[id];
+		for (entry in components)
+		{
+			if (entry.id == id)
+				return entry.component;
+		}
+		return null;
 	}
 
 	public function startAll()
 	{
-		for (component in components)
-			component.start();
+		for (entry in components)
+			entry.component.start();
 	}
 
 	public function setAll(name:String, value:Dynamic)
 	{
-		for (component in components)
-			component.set(name, value);
+		for (entry in components)
+			entry.component.set(name, value);
 	}
 
 	/** Calls all functions of the given name and returns the value output
@@ -57,12 +67,18 @@ class ComponentSystem
 	{
 		var result:Dynamic = null;
 		var finalResult:Dynamic = null;
-		for (component in components)
+		for (entry in components)
 		{
-			result = component.call(name, args);
+			result = entry.component.call(name, args);
 			if (result != null)
 				finalResult = result;
 		}
 		return finalResult;
 	}
+}
+
+typedef ComponentSystemEntry =
+{
+	id:String,
+	component:Script
 }

@@ -1,0 +1,29 @@
+// Component caches
+var health:GameScript;
+var equipper:GameScript;
+
+function onAddedToPlay()
+{
+	health = getComponent("health");
+	equipper = getComponent("equipper");
+
+	var data:Dynamic = GameSaver.instance.getGameData("playerMaxHealth");
+	if (data != null)
+		health.call("setMaxHealth", [data]);
+	data = GameSaver.instance.getGameData("playerMaxInvFrames");
+	if (data != null)
+		health.call("setMaxInvFrames", [data]);
+	data = GameSaver.instance.getGameData("playerEquippedItemID");
+	if (data != null)
+	{
+		var item:Entity = state.spawn(data, 0.0, 0.0);
+		equipper.call("equip", [item]);
+	}
+}
+
+function onRemovedFromPlay()
+{
+	GameSaver.instance.setGameData("playerMaxHealth", health.call("getMaxHealth"));
+	GameSaver.instance.setGameData("playerMaxInvFrames", health.call("getMaxInvFrames"));
+	GameSaver.instance.setGameData("playerEquippedItemID", equipper.call("getEquippedItem").id);
+}

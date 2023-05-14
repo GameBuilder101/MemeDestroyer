@@ -1,7 +1,6 @@
 {
     "name": "The Overworld",
     "components": [
-        "levels/_shared/player_spawn",
         "levels/_shared/round_manager",
         "levels/_shared/intro"
     ],

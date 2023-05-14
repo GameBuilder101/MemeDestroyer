@@ -10,5 +10,5 @@ function onLoaded()
 function onUpdate(elapsed:Float)
 {
 	if (animation.finished)
-		state.removeEntity(this);
+		state.removeEntity(this, true, true);
 }

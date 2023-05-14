@@ -49,7 +49,7 @@ function onUpdate(elapsed:Float)
 
 	if (baseAI.call("getTarget") == null)
 	{
-		baseAI.call("setTarget", [state.player]);
+		baseAI.call("setTarget", [state.getEntity("player")]);
 		return;
 	}
 
