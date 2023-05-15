@@ -1,5 +1,15 @@
 // Requires variables levels:Array<Dynamic>
 var player:Entity;
+var playerController:GameScript;
+
+// True when moving between spots
+var moving:Bool = false;
+
+// The movement arrow sprites used to indicate where the player can navigate
+var upArrow:AssetSprite;
+var downArrow:AssetSprite;
+var leftArrow:AssetSprite;
+var rightArrow:AssetSprite;
 
 // The index of the current level
 var currentLevel:Int = 0;
@@ -8,19 +18,71 @@ var spots:Array;
 function onLoaded()
 {
 	player = state.spawn("entities/map_player");
+	playerController = player.getComponent("controller");
 
 	spots = new Array();
+	var i:Int = 0;
 	var spot:Entity;
+	var spotComponent:GameScript;
 	for (level in levels)
 	{
 		spot = state.spawn("entities/level_spot", level.position[0], level.position[1]);
+		spotComponent = spot.getComponent("spot");
+		spotComponent.call("setSpotID", [i]);
+		spotComponent.call("setTarget", [level.id]);
+		spotComponent.call("setLocked", [false]);
 		spots.push(spot);
+		i++;
 	}
 
-	player.setPosition(spots[0].x, spots[0].y);
+	upArrow = new AssetSprite(0.0, 0.0, null, "levels/map/sprites/movement_arrow");
+	upArrow.animation.play("up");
+	upArrow.visible = false;
+	state.effects.add(upArrow);
+
+	downArrow = new AssetSprite(0.0, 0.0, null, "levels/map/sprites/movement_arrow");
+	downArrow.animation.play("down");
+	downArrow.visible = false;
+	state.effects.add(downArrow);
+
+	leftArrow = new AssetSprite(0.0, 0.0, null, "levels/map/sprites/movement_arrow");
+	leftArrow.animation.play("left");
+	leftArrow.visible = false;
+	state.effects.add(leftArrow);
+
+	rightArrow = new AssetSprite(0.0, 0.0, null, "levels/map/sprites/movement_arrow");
+	rightArrow.animation.play("right");
+	rightArrow.visible = false;
+	state.effects.add(rightArrow);
+
+	player.setPosition(spots[0].x, spots[0].y); // Start the player at the first spot
+	stopMoving(); // Update the initial spot visuals
 }
 
 function onUpdate(elapsed:Float)
+{
+	if (moving && !playerController.call("getMoving"))
+		stopMoving();
+	else if (!moving)
+		movementCheck(elapsed);
+
+	// Make the camera follow the player
+	FlxG.camera.scroll.y = player.y - FlxG.camera.height / 2.0;
+
+	// Stop the camera from going past the map
+	if (FlxG.camera.scroll.y < 0.0)
+		FlxG.camera.scroll.y = 0.0;
+	else if (FlxG.camera.scroll.y > state.background.height - FlxG.camera.height)
+		FlxG.camera.scroll.y = state.background.height - FlxG.camera.height;
+
+	upArrow.setPosition(player.x, player.y);
+	downArrow.setPosition(player.x, player.y);
+	leftArrow.setPosition(player.x, player.y);
+	rightArrow.setPosition(player.x, player.y);	
+}
+
+// Checks for player movement input
+function movementCheck(elapsed:Float)
 {
 	var prevLevel:Int = currentLevel;
 	if (Controls.moveUp.check() && levels[currentLevel].connections[0] >= 0)
@@ -32,19 +94,39 @@ function onUpdate(elapsed:Float)
 	if (Controls.moveRight.check() && levels[currentLevel].connections[3] >= 0)
 		currentLevel = levels[currentLevel].connections[3];
 
-	if (currentLevel != prevLevel)
-	{
-		spots[prevLevel].mainSprite.animation.play("locked");
-		spots[currentLevel].mainSprite.animation.play("interactable");
-		player.getComponent("controller").call("moveTo", [new Point(spots[currentLevel].x, spots[currentLevel].y)]);
-	}
+	if (currentLevel != prevLevel) // If the player made a move input
+		startMoving(prevLevel);
+}
 
-	// Make the camera follow the player
-	FlxG.camera.scroll.y = player.y - FlxG.camera.height / 2.0;
+// Starts the movement animation from one spot to another
+function startMoving(prevLevel:Int)
+{
+	moving = true;
+	playerController.call("moveTo", [new Point(spots[currentLevel].x, spots[currentLevel].y)]);
 
-	// Stop the camera from going past the map
-	if (FlxG.camera.scroll.y < 0.0)
-		FlxG.camera.scroll.y = 0.0;
-	else if (FlxG.camera.scroll.y > state.background.height - FlxG.camera.height)
-		FlxG.camera.scroll.y = state.background.height - FlxG.camera.height;
+	// Disable the previous spot
+	spots[prevLevel].getComponent("spot").call("setInteractable", [false]);
+
+	upArrow.visible = false;
+	downArrow.visible = false;
+	leftArrow.visible = false;
+	rightArrow.visible = false;
+}
+
+// Stops the movement animation from one spot to another
+function stopMoving()
+{
+	moving = false;
+
+	spots[currentLevel].getComponent("spot").call("setInteractable", [true]);
+
+	var color = spots[currentLevel].mainSprite.color;
+	upArrow.visible = levels[currentLevel].connections[0] >= 0;
+	upArrow.color = color;
+	downArrow.visible = levels[currentLevel].connections[1] >= 0;
+	downArrow.color = color;
+	leftArrow.visible = levels[currentLevel].connections[2] >= 0;
+	leftArrow.color = color;
+	rightArrow.visible = levels[currentLevel].connections[3] >= 0;
+	rightArrow.color = color;
 }

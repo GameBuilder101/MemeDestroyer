@@ -1,7 +1,9 @@
 {
     "name": "Level",
     "tags": [],
-    "components": [],
+    "components": [
+        "entities/level_spot/spot"
+    ],
     "variables": [],
     "spriteID": "entities/level_spot/sprites/main",
     "sortingPriority": -16

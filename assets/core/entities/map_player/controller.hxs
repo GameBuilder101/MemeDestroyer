@@ -35,3 +35,9 @@ function moveTo(position:Point)
 	movePosition = position;
 	initialPosition = new Point(this.x, this.y);
 }
+
+// Returns true if currently moving to a point
+function getMoving():Bool
+{
+	return moving;
+}

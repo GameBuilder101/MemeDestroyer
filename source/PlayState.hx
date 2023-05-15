@@ -48,7 +48,7 @@ class PlayState extends FlxTransitionableState
 		effects = new FlxGroup();
 		add(effects);
 
-		loadLevel(null, "levels/overworld");
+		loadLevel(null, "levels/map");
 	}
 
 	override function update(elapsed:Float)
@@ -111,6 +111,7 @@ class PlayState extends FlxTransitionableState
 		for (spawn in level.initialSpawns)
 			levelSpawn(spawn);
 
+		components.setAll("this", this);
 		components.setAll("state", this);
 
 		if (data.variables != null)

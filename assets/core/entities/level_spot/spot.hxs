@@ -1,0 +1,59 @@
+// Used to identify this spot
+var spotID:Int;
+
+var interactable:Bool;
+
+var targetLevel;
+var locked:Bool;
+
+function setSpotID(id:Int)
+{
+    spotID = id;
+}
+
+function getSpotID():Int
+{
+    return spotID;
+}
+
+function setInteractable(interactable:Bool)
+{
+    if (interactable)
+        animation.play("interactable");
+    else
+    {
+        if (locked)
+            animation.play("locked");
+        else
+            animation.play("idle");
+    }
+}
+
+// Sets the target level
+function setTarget(id:String)
+{
+    targetLevel = LevelRegistry.getAsset(id);
+    setLocked(locked); // Do this to update the color
+}
+
+// Sets the locked state and updates the color
+function setLocked(value:Bool)
+{
+    locked = value;
+
+    if (locked) // The locked sprite is un-colored
+    {
+        this.mainSprite.color = colorString("#ffffff");
+        return;
+    }
+    
+    // Set the sprite color to the level color (if it has one)
+    for (variable in targetLevel.variables)
+    {
+        if (variable.name == "titleColor")
+        {
+            this.mainSprite.color = colorString(variable.value);
+            break;
+        }
+    }
+}
