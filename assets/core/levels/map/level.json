@@ -36,6 +36,10 @@
                     "prerequisite": 0
                 }
             ]
+        },
+        {
+            "name": "mainThemeID",
+            "value": "levels/map/music/main_theme"
         }
     ],
     "backgroundSpriteID": "levels/map/sprites/main",

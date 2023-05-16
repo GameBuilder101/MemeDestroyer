@@ -1,4 +1,4 @@
-// Requires variables levels:Array<Dynamic>
+// Requires variables levels:Array<Dynamic>, mainThemeID:String
 var player:Entity;
 var playerController:GameScript;
 
@@ -14,6 +14,9 @@ var rightArrow:AssetSprite;
 // The index of the current level
 var currentLevel:Int = 0;
 var spots:Array;
+
+// The main theme music for the level
+var mainTheme:AssetMusic;
 
 function onLoaded()
 {
@@ -57,6 +60,9 @@ function onLoaded()
 
 	player.setPosition(spots[0].x, spots[0].y); // Start the player at the first spot
 	stopMoving(); // Update the initial spot visuals
+
+	mainTheme = AssetMusicRegistry.getAsset(mainThemeID);
+	MusicManager.transition(mainTheme, 1.0);
 }
 
 function onUpdate(elapsed:Float)

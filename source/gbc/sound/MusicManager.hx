@@ -14,6 +14,11 @@ class MusicManager
 			return;
 		}
 
+		if (FlxG.sound.music == null) // For some reason FlxG must have playMusic called before FlxG.sound.music gets created
+		{
+			music.play();
+			FlxG.sound.music.volume = 0.0;
+		}
 		FlxG.sound.music.fadeOut(duration / 2.0, 0.0, function(tween:FlxTween)
 		{
 			music.play();

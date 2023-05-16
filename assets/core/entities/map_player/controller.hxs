@@ -8,6 +8,8 @@ var movement:GameScript;
 function onLoaded()
 {
 	movement = getComponent("movement");
+
+	this.add(new AssetSprite(this.x, this.y, null, "entities/player/sprites/hands"));
 }
 
 function onUpdate(elapsed:Float)
