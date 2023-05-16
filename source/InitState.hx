@@ -12,6 +12,6 @@ class InitState extends FlxState
 		super.create();
 		FlxTransitionableState.defaultTransIn = TransitionDataRegistry.getAsset("transitions/default_in");
 		FlxTransitionableState.defaultTransOut = TransitionDataRegistry.getAsset("transitions/default_out");
-		FlxG.switchState(new PlayState());
+		FlxG.switchState(new PlayState("levels/map"));
 	}
 }

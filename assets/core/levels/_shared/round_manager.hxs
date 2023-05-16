@@ -45,7 +45,7 @@ function onUpdate(elapsed:Float)
 		MusicManager.fadeOut(1.0);
 		hud.deathOverlay.display(null, function()
 		{
-			FlxG.switchState(new PlayState());
+			FlxG.switchState(new PlayState("levels/map"));
 		});
 	}
 

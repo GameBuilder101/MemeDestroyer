@@ -36,6 +36,12 @@ function setTarget(id:String)
     setLocked(locked); // Do this to update the color
 }
 
+// Gets the target level, as a LevelData
+function getTarget()
+{
+    return targetLevel;
+}
+
 // Sets the locked state and updates the color
 function setLocked(value:Bool)
 {

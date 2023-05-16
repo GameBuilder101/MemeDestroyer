@@ -1,7 +1,12 @@
 // Requires variables levels:Array<Dynamic>, mainThemeID:String
+
+var hud:MapHud;
+
 var player:Entity;
 var playerController:GameScript;
 
+// True when entering a level
+var entering:Bool = false;
 // True when moving between spots
 var moving:Bool = false;
 
@@ -20,6 +25,9 @@ var mainTheme:AssetMusic;
 
 function onLoaded()
 {
+	hud = new MapHud();
+	state.add(hud);
+
 	player = state.spawn("entities/map_player");
 	playerController = player.getComponent("controller");
 
@@ -67,10 +75,16 @@ function onLoaded()
 
 function onUpdate(elapsed:Float)
 {
-	if (moving && !playerController.call("getMoving"))
-		stopMoving();
-	else if (!moving)
-		movementCheck(elapsed);
+	if (!entering && Controls.interact.check())
+		startEntering();
+
+	if (!entering)
+	{
+		if (moving && !playerController.call("getMoving"))
+			stopMoving();
+		else if (!moving)
+			movementCheck(elapsed);
+	}
 
 	// Make the camera follow the player
 	FlxG.camera.scroll.y = player.y - FlxG.camera.height / 2.0;
@@ -104,6 +118,15 @@ function movementCheck(elapsed:Float)
 		startMoving(prevLevel);
 }
 
+// Starts the entering animation for a level
+function startEntering()
+{
+	entering = true;
+	FlxG.switchState(new PlayState(levels[currentLevel].id));
+	// Zoom in the camera while transitioning
+	FlxTween.tween(FlxG.camera, {zoom: 2.0}, 1.0);
+}
+
 // Starts the movement animation from one spot to another
 function startMoving(prevLevel:Int)
 {
@@ -117,6 +140,8 @@ function startMoving(prevLevel:Int)
 	downArrow.visible = false;
 	leftArrow.visible = false;
 	rightArrow.visible = false;
+
+	hud.hideLevelPanel();
 }
 
 // Stops the movement animation from one spot to another
@@ -135,4 +160,14 @@ function stopMoving()
 	leftArrow.color = color;
 	rightArrow.visible = levels[currentLevel].connections[3] >= 0;
 	rightArrow.color = color;
+
+	hud.levelPanel.setValues(50.0, 100.0);
+	hud.levelPanel.setLabel(spots[currentLevel].getComponent("spot").call("getTarget").name);
+	hud.levelPanel.setIndicatorColor(color);
+	hud.showLevelPanel();
+}
+
+function getHud():MapHud
+{
+	return hud;
 }

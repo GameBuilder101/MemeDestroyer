@@ -4,6 +4,7 @@ import entity.Entity;
 import flixel.FlxG;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 import gbc.graphics.AssetSprite;
 import gbc.scripting.ComponentSystem;
@@ -14,6 +15,8 @@ import level.LevelRegistry;
 /** The play state can load a level and contains entities. **/
 class PlayState extends FlxTransitionableState
 {
+	var initialLevelID:String;
+
 	/** The currently-loaded level data. **/
 	public var level(default, null):LevelData;
 
@@ -34,6 +37,12 @@ class PlayState extends FlxTransitionableState
 	/** For miscellaneous effect sprites. **/
 	var effects:FlxGroup;
 
+	public function new(levelID:String)
+	{
+		super();
+		initialLevelID = levelID;
+	}
+
 	override function create()
 	{
 		super.create();
@@ -48,7 +57,7 @@ class PlayState extends FlxTransitionableState
 		effects = new FlxGroup();
 		add(effects);
 
-		loadLevel(null, "levels/map");
+		loadLevel(null, initialLevelID);
 	}
 
 	override function update(elapsed:Float)

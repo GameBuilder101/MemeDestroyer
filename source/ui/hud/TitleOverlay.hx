@@ -30,10 +30,10 @@ class TitleOverlay extends FlxSpriteGroup implements IOverlay
 		super(x, y);
 		scrollFactor.set(0.0, 0.0);
 
-		upperLine = new AssetSprite(0.0, 0.0, "ui/hud/sprites/title_line");
+		upperLine = new AssetSprite(0.0, 0.0, "ui/_shared/sprites/title_line");
 		upperLine.visible = false;
 		add(upperLine);
-		lowerLine = new AssetSprite(0.0, 80.0, "ui/hud/sprites/title_line");
+		lowerLine = new AssetSprite(0.0, 80.0, "ui/_shared/sprites/title_line");
 		lowerLine.visible = false;
 		add(lowerLine);
 

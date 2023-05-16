@@ -11,7 +11,7 @@ import gbc.sound.AssetSoundRegistry;
 
 class HealthNotches extends FlxSpriteGroup implements IIndicator
 {
-	var notches:Array<FlxSpriteGroup> = new Array<FlxSpriteGroup>();
+	var notches:Array<FlxSpriteGroup> = [];
 
 	var label:FlxText;
 
