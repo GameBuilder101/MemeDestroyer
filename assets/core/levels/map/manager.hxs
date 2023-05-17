@@ -37,7 +37,7 @@ function onLoaded()
 	var spotComponent:GameScript;
 	for (level in levels)
 	{
-		spot = state.spawn("entities/level_spot", level.position[0], level.position[1]);
+		spot = state.spawn(level.spotEntityID, level.position[0], level.position[1]);
 		spotComponent = spot.getComponent("spot");
 		spotComponent.call("setSpotID", [i]);
 		spotComponent.call("setTarget", [level.id]);
@@ -123,9 +123,10 @@ function startEntering()
 {
 	entering = true;
 
+	state.transOut = TransitionDataRegistry.getAsset("transitions/start_level_out");
 	FlxG.switchState(new PlayState(levels[currentLevel].id));
 	// Zoom in the camera while transitioning
-	FlxTween.tween(FlxG.camera, {zoom: 2.0}, 1.0);
+	FlxTween.tween(FlxG.camera, {zoom: 2.0}, 2.0);
 
 	MusicManager.fadeOut(0.0);
 	AssetSoundRegistry.getAsset("levels/map/sounds/start_level").play();

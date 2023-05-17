@@ -1,0 +1,11 @@
+{
+    "name": "Shop",
+    "description": "Shop content",
+    "version": "1.0.0",
+    "dependencies": [
+        {
+            "id": "core",
+            "version": "1.0.0"
+        }
+    ]
+}

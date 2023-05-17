@@ -1,0 +1,10 @@
+{
+    "name": "Shop",
+    "tags": [],
+    "components": [
+        "entities/level_spot/spot"
+    ],
+    "variables": [],
+    "spriteID": "entities/shop_level_spot/sprites/main",
+    "sortingPriority": -16
+}

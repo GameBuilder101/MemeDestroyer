@@ -6,17 +6,7 @@ var interactable:Bool;
 var targetLevel;
 var locked:Bool;
 
-function setSpotID(id:Int)
-{
-    spotID = id;
-}
-
-function getSpotID():Int
-{
-    return spotID;
-}
-
-function setInteractable(interactable:Bool)
+function onUpdate(elapsed:Float)
 {
     if (interactable)
         animation.play("interactable");
@@ -27,6 +17,21 @@ function setInteractable(interactable:Bool)
         else
             animation.play("idle");
     }
+}
+
+function setSpotID(id:Int)
+{
+    spotID = id;
+}
+
+function getSpotID():Int
+{
+    return spotID;
+}
+
+function setInteractable(value:Bool)
+{
+    interactable = value;
 }
 
 // Sets the target level

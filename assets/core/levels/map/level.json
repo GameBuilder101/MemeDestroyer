@@ -9,9 +9,10 @@
             "value": [
                 {
                     "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
                     "position": [
-                        320.0,
-                        1900.0
+                        260.0,
+                        1925.0
                     ],
                     "connections": [
                         -1,
@@ -23,13 +24,29 @@
                 },
                 {
                     "id": "levels/overworld",
+                    "spotEntityID": "entities/shop_level_spot",
                     "position": [
                         100.0,
-                        1700.0
+                        1800.0
+                    ],
+                    "connections": [
+                        2,
+                        0,
+                        -1,
+                        -1
+                    ],
+                    "prerequisite": 0
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        90.0,
+                        1665.0
                     ],
                     "connections": [
                         -1,
-                        0,
+                        1,
                         -1,
                         -1
                     ],
