@@ -122,9 +122,13 @@ function movementCheck(elapsed:Float)
 function startEntering()
 {
 	entering = true;
+
 	FlxG.switchState(new PlayState(levels[currentLevel].id));
 	// Zoom in the camera while transitioning
 	FlxTween.tween(FlxG.camera, {zoom: 2.0}, 1.0);
+
+	MusicManager.fadeOut(0.0);
+	AssetSoundRegistry.getAsset("levels/map/sounds/start_level").play();
 }
 
 // Starts the movement animation from one spot to another
