@@ -1,0 +1,12 @@
+{
+    "name": "Conspirator's Shop",
+    "components": [],
+    "variables": [
+        {
+            "name": "titleColor",
+            "value": "#ffffff"
+        }
+    ],
+    "backgroundSpriteID": "",
+    "initialSpawns": []
+}

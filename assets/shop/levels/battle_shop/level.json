@@ -1,0 +1,12 @@
+{
+    "name": "Battle Shop",
+    "components": [],
+    "variables": [
+        {
+            "name": "titleColor",
+            "value": "#ffffff"
+        }
+    ],
+    "backgroundSpriteID": "",
+    "initialSpawns": []
+}
