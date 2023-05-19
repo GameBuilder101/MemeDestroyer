@@ -1,0 +1,27 @@
+{
+    "name": "Map",
+    "description": "Map content",
+    "version": "1.0.0",
+    "dependencies": [
+        {
+            "id": "core",
+            "version": "1.0.0"
+        },
+        {
+            "id": "combat_level",
+            "version": "1.0.0"
+        },
+        {
+            "id": "shop",
+            "version": "1.0.0"
+        },
+        {
+            "id": "transcended_boss",
+            "version": "1.0.0"
+        },
+        {
+            "id": "final_level",
+            "version": "1.0.0"
+        }
+    ]
+}

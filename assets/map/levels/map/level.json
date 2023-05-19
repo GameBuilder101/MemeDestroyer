@@ -1,0 +1,319 @@
+{
+    "name": "Map",
+    "components": [
+        "levels/map/manager"
+    ],
+    "variables": [
+        {
+            "name": "levels",
+            "value": [
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        260.0,
+                        1925.0
+                    ],
+                    "connections": [
+                        2,
+                        -1,
+                        3,
+                        1
+                    ],
+                    "prerequisite": -1
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        495.0,
+                        1845.0
+                    ],
+                    "connections": [
+                        -1,
+                        -1,
+                        0,
+                        -1
+                    ],
+                    "prerequisite": 0
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        295.0,
+                        1730.0
+                    ],
+                    "connections": [
+                        -1,
+                        0,
+                        -1,
+                        -1
+                    ],
+                    "prerequisite": 0
+                },
+                {
+                    "id": "levels/interstate_shop",
+                    "spotEntityID": "entities/shop_level_spot",
+                    "position": [
+                        140.0,
+                        1830.0
+                    ],
+                    "connections": [
+                        4,
+                        0,
+                        -1,
+                        -1
+                    ],
+                    "prerequisite": 0
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        90.0,
+                        1665.0
+                    ],
+                    "connections": [
+                        5,
+                        3,
+                        -1,
+                        6
+                    ],
+                    "prerequisite": 0
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        78.0,
+                        1478.0
+                    ],
+                    "connections": [
+                        -1,
+                        4,
+                        -1,
+                        -1
+                    ],
+                    "prerequisite": 4
+                },
+                {
+                    "id": "levels/battle_shop",
+                    "spotEntityID": "entities/shop_level_spot",
+                    "position": [
+                        273.0,
+                        1505.0
+                    ],
+                    "connections": [
+                        -1,
+                        -1,
+                        4,
+                        7
+                    ],
+                    "prerequisite": 4
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        435.0,
+                        1430.0
+                    ],
+                    "connections": [
+                        10,
+                        6,
+                        9,
+                        8
+                    ],
+                    "prerequisite": 4
+                },
+                {
+                    "id": "levels/brazilian_shop",
+                    "spotEntityID": "entities/shop_level_spot",
+                    "position": [
+                        590.0,
+                        1395.0
+                    ],
+                    "connections": [
+                        -1,
+                        -1,
+                        7,
+                        -1
+                    ],
+                    "prerequisite": 7
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        310.0,
+                        1300.0
+                    ],
+                    "connections": [
+                        -1,
+                        7,
+                        -1,
+                        -1
+                    ],
+                    "prerequisite": 7
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        510.0,
+                        1235.0
+                    ],
+                    "connections": [
+                        11,
+                        7,
+                        -1,
+                        -1
+                    ],
+                    "prerequisite": 7
+                },
+                {
+                    "id": "levels/liminal_shop",
+                    "spotEntityID": "entities/shop_level_spot",
+                    "position": [
+                        465.0,
+                        1080.0
+                    ],
+                    "connections": [
+                        13,
+                        10,
+                        12,
+                        -1
+                    ],
+                    "prerequisite": 10
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        88.0,
+                        1160.0
+                    ],
+                    "connections": [
+                        -1,
+                        -1,
+                        -1,
+                        11
+                    ],
+                    "prerequisite": 10
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        450.0,
+                        975.0
+                    ],
+                    "connections": [
+                        15,
+                        11,
+                        14,
+                        -1
+                    ],
+                    "prerequisite": 10
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        160.0,
+                        918.0
+                    ],
+                    "connections": [
+                        -1,
+                        -1,
+                        -1,
+                        13
+                    ],
+                    "prerequisite": 13
+                },
+                {
+                    "id": "levels/conspirators_shop",
+                    "spotEntityID": "entities/shop_level_spot",
+                    "position": [
+                        285.0,
+                        845.0
+                    ],
+                    "connections": [
+                        -1,
+                        13,
+                        16,
+                        -1
+                    ],
+                    "prerequisite": 13
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        132.0,
+                        782.0
+                    ],
+                    "connections": [
+                        19,
+                        15,
+                        17,
+                        18
+                    ],
+                    "prerequisite": 13
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        75.0,
+                        710.0
+                    ],
+                    "connections": [
+                        -1,
+                        16,
+                        -1,
+                        -1
+                    ],
+                    "prerequisite": 16
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        365.0,
+                        775.0
+                    ],
+                    "connections": [
+                        -1,
+                        -1,
+                        16,
+                        -1
+                    ],
+                    "prerequisite": 16
+                },
+                {
+                    "id": "levels/overworld",
+                    "spotEntityID": "entities/level_spot",
+                    "position": [
+                        295.0,
+                        170.0
+                    ],
+                    "connections": [
+                        -1,
+                        16,
+                        -1,
+                        -1
+                    ],
+                    "prerequisite": 16
+                }
+            ]
+        },
+        {
+            "name": "mainThemeID",
+            "value": "levels/map/music/main_theme"
+        }
+    ],
+    "backgroundSpriteID": "levels/map/sprites/main",
+    "initialSpawns": []
+}

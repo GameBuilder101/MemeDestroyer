@@ -1,0 +1,22 @@
+{
+    "name": "Wow.exe",
+    "components": [
+        "levels/_shared/round_manager"
+    ],
+    "variables": [
+        {
+            "name": "bosses",
+            "value": []
+        },
+        {
+            "name": "mainThemeID",
+            "value": ""
+        },
+        {
+            "name": "titleColor",
+            "value": "#ffffff"
+        }
+    ],
+    "backgroundSpriteID": "",
+    "initialSpawns": []
+}

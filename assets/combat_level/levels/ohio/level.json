@@ -1,0 +1,31 @@
+{
+    "name": "Ohio",
+    "components": [
+        "levels/_shared/round_manager",
+        "levels/_shared/intro"
+    ],
+    "variables": [
+        {
+            "name": "bosses",
+            "value": []
+        },
+        {
+            "name": "mainThemeID",
+            "value": ""
+        },
+        {
+            "name": "title",
+            "value": "Ohio"
+        },
+        {
+            "name": "subtitle",
+            "value": "Forsaken State"
+        },
+        {
+            "name": "titleColor",
+            "value": "#ffffff"
+        }
+    ],
+    "backgroundSpriteID": "",
+    "initialSpawns": []
+}

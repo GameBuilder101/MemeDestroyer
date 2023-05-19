@@ -10,6 +10,9 @@ class LevelPanel extends FlxSpriteGroup implements IIndicator
 	/** The number of stars to display. **/
 	static inline final NUM_STARS:Int = 5;
 
+	/** The display style. **/
+	var style:String;
+
 	var panel:AssetSprite;
 
 	var label:FlxText;
@@ -32,7 +35,7 @@ class LevelPanel extends FlxSpriteGroup implements IIndicator
 
 		upperLine = new AssetSprite(0.0, 8.0, "ui/_shared/sprites/title_line");
 		add(upperLine);
-		lowerLine = new AssetSprite(0.0, panel.height - 24.0, "ui/_shared/sprites/title_line");
+		lowerLine = new AssetSprite(0.0, 0.0, "ui/_shared/sprites/title_line");
 		add(lowerLine);
 
 		label = new FlxText(0.0, upperLine.height + 6.0, panel.width);
@@ -50,6 +53,17 @@ class LevelPanel extends FlxSpriteGroup implements IIndicator
 			add(star);
 			stars.push(star);
 		}
+
+		setStyle("normal");
+	}
+
+	override function update(elapsed:Float)
+	{
+		super.update(elapsed);
+		var show:Bool = visible && style != "simple";
+		highScore.visible = show;
+		for (star in stars)
+			star.visible = show;
 	}
 
 	public function setValues(current:Float, max:Float)
@@ -92,5 +106,16 @@ class LevelPanel extends FlxSpriteGroup implements IIndicator
 			else
 				star.color = indicatorColor;
 		}
+	}
+
+	public function setStyle(style:String)
+	{
+		this.style = style;
+
+		if (style == "simple")
+			panel.loadFromID("ui/map_hud/sprites/level_panel_simple");
+		else
+			panel.loadFromID("ui/map_hud/sprites/level_panel");
+		lowerLine.y = y + panel.height - 24.0;
 	}
 }

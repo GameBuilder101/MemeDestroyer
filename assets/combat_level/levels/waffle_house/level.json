@@ -1,0 +1,31 @@
+{
+    "name": "Waffle House",
+    "components": [
+        "levels/_shared/round_manager",
+        "levels/_shared/intro"
+    ],
+    "variables": [
+        {
+            "name": "bosses",
+            "value": []
+        },
+        {
+            "name": "mainThemeID",
+            "value": ""
+        },
+        {
+            "name": "title",
+            "value": "Waffle House"
+        },
+        {
+            "name": "subtitle",
+            "value": "The Hosted"
+        },
+        {
+            "name": "titleColor",
+            "value": "#ffffff"
+        }
+    ],
+    "backgroundSpriteID": "",
+    "initialSpawns": []
+}

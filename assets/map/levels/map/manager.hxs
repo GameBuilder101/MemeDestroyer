@@ -155,8 +155,9 @@ function stopMoving()
 	moving = false;
 
 	spots[currentLevel].getComponent("spot").call("setInteractable", [true]);
-
+	var target = spots[currentLevel].getComponent("spot").call("getTarget");
 	var color = spots[currentLevel].mainSprite.color;
+
 	upArrow.visible = levels[currentLevel].connections[0] >= 0;
 	upArrow.color = color;
 	downArrow.visible = levels[currentLevel].connections[1] >= 0;
@@ -166,9 +167,21 @@ function stopMoving()
 	rightArrow.visible = levels[currentLevel].connections[3] >= 0;
 	rightArrow.color = color;
 
+	var canGetHighScore:Bool = false;
+	for (component in target.components)
+	{
+		if (component == "levels/_shared/round_manager")
+		{
+			canGetHighScore = true;
+			break;
+		}
+	}
+
 	hud.levelPanel.setValues(50.0, 100.0);
-	hud.levelPanel.setLabel(spots[currentLevel].getComponent("spot").call("getTarget").name);
+	hud.levelPanel.setLabel(target.name);
 	hud.levelPanel.setIndicatorColor(color);
+	// Use a simple panel if it's not possible to geta high score for the level
+	hud.levelPanel.setStyle(canGetHighScore ? "normal" : "simple");
 	hud.showLevelPanel();
 }
 

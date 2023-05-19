@@ -1,0 +1,31 @@
+{
+    "name": "Illuminati HQ",
+    "components": [
+        "levels/_shared/round_manager",
+        "levels/_shared/intro"
+    ],
+    "variables": [
+        {
+            "name": "bosses",
+            "value": []
+        },
+        {
+            "name": "mainThemeID",
+            "value": ""
+        },
+        {
+            "name": "title",
+            "value": "Illuminati HQ"
+        },
+        {
+            "name": "subtitle",
+            "value": "Shadow Government"
+        },
+        {
+            "name": "titleColor",
+            "value": "#ffffff"
+        }
+    ],
+    "backgroundSpriteID": "",
+    "initialSpawns": []
+}

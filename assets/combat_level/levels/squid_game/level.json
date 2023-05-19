@@ -1,0 +1,31 @@
+{
+    "name": "Squid Game",
+    "components": [
+        "levels/_shared/round_manager",
+        "levels/_shared/intro"
+    ],
+    "variables": [
+        {
+            "name": "bosses",
+            "value": []
+        },
+        {
+            "name": "mainThemeID",
+            "value": ""
+        },
+        {
+            "name": "title",
+            "value": "Squid Game"
+        },
+        {
+            "name": "subtitle",
+            "value": "Battle Royale"
+        },
+        {
+            "name": "titleColor",
+            "value": "#ffffff"
+        }
+    ],
+    "backgroundSpriteID": "",
+    "initialSpawns": []
+}
