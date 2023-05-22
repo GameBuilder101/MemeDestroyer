@@ -52,7 +52,6 @@ function onUnequip()
 		return;
 	equipper = null;
 
-	currentUseDelay = 0.0;
 	callAll("onUnequipped");
 }
 

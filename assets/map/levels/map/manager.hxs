@@ -125,7 +125,7 @@ function onUpdate(elapsed:Float)
 	leftArrow.alpha = arrowAnimPercent;
 	rightArrow.alpha = arrowAnimPercent;
 
-	hud.startLevelText.text = "Press \"" + Controls.interact.getDisplayName() + "\" to start";
+	hud.startLevelText.text = "Press \"" + Controls.interact.getDisplayName(0) + "\" to start";
 	hud.startLevelText.alpha = arrowAnimPercent; // Also animate start level text
 }
 

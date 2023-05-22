@@ -153,6 +153,8 @@ function equip(index:Int)
 // Unequips the currently-equipped item
 function unequip()
 {
+	if (equipped == null)
+		return;
 	equipped = null;
 	equippedItem.call("onUnequip");
 	equippedItem = null;
