@@ -1,12 +1,55 @@
 {
     "name": "Interstate Shop",
-    "components": [],
+    "components": [
+        "levels/_shared/shop_manager"
+    ],
     "variables": [
+        {
+            "name": "mainThemeID",
+            "value": "levels/_shared/music/shop_theme"
+        },
         {
             "name": "titleColor",
             "value": "#ffffff"
         }
     ],
-    "backgroundSpriteID": "",
-    "initialSpawns": []
+    "backgroundSpriteID": "levels/interstate_shop/sprites/main",
+    "initialSpawns": [
+        {
+            "id": "entities/shopkeep",
+            "position": [
+                272.0,
+                24.0
+            ],
+            "randomizeX": false,
+            "randomizeY": false
+        },
+        {
+            "id": "entities/leave_arrow",
+            "position": [
+                304.0,
+                320.0
+            ],
+            "randomizeX": false,
+            "randomizeY": false
+        },
+        {
+            "id": "items/the_l",
+            "position": [
+                200.0,
+                200.0
+            ],
+            "randomizeX": false,
+            "randomizeY": false
+        },
+        {
+            "id": "items/nokia",
+            "position": [
+                400.0,
+                200.0
+            ],
+            "randomizeX": false,
+            "randomizeY": false
+        }
+    ]
 }

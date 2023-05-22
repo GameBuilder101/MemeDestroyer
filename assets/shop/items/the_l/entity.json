@@ -1,0 +1,46 @@
+{
+    "name": "The L",
+    "tags": [
+        "item"
+    ],
+    "components": [
+        "entities/_shared/interactable",
+        "items/_shared/item",
+        "items/_shared/weapon"
+    ],
+    "variables": [
+        {
+            "name": "altEquipSoundID",
+            "value": "items/the_l/sounds/use"
+        },
+        {
+            "name": "heldSpriteID",
+            "value": "items/the_l/sprites/held"
+        },
+        {
+            "name": "heldSpriteMode",
+            "value": "rotating"
+        },
+        {
+            "name": "useDelay",
+            "value": 0.61
+        },
+        {
+            "name": "projectileID",
+            "value": "projectiles/the_l"
+        },
+        {
+            "name": "maxAmmo",
+            "value": -1
+        },
+        {
+            "name": "fireSoundID",
+            "value": "items/the_l/sounds/fire"
+        },
+        {
+            "name": "emptySoundID",
+            "value": "items/_shared/sounds/empty"
+        }
+    ],
+    "spriteID": "items/the_l/sprites/main"
+}

@@ -1,7 +1,7 @@
 {
     "name": "Void of Trolling",
     "components": [
-        "levels/_shared/round_manager"
+        "levels/_shared/combat_manager"
     ],
     "variables": [
         {
@@ -17,6 +17,6 @@
             "value": "#ffffff"
         }
     ],
-    "backgroundSpriteID": "",
+    "backgroundSpriteID": "levels/void_of_trolling/sprites/main",
     "initialSpawns": []
 }

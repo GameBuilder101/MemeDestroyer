@@ -13,11 +13,17 @@ function onAddedToPlay()
 	data = GameSaver.instance.getGameData("playerMaxInvFrames");
 	if (data != null)
 		health.call("setMaxInvFrames", [data]);
-	data = GameSaver.instance.getGameData("playerEquippedItemID");
+	data = GameSaver.instance.getGameData("playerInventory");
 	if (data != null)
 	{
-		var item:Entity = state.spawn(data, 0.0, 0.0);
-		equipper.call("equip", [item]);
+		var item:Entity;
+		for (i in 0...data.length)
+		{
+			if (data[i] == "")
+				continue;
+			item = state.spawn(data[i], 0.0, 0.0);
+			equipper.call("addToInventory", [i, item]);
+		}
 	}
 }
 
@@ -25,5 +31,16 @@ function onRemovedFromPlay()
 {
 	GameSaver.instance.setGameData("playerMaxHealth", health.call("getMaxHealth"));
 	GameSaver.instance.setGameData("playerMaxInvFrames", health.call("getMaxInvFrames"));
-	GameSaver.instance.setGameData("playerEquippedItemID", equipper.call("getEquippedItem").id);
+
+	var playerInventory:Array<String> = [];
+	var item:Entity;
+	for (i in 0...equipper.call("getInventorySize"))
+	{
+		item = equipper.call("getInventoryItem", [i]);
+		if (item == null)
+			playerInventory.push("");
+		else
+			playerInventory.push(item.id);
+	}
+	GameSaver.instance.setGameData("playerInventory", playerInventory);
 }

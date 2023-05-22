@@ -15,6 +15,9 @@ var upArrow:AssetSprite;
 var downArrow:AssetSprite;
 var leftArrow:AssetSprite;
 var rightArrow:AssetSprite;
+// Arrow animation variables
+var arrowAnimPercent:Float = 0.0;
+var arrowAnimDir:Int = 1;
 
 // The index of the current level
 var currentLevel:Int = 0;
@@ -66,7 +69,12 @@ function onLoaded()
 	rightArrow.visible = false;
 	state.effects.add(rightArrow);
 
-	player.setPosition(spots[0].x, spots[0].y); // Start the player at the first spot
+	// Restore data from save
+	var data:Dynamic = GameSaver.instance.getGameData("lastMapLevelIndex");
+	if (data != null)
+		currentLevel = data;
+
+	player.setPosition(spots[currentLevel].x, spots[currentLevel].y); // Start the player at the initial spot
 	stopMoving(); // Update the initial spot visuals
 
 	mainTheme = AssetMusicRegistry.getAsset(mainThemeID);
@@ -98,7 +106,27 @@ function onUpdate(elapsed:Float)
 	upArrow.setPosition(player.x, player.y);
 	downArrow.setPosition(player.x, player.y);
 	leftArrow.setPosition(player.x, player.y);
-	rightArrow.setPosition(player.x, player.y);	
+	rightArrow.setPosition(player.x, player.y);
+
+	// Continue animating the arrow alpha in one direction, until it reaches an end, and then flip direction
+	arrowAnimPercent += elapsed * arrowAnimDir * 0.75;
+	if (arrowAnimDir > 0 && arrowAnimPercent >= 1.0)
+	{
+		arrowAnimPercent = 1.0;
+		arrowAnimDir *= -1;
+	}
+	else if (arrowAnimPercent <= 0.4)
+	{
+		arrowAnimPercent = 0.4;
+		arrowAnimDir *= -1;
+	}
+	upArrow.alpha = arrowAnimPercent;
+	downArrow.alpha = arrowAnimPercent;
+	leftArrow.alpha = arrowAnimPercent;
+	rightArrow.alpha = arrowAnimPercent;
+
+	hud.startLevelText.text = "Press \"" + Controls.interact.getDisplayName() + "\" to start";
+	hud.startLevelText.alpha = arrowAnimPercent; // Also animate start level text
 }
 
 // Checks for player movement input
@@ -107,11 +135,11 @@ function movementCheck(elapsed:Float)
 	var prevLevel:Int = currentLevel;
 	if (Controls.moveUp.check() && levels[currentLevel].connections[0] >= 0)
 		currentLevel = levels[currentLevel].connections[0];
-	if (Controls.moveDown.check() && levels[currentLevel].connections[1] >= 0)
+	else if (Controls.moveDown.check() && levels[currentLevel].connections[1] >= 0)
 		currentLevel = levels[currentLevel].connections[1];
-	if (Controls.moveLeft.check() && levels[currentLevel].connections[2] >= 0)
+	else if (Controls.moveLeft.check() && levels[currentLevel].connections[2] >= 0)
 		currentLevel = levels[currentLevel].connections[2];
-	if (Controls.moveRight.check() && levels[currentLevel].connections[3] >= 0)
+	else if (Controls.moveRight.check() && levels[currentLevel].connections[3] >= 0)
 		currentLevel = levels[currentLevel].connections[3];
 
 	if (currentLevel != prevLevel) // If the player made a move input
@@ -122,6 +150,8 @@ function movementCheck(elapsed:Float)
 function startEntering()
 {
 	entering = true;
+
+	GameSaver.instance.setGameData("lastMapLevelIndex", currentLevel);
 
 	state.transOut = TransitionDataRegistry.getAsset("transitions/start_level_out");
 	FlxG.switchState(new PlayState(levels[currentLevel].id));
@@ -147,6 +177,7 @@ function startMoving(prevLevel:Int)
 	rightArrow.visible = false;
 
 	hud.hideLevelPanel();
+	hud.startLevelText.visible = false;
 }
 
 // Stops the movement animation from one spot to another
@@ -170,7 +201,7 @@ function stopMoving()
 	var canGetHighScore:Bool = false;
 	for (component in target.components)
 	{
-		if (component == "levels/_shared/round_manager")
+		if (component == "levels/_shared/combat_manager")
 		{
 			canGetHighScore = true;
 			break;
@@ -183,6 +214,7 @@ function stopMoving()
 	// Use a simple panel if it's not possible to geta high score for the level
 	hud.levelPanel.setStyle(canGetHighScore ? "normal" : "simple");
 	hud.showLevelPanel();
+	hud.startLevelText.visible = true;
 }
 
 function getHud():MapHud

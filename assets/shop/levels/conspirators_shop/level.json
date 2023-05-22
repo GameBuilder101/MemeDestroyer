@@ -1,12 +1,18 @@
 {
     "name": "Conspirator's Shop",
-    "components": [],
+    "components": [
+        "levels/_shared/shop_manager"
+    ],
     "variables": [
+        {
+            "name": "mainThemeID",
+            "value": "levels/_shared/music/shop_theme"
+        },
         {
             "name": "titleColor",
             "value": "#ffffff"
         }
     ],
-    "backgroundSpriteID": "",
+    "backgroundSpriteID": "levels/conspirators_shop/sprites/main",
     "initialSpawns": []
 }

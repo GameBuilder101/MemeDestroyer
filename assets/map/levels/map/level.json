@@ -23,7 +23,7 @@
                     "prerequisite": -1
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/waffle_house",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         495.0,
@@ -38,7 +38,7 @@
                     "prerequisite": 0
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/void_of_trolling",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         295.0,
@@ -68,7 +68,7 @@
                     "prerequisite": 0
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/ohio",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         90.0,
@@ -83,7 +83,7 @@
                     "prerequisite": 0
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/squid_game",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         78.0,
@@ -113,7 +113,7 @@
                     "prerequisite": 4
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/brazil",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         435.0,
@@ -143,7 +143,7 @@
                     "prerequisite": 7
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/odorous_swamp",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         310.0,
@@ -158,7 +158,7 @@
                     "prerequisite": 7
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/the_backrooms",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         510.0,
@@ -188,7 +188,7 @@
                     "prerequisite": 10
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/area_51",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         88.0,
@@ -203,7 +203,7 @@
                     "prerequisite": 10
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/illuminati_hq",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         450.0,
@@ -218,7 +218,7 @@
                     "prerequisite": 10
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/the_skeld",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         160.0,
@@ -248,7 +248,7 @@
                     "prerequisite": 13
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/windows_xp",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         132.0,
@@ -263,7 +263,7 @@
                     "prerequisite": 13
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/wow_exe",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         75.0,
@@ -278,7 +278,7 @@
                     "prerequisite": 16
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/familiar_underpass",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         365.0,
@@ -293,7 +293,7 @@
                     "prerequisite": 16
                 },
                 {
-                    "id": "levels/overworld",
+                    "id": "levels/precipice_of_the_memeiverse",
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         295.0,

@@ -1,6 +1,6 @@
 {
     "name": "Shop",
-    "description": "Shop content",
+    "description": "Shop assets",
     "version": "1.0.0",
     "dependencies": [
         {

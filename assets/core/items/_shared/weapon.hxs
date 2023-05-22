@@ -1,9 +1,71 @@
-// Requires variables projectileID:String
+// Requires variables projectileID:String, maxAmmo:Int, fireSoundID:String, emptySoundID:String
+var equipper:Entity;
+var equipperHands:AssetSprite;
+
+var ammo:Int = 0;
+
+var fireSound:AssetSound;
+var emptySound:AssetSound;
+
+function onLoaded()
+{
+	ammo = maxAmmo;
+
+	if (fireSoundID != null)
+		fireSound = AssetSoundRegistry.getAsset(fireSoundID);
+	if (emptySoundID != null)
+		emptySound = AssetSoundRegistry.getAsset(emptySoundID);
+}
+
+function onEquipped(entity:Entity)
+{
+	equipper = entity;
+	equipperHands = entity.getComponent("equipper").call("getHands");
+}
+
+function onUnequipped()
+{
+	equipper = null;
+}
+
 function onUsed(equipper:Entity, riposte:Bool)
 {
+	if (ammo == 0) // If empty
+	{
+		if (equipperHands.animation.exists("empty"))
+			equipperHands.animation.play("empty", true);
+		if (emptySound != null)
+			emptySound.play();
+		
+		return;
+	}
+
+	if (equipperHands.animation.exists("fire"))
+		equipperHands.animation.play("fire", true);
+	if (fireSound != null)
+		fireSound.play();
+
 	equipper.getComponent("shooter").call("fire", [
 		projectileID,
 		FlxAngle.angleBetweenPoint(equipper, FlxG.mouse.getPosition(), true),
 		riposte
 	]);
+	if (state.components.getComponent("combat_manager") != null) // Only use ammo during combat levels
+		ammo--;
+}
+
+// The weapon doesn't use ammo if max ammo is less than zero
+function usesAmmo():Bool
+{
+	return maxAmmo >= 0;
+}
+
+function getAmmo():Int
+{
+	return ammo;
+}
+
+function getMaxAmmo():Int
+{
+	return maxAmmo;
 }

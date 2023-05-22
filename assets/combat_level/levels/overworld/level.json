@@ -1,7 +1,7 @@
 {
     "name": "The Overworld",
     "components": [
-        "levels/_shared/round_manager",
+        "levels/_shared/combat_manager",
         "levels/_shared/intro"
     ],
     "variables": [
@@ -9,13 +9,16 @@
             "name": "bosses",
             "value": [
                 {
-                    "id": "entities/maxwell",
-                    "position": [
-                        0.0,
-                        0.0
-                    ],
-                    "randomizeX": true,
-                    "randomizeY": false
+                    "spawn": {
+                        "id": "entities/maxwell",
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "randomizeX": true,
+                        "randomizeY": false
+                    },
+                    "playSpawnEffects": true
                 }
             ]
         },
@@ -33,7 +36,7 @@
         },
         {
             "name": "titleColor",
-            "value": "#d3f04c"
+            "value": "#ace24e"
         }
     ],
     "backgroundSpriteID": "levels/overworld/sprites/main",
@@ -52,15 +55,6 @@
             "position": [
                 16.0,
                 220.0
-            ],
-            "randomizeX": false,
-            "randomizeY": false
-        },
-        {
-            "id": "items/nokia",
-            "position": [
-                200.0,
-                200.0
             ],
             "randomizeX": false,
             "randomizeY": false

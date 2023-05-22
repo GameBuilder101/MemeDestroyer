@@ -21,6 +21,7 @@ class Controls extends Saver<Array<Dynamic>>
 	public static var fire(default, null):OverridableAction;
 	public static var dodge(default, null):OverridableAction;
 	public static var interact(default, null):OverridableAction;
+	public static var equip(default, null):OverridableAction;
 
 	static var actions:Array<OverridableAction>;
 
@@ -37,12 +38,14 @@ class Controls extends Saver<Array<Dynamic>>
 		moveRight = new OverridableAction("moveRight", "Move Right", PRESSED, 2, [RIGHT, D], [LEFT_STICK_DIGITAL_RIGHT, NONE]);
 		actions.push(moveRight);
 
-		fire = new OverridableAction("fire", "Fire", PRESSED, 1, [F], [RIGHT_TRIGGER]);
+		fire = new OverridableAction("fire", "Fire", PRESSED, 1, [R], [RIGHT_TRIGGER]);
 		actions.push(fire);
 		dodge = new OverridableAction("dodge", "Dodge", JUST_PRESSED, 1, [SPACE], [A]);
 		actions.push(dodge);
 		interact = new OverridableAction("interact", "Interact", JUST_PRESSED, 1, [E], [B]);
 		actions.push(interact);
+		equip = new OverridableAction("equip", "Equip", JUST_PRESSED, 1, [F], [DPAD_RIGHT]);
+		actions.push(equip);
 
 		super();
 	}

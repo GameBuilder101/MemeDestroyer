@@ -45,8 +45,12 @@
             "value": "entities/player/sounds/die"
         },
         {
+            "name": "inventorySize",
+            "value": 2
+        },
+        {
             "name": "riposteDuration",
-            "value": 0.3
+            "value": 0.5
         },
         {
             "name": "dodgeSpeed",

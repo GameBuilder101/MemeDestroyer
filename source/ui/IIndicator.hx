@@ -10,4 +10,6 @@ interface IIndicator
 	public function setLabel(label:String):Void;
 
 	public function setIndicatorColor(color:FlxColor):Void;
+
+	public function getIndicatorColor():FlxColor;
 }

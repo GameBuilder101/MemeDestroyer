@@ -1,6 +1,6 @@
 {
     "name": "Map",
-    "description": "Map content",
+    "description": "Map assets",
     "version": "1.0.0",
     "dependencies": [
         {

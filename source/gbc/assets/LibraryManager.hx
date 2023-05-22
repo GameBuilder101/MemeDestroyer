@@ -77,10 +77,4 @@ class LibraryManager
 		for (library in all)
 			library.clearAssetCache();
 	}
-
-	/** Returns the core library or null if none exists. **/
-	public static function getCore()
-	{
-		return registry.get("core");
-	}
 }

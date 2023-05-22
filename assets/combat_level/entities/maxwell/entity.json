@@ -49,10 +49,6 @@
             "value": "entities/maxwell/sounds/die"
         },
         {
-            "name": "riposteDuration",
-            "value": 0.3
-        },
-        {
             "name": "contactDamage",
             "value": -1.0
         },

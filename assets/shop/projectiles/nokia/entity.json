@@ -1,0 +1,24 @@
+{
+    "name": "Nokia (Projectile)",
+    "tags": [],
+    "components": [
+        "projectiles/_shared/projectile",
+        "entities/_shared/damager"
+    ],
+    "variables": [
+        {
+            "name": "fireSpeed",
+            "value": 3.5
+        },
+        {
+            "name": "damage",
+            "value": -3.0
+        },
+        {
+            "name": "riposteMultiplier",
+            "value": 3.5
+        }
+    ],
+    "spriteID": "projectiles/nokia/sprites/main",
+    "sortingPriority": 32
+}

@@ -1,0 +1,10 @@
+{
+    "name": "Leave Arrow",
+    "tags": [],
+    "components": [
+        "entities/_shared/interactable",
+        "entities/leave_arrow/interaction"
+    ],
+    "variables": [],
+    "spriteID": "entities/leave_arrow/sprites/main"
+}

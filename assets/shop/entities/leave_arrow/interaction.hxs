@@ -1,0 +1,11 @@
+var leaving:Bool = false;
+
+function onInteracted(entity:Entity)
+{
+    if (leaving)
+        return;
+    leaving = true;
+    AssetSoundRegistry.getAsset("entities/leave_arrow/sounds/leave").play();
+    MusicManager.fadeOut(1.0);
+    FlxG.switchState(new PlayState("levels/map"));
+}

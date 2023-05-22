@@ -1,7 +1,7 @@
 {
     "name": "Familiar Underpass",
     "components": [
-        "levels/_shared/round_manager"
+        "levels/_shared/combat_manager"
     ],
     "variables": [
         {
@@ -14,9 +14,9 @@
         },
         {
             "name": "titleColor",
-            "value": "#ffffff"
+            "value": "#ffee83"
         }
     ],
-    "backgroundSpriteID": "",
+    "backgroundSpriteID": "levels/familiar_underpass/sprites/main",
     "initialSpawns": []
 }

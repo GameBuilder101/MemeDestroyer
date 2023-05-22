@@ -1,5 +1,6 @@
 package gbc.input;
 
+import flixel.FlxG;
 import flixel.input.FlxInput;
 import flixel.input.actions.FlxAction;
 import flixel.input.gamepad.FlxGamepadInputID;
@@ -110,6 +111,22 @@ class OverridableAction
 	public function check():Bool
 	{
 		return action.check();
+	}
+
+	public function getKeyDisplayName(index:Int):String
+	{
+		return getKeyBind(index);
+	}
+
+	public function getGamepadDisplayName(index:Int):String
+	{
+		return getGamepadBind(index);
+	}
+
+	/** Returns either the key or gamepad display name at bind index, depending on if a gamepad is plugged in. **/
+	public function getDisplayName(index:Int):String
+	{
+		return FlxG.gamepads.numActiveGamepads > 0 ? getGamepadDisplayName(index) : getKeyDisplayName(index);
 	}
 
 	/** Converts the action to be savable dynamic for a saver. **/

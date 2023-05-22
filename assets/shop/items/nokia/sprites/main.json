@@ -1,0 +1,17 @@
+{
+    "animations": [
+        {
+            "name": "idle",
+            "atlasPrefix": "idle",
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "interactable",
+            "atlasPrefix": "interactable",
+            "frameRate": 4,
+            "looped": true
+        }
+    ],
+    "defaultAnim": "idle"
+}

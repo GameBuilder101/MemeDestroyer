@@ -1,0 +1,36 @@
+// Requires variables mainThemeID:String
+
+var hud:ShopHud;
+
+var player:Entity;
+var playerEquipper:GameScript = null;
+
+function onLoaded()
+{
+	hud = new ShopHud();
+	state.add(hud);
+	
+	player = state.spawn("entities/player");
+	playerEquipper = player.getComponent("equipper");
+	player.screenCenter();
+
+	for (i in 0...playerEquipper.call("getInventorySize"))
+		hud.inventory.addSlot();
+
+	AssetMusicRegistry.getAsset(mainThemeID).play();
+}
+
+function onUpdate(elapsed:Float)
+{
+	if (playerEquipper != null)
+	{
+		for (i in 0...playerEquipper.call("getInventorySize"))
+			hud.inventory.setItemInSlot(i, playerEquipper.call("getInventoryItem", [i]));
+		hud.inventory.setSelectedSlot(playerEquipper.call("getSelectedItemIndex"));
+	}
+}
+
+function getHud():ShopHud
+{
+	return hud;
+}

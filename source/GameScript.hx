@@ -12,7 +12,8 @@ class GameScript extends Script
 		set("Entity", entity.Entity);
 		set("EntityRegistry", entity.EntityRegistry);
 		set("PlayState", PlayState);
-		set("Hud", ui.hud.Hud);
+		set("CombatHud", ui.combat_hud.CombatHud);
+		set("ShopHud", ui.shop_hud.ShopHud);
 		set("MapHud", ui.map_hud.MapHud);
 		set("Controls", Controls);
 		set("GameSaver", GameSaver);

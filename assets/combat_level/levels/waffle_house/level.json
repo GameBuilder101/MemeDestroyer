@@ -1,7 +1,7 @@
 {
     "name": "Waffle House",
     "components": [
-        "levels/_shared/round_manager",
+        "levels/_shared/combat_manager",
         "levels/_shared/intro"
     ],
     "variables": [
@@ -23,9 +23,9 @@
         },
         {
             "name": "titleColor",
-            "value": "#ffffff"
+            "value": "#e4d11c"
         }
     ],
-    "backgroundSpriteID": "",
+    "backgroundSpriteID": "levels/waffle_house/sprites/main",
     "initialSpawns": []
 }

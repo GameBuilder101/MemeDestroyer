@@ -1,7 +1,7 @@
 {
     "name": "Precipice of the Memeiverse",
     "components": [
-        "levels/_shared/round_manager"
+        "levels/_shared/combat_manager"
     ],
     "variables": [
         {
@@ -14,9 +14,9 @@
         },
         {
             "name": "titleColor",
-            "value": "#ffffff"
+            "value": "#ff0000"
         }
     ],
-    "backgroundSpriteID": "",
+    "backgroundSpriteID": "levels/precipice_of_the_memeiverse/sprites/main",
     "initialSpawns": []
 }

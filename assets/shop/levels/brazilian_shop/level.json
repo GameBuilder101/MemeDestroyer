@@ -1,12 +1,18 @@
 {
     "name": "Brazilian Shop",
-    "components": [],
+    "components": [
+        "levels/_shared/shop_manager"
+    ],
     "variables": [
+        {
+            "name": "mainThemeID",
+            "value": "levels/_shared/music/shop_theme"
+        },
         {
             "name": "titleColor",
             "value": "#ffffff"
         }
     ],
-    "backgroundSpriteID": "",
+    "backgroundSpriteID": "levels/brazilian_shop/sprites/main",
     "initialSpawns": []
 }

@@ -1,7 +1,7 @@
 {
     "name": "Odorous Swamp",
     "components": [
-        "levels/_shared/round_manager"
+        "levels/_shared/combat_manager"
     ],
     "variables": [
         {
@@ -14,9 +14,9 @@
         },
         {
             "name": "titleColor",
-            "value": "#ffffff"
+            "value": "#7cc612"
         }
     ],
-    "backgroundSpriteID": "",
+    "backgroundSpriteID": "levels/odorous_swamp/sprites/main",
     "initialSpawns": []
 }

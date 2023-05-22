@@ -4,7 +4,6 @@ import entity.Entity;
 import flixel.FlxG;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup;
-import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 import gbc.graphics.AssetSprite;
 import gbc.scripting.ComponentSystem;

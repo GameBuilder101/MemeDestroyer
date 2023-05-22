@@ -13,7 +13,7 @@ class LevelPanel extends FlxSpriteGroup implements IIndicator
 	/** The display style. **/
 	var style:String;
 
-	var panel:AssetSprite;
+	public var panel(default, null):AssetSprite;
 
 	var label:FlxText;
 	var highScore:FlxText;
@@ -89,6 +89,11 @@ class LevelPanel extends FlxSpriteGroup implements IIndicator
 	{
 		indicatorColor = color;
 		updateIndicatorColor();
+	}
+
+	public function getIndicatorColor():FlxColor
+	{
+		return indicatorColor;
 	}
 
 	function updateIndicatorColor()
