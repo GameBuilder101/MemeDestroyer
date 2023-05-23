@@ -1,7 +1,22 @@
 {
     "name": "Shopkeep",
     "tags": [],
-    "components": [],
-    "variables": [],
+    "components": [
+        "entities/shopkeep/ai"
+    ],
+    "variables": [
+        {
+            "name": "team",
+            "value": "hostile"
+        },
+        {
+            "name": "damagedDialogue",
+            "value": [
+                "Hey! Watch where you're firing.",
+                "Watch it, bud.",
+                "Don't bother attacking me."
+            ]
+        }
+    ],
     "spriteID": "entities/shopkeep/sprites/main"
 }

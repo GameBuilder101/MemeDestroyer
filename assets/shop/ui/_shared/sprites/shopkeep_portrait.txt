@@ -1,0 +1,4 @@
+idle_normal0 = 0 0 64 64
+speaking_normal0 = 0 0 64 64
+speaking_normal1 = 64 0 64 64
+idle_angry0 = 0 64 64 64

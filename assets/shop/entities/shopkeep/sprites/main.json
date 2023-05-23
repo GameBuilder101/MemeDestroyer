@@ -5,18 +5,6 @@
             "atlasPrefix": "idle",
             "frameRate": 2,
             "looped": true
-        },
-        {
-            "name": "speaking",
-            "atlasPrefix": "speaking",
-            "frameRate": 4,
-            "looped": true
-        },
-        {
-            "name": "angry_speaking",
-            "atlasPrefix": "angry_speaking",
-            "frameRate": 4,
-            "looped": true
         }
     ],
     "defaultAnim": "idle"

@@ -1,0 +1,20 @@
+// Requires variables team:String, damagedDialogue:Array<String>
+
+function onUpdate(elapsed:Float)
+{
+	// Look for damage sources
+	overlap("damager");
+}
+
+function onOverlap(tag:String, entity:Entity)
+{
+	if (tag != "damager")
+		return;
+	var damager:GameScript = entity.getComponent("damager");
+	if (damager.get("team") == team)
+		return;
+    var hud:ShopHud = state.components.getComponent("shop_manager").call("getHud");
+    if (hud.dialogueBox.displaying)
+        return;
+    hud.call("displayShopkeepDialogue", [damagedDialogue[Math.random() * damagedDialogue.length], "angry", null]);
+}

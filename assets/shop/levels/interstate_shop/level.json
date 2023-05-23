@@ -9,6 +9,10 @@
             "value": "levels/_shared/music/shop_theme"
         },
         {
+            "name": "shopkeepName",
+            "value": "The Purveyor"
+        },
+        {
             "name": "titleColor",
             "value": "#ffffff"
         }

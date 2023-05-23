@@ -1,4 +1,4 @@
-// Requires variables mainThemeID:String
+// Requires variables mainThemeID:String, shopkeepName:String
 
 var hud:ShopHud;
 
@@ -33,4 +33,9 @@ function onUpdate(elapsed:Float)
 function getHud():ShopHud
 {
 	return hud;
+}
+
+function displayShopkeepDialogue(text:String, animVariant:String, onComplete:Void->Void)
+{
+	hud.dialogueBox.display({name: shopkeepName, text: text, portraitSpriteID: "ui/_shared/sprites/shopkeep_portrait", animVariant: animVariant, speakingSoundID: "ui/_shared/sounds/shopkeep_speaking"}, onComplete);
 }

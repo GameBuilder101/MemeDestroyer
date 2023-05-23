@@ -17,6 +17,8 @@ class CombatHud extends FlxTypedGroup<FlxSprite>
 
 	public var ammoIndicator(default, null):AmmoIndicator;
 
+	public var dialogueBox(default, null):DialogueBox;
+
 	public var titleOverlay(default, null):TitleOverlay;
 
 	public var countdownOverlay(default, null):CountdownOverlay;
@@ -48,6 +50,12 @@ class CombatHud extends FlxTypedGroup<FlxSprite>
 		ammoIndicator = new AmmoIndicator(0.0, 0.0);
 		ammoIndicator.setPosition(FlxG.width - ammoIndicator.width - 6.0, FlxG.height - ammoIndicator.height - 6.0);
 		add(ammoIndicator);
+
+		// Add the dialogue box
+		dialogueBox = new DialogueBox(0.0, 0.0);
+		dialogueBox.screenCenter();
+		dialogueBox.y = FlxG.height * 0.6;
+		add(dialogueBox);
 
 		// Add the title overlay
 		titleOverlay = new TitleOverlay(0.0, 0.0);
