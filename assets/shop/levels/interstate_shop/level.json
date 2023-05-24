@@ -38,7 +38,7 @@
             "randomizeY": false
         },
         {
-            "id": "items/the_l",
+            "id": "entities/the_l_buyable",
             "position": [
                 200.0,
                 200.0
@@ -47,7 +47,7 @@
             "randomizeY": false
         },
         {
-            "id": "items/nokia",
+            "id": "entities/nokia_buyable",
             "position": [
                 400.0,
                 200.0

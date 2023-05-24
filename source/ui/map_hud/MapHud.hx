@@ -30,7 +30,7 @@ class MapHud extends FlxTypedGroup<FlxSprite>
 		levelPanel.screenCenter();
 		levelPanel.setPosition(levelPanel.x, 0.0);
 		levelPanel.visible = false; // The level panel starts hidden by default
-		levelPanelAppearSound = AssetSoundRegistry.getAsset("ui/map_hud/sounds/level_panel_appear");
+		levelPanelAppearSound = AssetSoundRegistry.getAsset("ui/_shared/sounds/panel_appear");
 
 		startLevelText = new FlxText(levelPanel.x, 0.0, levelPanel.width);
 		startLevelText.setFormat("Edit Undo BRK", 20, FlxColor.WHITE, CENTER, SHADOW, FlxColor.BLACK);

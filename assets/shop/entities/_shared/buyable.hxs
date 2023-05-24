@@ -1,0 +1,31 @@
+// Require variables description:String, cost:Int
+
+var hud:ShopHud;
+
+function onLoaded()
+{
+    // Add an icon to indicate this is not yet bought
+    this.add(new AssetSprite(this.x + this.mainSprite.width * 0.25, this.y, null, "entities/_shared/sprites/buyable_icon"));
+
+    item = EntityRegistry.getAsset(itemID);
+
+    hud = state.components.getComponent("shop_manager").call("getHud");
+}
+
+function onEnteredInteractRange(entity:Entity)
+{
+    hud.itemPanel.setValues(cost, cost);
+    hud.itemPanel.setLabel(this.name);
+    hud.itemPanel.setDescription(description);
+    hud.showItemPanel();
+}
+
+function onExitedInteractRange(entity:Entity)
+{
+    hud.hideItemPanel();
+}
+
+function onInteracted(entity:Entity)
+{
+
+}
