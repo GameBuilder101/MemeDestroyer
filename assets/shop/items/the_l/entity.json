@@ -36,10 +36,6 @@
         {
             "name": "fireSoundID",
             "value": "items/the_l/sounds/fire"
-        },
-        {
-            "name": "emptySoundID",
-            "value": "items/_shared/sounds/empty"
         }
     ],
     "spriteID": "items/the_l/sprites/main"

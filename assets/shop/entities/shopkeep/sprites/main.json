@@ -5,6 +5,12 @@
             "atlasPrefix": "idle",
             "frameRate": 2,
             "looped": true
+        },
+        {
+            "name": "angry",
+            "atlasPrefix": "angry",
+            "frameRate": 2,
+            "looped": false
         }
     ],
     "defaultAnim": "idle"

@@ -16,6 +16,9 @@ class PlayState extends FlxTransitionableState
 {
 	var initialLevelID:String;
 
+	/** The ID the current level was loaded with. Null if created dynamically. **/
+	public var levelID(default, null):String;
+
 	/** The currently-loaded level data. **/
 	public var level(default, null):LevelData;
 
@@ -91,8 +94,12 @@ class PlayState extends FlxTransitionableState
 		components.callAll("onUnloaded");
 
 		// Find the level
+		levelID = null;
 		if (data == null && id != null)
+		{
+			levelID = id;
 			data = LevelRegistry.getAsset(id);
+		}
 		if (data == null)
 			return;
 		this.level = data;
@@ -108,16 +115,18 @@ class PlayState extends FlxTransitionableState
 		}
 
 		// Load the background sprite
-		background.loadFromID(level.backgroundSpriteID);
+		if (level.backgroundSpriteID != null)
+			background.loadFromID(level.backgroundSpriteID);
 		FlxG.worldBounds.set(background.x, background.y, background.width, background.height);
 
 		// Remove existing entities
 		for (entity in entities.members)
 			removeEntity(entity);
 
-		// Add initial spawns
+		// Create initial spawns, but don't yet add them (since onAddedToPlay should only get called after the level is created)
+		var initialEntities:Array<Entity> = [];
 		for (spawn in level.initialSpawns)
-			levelSpawn(spawn);
+			initialEntities.push(levelSpawnCreate(spawn));
 
 		components.setAll("this", this);
 		components.setAll("state", this);
@@ -131,6 +140,10 @@ class PlayState extends FlxTransitionableState
 
 		components.startAll();
 		components.callAll("onLoaded");
+
+		// Add the previously-created entities
+		for (entity in initialEntities)
+			addEntity(entity);
 	}
 
 	/** Use this function to add any entities. **/
@@ -187,8 +200,8 @@ class PlayState extends FlxTransitionableState
 		return entity;
 	}
 
-	/** Creates and adds an entity based on the data from a level spawn. **/
-	public function levelSpawn(spawn:LevelSpawn):Entity
+	/** Only creates an entity based on the data from a level spawn. **/
+	function levelSpawnCreate(spawn:LevelSpawn):Entity
 	{
 		var x:Float = spawn.position[0];
 		if (spawn.randomizeX)
@@ -196,6 +209,14 @@ class PlayState extends FlxTransitionableState
 		var y:Float = spawn.position[1];
 		if (spawn.randomizeY)
 			y = Math.random() * FlxG.height;
-		return this.spawn(spawn.id, x, y);
+		return new Entity(x, y, null, spawn.id);
+	}
+
+	/** Creates and adds an entity based on the data from a level spawn. **/
+	public function levelSpawn(spawn:LevelSpawn):Entity
+	{
+		var entity:Entity = levelSpawnCreate(spawn);
+		addEntity(entity);
+		return entity;
 	}
 }

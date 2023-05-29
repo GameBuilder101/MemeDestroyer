@@ -9,7 +9,7 @@
         {
             "name": "speaking_normal",
             "atlasPrefix": "speaking_normal",
-            "frameRate": 4,
+            "frameRate": 8,
             "looped": true
         },
         {
@@ -21,7 +21,7 @@
         {
             "name": "speaking_angry",
             "atlasPrefix": "idle_angry",
-            "frameRate": 4,
+            "frameRate": 8,
             "looped": true
         }
     ],

@@ -23,14 +23,17 @@ function onUpdate(elapsed:Float)
 
 function enterInteractRange(entity:Entity)
 {
+	if (entity == interactor)
+		return;
 	interactor = entity;
 	callAll("onEnteredInteractRange", [entity]);
 }
 
 function exitInteractRange(entity:Entity)
 {
-	if (entity == interactor)
-		interactor = null;
+	if (entity != interactor)
+		return;
+	interactor = null;
 	callAll("onExitedInteractRange", [entity]);
 }
 

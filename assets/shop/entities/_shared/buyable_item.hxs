@@ -1,0 +1,19 @@
+// Requires variables itemID:String
+
+function onUnlocked()
+{
+    var playerEquipper:GameScript = state.getEntity("player").getComponent("equipper");
+    var shouldSpawn:Bool = true;
+    for (i in 0...playerEquipper.call("getInventorySize"))
+	{
+        if (playerEquipper.call("getInventoryItem", [i]).id == itemID)
+        {
+            shouldSpawn = false;
+            break;
+        }
+    }
+    if (shouldSpawn) // Only spawn if the player doesn't already have the item equipped
+        state.spawn(itemID, this.x, this.y);
+
+    state.removeEntity(this);
+}

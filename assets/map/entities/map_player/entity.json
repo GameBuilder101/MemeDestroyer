@@ -8,6 +8,10 @@
     "variables": [
         {
             "name": "walkSpeed",
+            "value": 175.0
+        },
+        {
+            "name": "runSpeed",
             "value": 350.0
         },
         {
@@ -16,7 +20,7 @@
         },
         {
             "name": "footstepDelay",
-            "value": 0.5
+            "value": 1.0
         }
     ],
     "hitboxSize": [

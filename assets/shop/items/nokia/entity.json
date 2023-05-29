@@ -31,15 +31,11 @@
         },
         {
             "name": "maxAmmo",
-            "value": 60
+            "value": 40
         },
         {
             "name": "fireSoundID",
             "value": "items/nokia/sounds/fire"
-        },
-        {
-            "name": "emptySoundID",
-            "value": "items/_shared/sounds/empty"
         }
     ],
     "spriteID": "items/nokia/sprites/main"

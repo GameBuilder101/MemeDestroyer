@@ -37,6 +37,7 @@ function fire(team:String, pos:Point, angle:Float, riposte:Bool = false)
 		setAll("contactDamage", damage);
 
 	this.revive();
+	
 	this.setPosition(firePos.getX(), firePos.getY());
 	this.mainSprite.angle = fireAngle;
 	// Play the appropriate animation

@@ -1,0 +1,10 @@
+{
+    "name": "Buy Particle",
+    "tags": [],
+    "components": [
+        "entities/_shared/basic_particle"
+    ],
+    "variables": [],
+    "spriteID": "entities/buy_particle/sprites/main",
+    "sortingPriority": 16
+}

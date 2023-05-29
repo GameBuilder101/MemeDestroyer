@@ -6,17 +6,17 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.tweens.FlxTween;
 import gbc.sound.AssetSound;
 import gbc.sound.AssetSoundRegistry;
-import ui.shop_hud.ItemPanel;
+import ui.shop_hud.BuyablePanel;
 
 class ShopHud extends FlxTypedGroup<FlxSprite>
 {
 	public var inventory(default, null):Inventory;
 
-	public var moneyIndicator(default, null):MoneyIndicator;
+	public var moneyIndicator(default, null):IconIndicator;
 
-	public var itemPanel(default, null):ItemPanel;
+	public var buyablePanel(default, null):BuyablePanel;
 
-	var itemPanelAppearSound:AssetSound;
+	var buyablePanelAppearSound:AssetSound;
 
 	public var dialogueBox(default, null):DialogueBox;
 
@@ -32,36 +32,36 @@ class ShopHud extends FlxTypedGroup<FlxSprite>
 		inventory = new Inventory(6.0, FlxG.height - 48.0);
 		add(inventory);
 
-		moneyIndicator = new MoneyIndicator(0.0, 0.0);
+		moneyIndicator = new IconIndicator(0.0, 0.0, "ui/_shared/sprites/money_icon", "ui/_shared/sounds/error");
 		moneyIndicator.setPosition(FlxG.width - moneyIndicator.width - 6.0, FlxG.height - moneyIndicator.height - 6.0);
 		add(moneyIndicator);
 
-		itemPanel = new ItemPanel();
-		itemPanel.screenCenter();
-		itemPanel.setPosition(itemPanel.x, 0.0);
-		itemPanel.visible = false; // The item panel starts hidden by default
-		itemPanelAppearSound = AssetSoundRegistry.getAsset("ui/_shared/sounds/panel_appear");
-		add(itemPanel);
+		buyablePanel = new BuyablePanel();
+		buyablePanel.screenCenter();
+		buyablePanel.setPosition(buyablePanel.x, -buyablePanel.height);
+		buyablePanel.visible = false; // The buyable panel starts hidden by default
+		buyablePanelAppearSound = AssetSoundRegistry.getAsset("ui/_shared/sounds/panel_appear");
+		add(buyablePanel);
 	}
 
-	/** Plays an animation to show the item panel. **/
-	public function showItemPanel()
+	/** Plays an animation to show the buyable panel. **/
+	public function showBuyablePanel()
 	{
-		itemPanel.visible = true;
-		FlxTween.cancelTweensOf(itemPanel);
-		FlxTween.linearMotion(itemPanel, itemPanel.x, -itemPanel.height, itemPanel.x, 0.0, 0.25);
+		buyablePanel.visible = true;
+		FlxTween.cancelTweensOf(buyablePanel);
+		FlxTween.linearMotion(buyablePanel, buyablePanel.x, -buyablePanel.height, buyablePanel.x, 0.0, 0.25);
 
-		itemPanelAppearSound.play();
+		buyablePanelAppearSound.play();
 	}
 
-	/** Plays an animation to hide the item panel. **/
-	public function hideItemPanel()
+	/** Plays an animation to hide the buyable panel. **/
+	public function hideBuyablePanel()
 	{
-		FlxTween.cancelTweensOf(itemPanel);
-		FlxTween.linearMotion(itemPanel, itemPanel.x, 0.0, itemPanel.x, -itemPanel.height, 0.25, true, {
+		FlxTween.cancelTweensOf(buyablePanel);
+		FlxTween.linearMotion(buyablePanel, buyablePanel.x, 0.0, buyablePanel.x, -buyablePanel.height, 0.25, true, {
 			onComplete: function(tween:FlxTween)
 			{
-				itemPanel.visible = false;
+				buyablePanel.visible = false;
 			}
 		});
 	}

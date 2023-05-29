@@ -7,6 +7,8 @@ var ammo:Int = 0;
 var fireSound:AssetSound;
 var emptySound:AssetSound;
 
+var combatManager:GameScript;
+
 function onLoaded()
 {
 	ammo = maxAmmo;
@@ -15,6 +17,11 @@ function onLoaded()
 		fireSound = AssetSoundRegistry.getAsset(fireSoundID);
 	if (emptySoundID != null)
 		emptySound = AssetSoundRegistry.getAsset(emptySoundID);
+}
+
+function onAddedToPlay()
+{
+	combatManager = state.components.getComponent("combat_manager");
 }
 
 function onEquipped(entity:Entity)
@@ -36,6 +43,9 @@ function onUsed(equipper:Entity, riposte:Bool)
 			equipperHands.animation.play("empty", true);
 		if (emptySound != null)
 			emptySound.play();
+
+		if (combatManager != null) // Flash the ammo icon to indicate the inability to fire
+			combatManager.call("getHud").ammoIndicator.flash(colorString("#ff0000"));
 		
 		return;
 	}
@@ -50,7 +60,7 @@ function onUsed(equipper:Entity, riposte:Bool)
 		FlxAngle.angleBetweenPoint(equipper, FlxG.mouse.getPosition(), true),
 		riposte
 	]);
-	if (state.components.getComponent("combat_manager") != null) // Only use ammo during combat levels
+	if (combatManager != null) // Only use ammo during combat levels
 		ammo--;
 }
 

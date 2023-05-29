@@ -18,7 +18,7 @@ class MusicManager
 		FlxG.sound.music.fadeOut(duration / 2.0, 0.0, function(tween:FlxTween)
 		{
 			music.play();
-			FlxG.sound.music.fadeIn(duration / 2.0);
+			FlxG.sound.music.fadeIn(duration / 2.0, 0.0, music.volume);
 		});
 	}
 

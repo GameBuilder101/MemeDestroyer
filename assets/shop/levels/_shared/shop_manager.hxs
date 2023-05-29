@@ -1,9 +1,12 @@
-// Requires variables mainThemeID:String, shopkeepName:String
+// Requires variables mainThemeID:String, shopkeepName:String, shopkeepPortraitID:String, shopkeepSpeakingID:String, shopkeepEntryDialogue:Array<String>, shopkeepFirstEntryDialogue:Array<String>, shopkeepDamagedDialogue:Array<String>
 
 var hud:ShopHud;
 
 var player:Entity;
 var playerEquipper:GameScript = null;
+
+// Used to track what buyable the player is currently inspecting
+var inspectedBuyable:GameScript = null;
 
 function onLoaded()
 {
@@ -18,6 +21,14 @@ function onLoaded()
 		hud.inventory.addSlot();
 
 	AssetMusicRegistry.getAsset(mainThemeID).play();
+
+	// Display special dialogue if this is the first time the player entered the shop
+	var data:Dynamic = GameSaver.instance.getGameData("enteredShop");
+	if (data != null && data)
+		displayShopkeepEntryDialogue();
+	else
+		displayShopkeepFirstEntryDialogue();
+	GameSaver.instance.setGameData("enteredShop", true);
 }
 
 function onUpdate(elapsed:Float)
@@ -28,6 +39,9 @@ function onUpdate(elapsed:Float)
 			hud.inventory.setItemInSlot(i, playerEquipper.call("getInventoryItem", [i]));
 		hud.inventory.setSelectedSlot(playerEquipper.call("getSelectedItemIndex"));
 	}
+
+	var money:Int = GameSaver.instance.getGameData("money");
+	hud.moneyIndicator.setValues(money, money);
 }
 
 function getHud():ShopHud
@@ -35,7 +49,49 @@ function getHud():ShopHud
 	return hud;
 }
 
+function getInspectedBuyable():GameScript
+{
+	return inspectedBuyable;
+}
+
+function setInspectedBuyable(buyable:GameScript)
+{
+	inspectedBuyable = buyable;
+	if (buyable == null)
+		hud.hideBuyablePanel();
+	else
+	{
+		hud.buyablePanel.setValues(buyable.get("cost"), buyable.get("cost"));
+    	hud.buyablePanel.setLabel(buyable.get("this").name);
+    	hud.buyablePanel.setDescription(buyable.get("description"));
+    	hud.showBuyablePanel();
+	}
+}
+
 function displayShopkeepDialogue(text:String, animVariant:String, onComplete:Void->Void)
 {
-	hud.dialogueBox.display({name: shopkeepName, text: text, portraitSpriteID: "ui/_shared/sprites/shopkeep_portrait", animVariant: animVariant, speakingSoundID: "ui/_shared/sounds/shopkeep_speaking"}, onComplete);
+	hud.dialogueBox.display({name: shopkeepName, text: text, portraitSpriteID: shopkeepPortraitID, animVariant: animVariant, speakingSoundID: shopkeepSpeakingID}, onComplete);
+}
+
+function displayShopkeepEntryDialogue()
+{
+	displayShopkeepDialogue(shopkeepEntryDialogue[Math.random() * shopkeepEntryDialogue.length], "normal", null);
+}
+
+function displayShopkeepFirstEntryDialogue()
+{
+	displayShopkeepDialogue(shopkeepFirstEntryDialogue[0], "normal", function()
+	{
+		displayShopkeepDialogue(shopkeepFirstEntryDialogue[1], "normal", function()
+		{
+			displayShopkeepDialogue(shopkeepFirstEntryDialogue[2], "normal", null);
+		});
+	});
+}
+
+function displayShopkeepDamagedDialogue()
+{
+	if (hud.dialogueBox.displaying)
+		return;
+	displayShopkeepDialogue(shopkeepDamagedDialogue[Math.random() * shopkeepDamagedDialogue.length], "angry", null);
 }

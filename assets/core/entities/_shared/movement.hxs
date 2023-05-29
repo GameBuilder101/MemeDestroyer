@@ -61,7 +61,7 @@ function onUpdate(elapsed:Float)
 		currentFootstepDelay = 0.0;
 
 	if ((isWalking && currentFootstepDelay >= footstepDelay)
-		|| (isRunning && currentFootstepDelay >= footstepDelay * (runSpeed / walkSpeed)))
+		|| (isRunning && currentFootstepDelay >= footstepDelay * (walkSpeed / runSpeed)))
 	{
 		if (footstepSound != null)
 			footstepSound.play();

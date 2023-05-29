@@ -13,6 +13,40 @@
             "value": "The Purveyor"
         },
         {
+            "name": "shopkeepPortraitID",
+            "value": "ui/_shared/sprites/shopkeep_portrait"
+        },
+        {
+            "name": "shopkeepSpeakingID",
+            "value": "ui/_shared/sounds/shopkeep_speaking"
+        },
+        {
+            "name": "shopkeepEntryDialogue",
+            "value": [
+                "Back again, are we?",
+                "What can I do for you?",
+                "Lamp oil? Rope? Bombs?",
+                "Got a selection of good things on sale, stranger.",
+                "Better be here to buy somethin'."
+            ]
+        },
+        {
+            "name": "shopkeepFirstEntryDialogue",
+            "value": [
+                "Ah, welcome new customer to the Purveyor's Item Emporium!",
+                "Here you can purchase items using M-Bucks you've earned from clearing levels.",
+                "Walk over an item to read more about it, and press the interact key to buy it."
+            ]
+        },
+        {
+            "name": "shopkeepDamagedDialogue",
+            "value": [
+                "Hey! Watch where you're firing.",
+                "Watch it, bud.",
+                "Don't bother attacking me."
+            ]
+        },
+        {
             "name": "titleColor",
             "value": "#ffffff"
         }
@@ -38,19 +72,55 @@
             "randomizeY": false
         },
         {
-            "id": "entities/the_l_buyable",
+            "id": "entities/buyable_the_l",
             "position": [
-                200.0,
-                200.0
+                80.0,
+                128.0
             ],
             "randomizeX": false,
             "randomizeY": false
         },
         {
-            "id": "entities/nokia_buyable",
+            "id": "entities/buyable_nokia",
+            "position": [
+                176.0,
+                128.0
+            ],
+            "randomizeX": false,
+            "randomizeY": false
+        },
+        {
+            "id": "entities/buyable_nokia",
+            "position": [
+                80.0,
+                256.0
+            ],
+            "randomizeX": false,
+            "randomizeY": false
+        },
+        {
+            "id": "entities/buyable_nokia",
+            "position": [
+                176.0,
+                256.0
+            ],
+            "randomizeX": false,
+            "randomizeY": false
+        },
+        {
+            "id": "entities/buyable_nokia",
             "position": [
                 400.0,
-                200.0
+                128.0
+            ],
+            "randomizeX": false,
+            "randomizeY": false
+        },
+        {
+            "id": "entities/buyable_nokia",
+            "position": [
+                400.0,
+                256.0
             ],
             "randomizeX": false,
             "randomizeY": false

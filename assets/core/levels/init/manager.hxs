@@ -1,0 +1,8 @@
+// Requires variables initialLevel:String, initialMoney:Int
+
+function onLoaded()
+{
+    GameSaver.instance.setGameData("money", initialMoney);
+
+    state.loadLevel(null, initialLevel);
+}

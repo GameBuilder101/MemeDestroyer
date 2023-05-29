@@ -1,31 +1,55 @@
-// Require variables description:String, cost:Int
+// Require variables description:String, cost:Int, buySoundID:String, shopkeepBuyDialogue:String
 
-var hud:ShopHud;
+var shopManager:GameScript;
 
 function onLoaded()
 {
     // Add an icon to indicate this is not yet bought
-    this.add(new AssetSprite(this.x + this.mainSprite.width * 0.25, this.y, null, "entities/_shared/sprites/buyable_icon"));
+    this.add(new AssetSprite(this.mainSprite.width * 0.25, 0.0, null, "entities/_shared/sprites/buyable_icon"));
+}
 
-    item = EntityRegistry.getAsset(itemID);
+function onAddedToPlay()
+{
+    shopManager = state.components.getComponent("shop_manager");
 
-    hud = state.components.getComponent("shop_manager").call("getHud");
+    var data:Dynamic = GameSaver.instance.getGameData("bought" + this.id);
+	if (data != null && data)
+		callAll("onUnlocked"); // Remind other components that this buyable is unlocked
+}
+
+function onRemovedFromPlay()
+{
+    onExitedInteractRange(null); // Close the buyable panel
 }
 
 function onEnteredInteractRange(entity:Entity)
 {
-    hud.itemPanel.setValues(cost, cost);
-    hud.itemPanel.setLabel(this.name);
-    hud.itemPanel.setDescription(description);
-    hud.showItemPanel();
+    shopManager.call("setInspectedBuyable", [getComponent("buyable")]);
 }
 
 function onExitedInteractRange(entity:Entity)
 {
-    hud.hideItemPanel();
+    if (shopManager.call("getInspectedBuyable") == getComponent("buyable"))
+        shopManager.call("setInspectedBuyable", [null]);
 }
 
 function onInteracted(entity:Entity)
 {
+    var money:Int = GameSaver.instance.getGameData("money");
+    if (money < cost) // If not enough money
+    {
+        shopManager.call("getHud").moneyIndicator.flash(colorString("#ff0000"));
+        return;
+    }
 
+    GameSaver.instance.setGameData("money", money - cost);
+    GameSaver.instance.setGameData("bought" + this.id, true);
+    callAll("onBought"); // Notify other components that this buyable was bought
+    callAll("onUnlocked"); // Notify other components that this buyable is now unlocked
+
+    state.spawn("entities/buy_particle", this.x, this.y);
+    AssetSoundRegistry.getAsset(buySoundID).play();
+
+    // Display buy dialogue
+    shopManager.call("displayShopkeepDialogue", [shopkeepBuyDialogue, "normal", null]);
 }

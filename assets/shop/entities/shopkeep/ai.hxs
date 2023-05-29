@@ -1,7 +1,17 @@
-// Requires variables team:String, damagedDialogue:Array<String>
+// Requires variables team:String, angrySoundID:String
+
+var angrySound:AssetSound;
+
+function onLoaded()
+{
+	angrySound = AssetSoundRegistry.getAsset(angrySoundID);
+}
 
 function onUpdate(elapsed:Float)
 {
+	if (animation.finished)
+		animation.play("idle");
+
 	// Look for damage sources
 	overlap("damager");
 }
@@ -13,8 +23,13 @@ function onOverlap(tag:String, entity:Entity)
 	var damager:GameScript = entity.getComponent("damager");
 	if (damager.get("team") == team)
 		return;
-    var hud:ShopHud = state.components.getComponent("shop_manager").call("getHud");
-    if (hud.dialogueBox.displaying)
-        return;
-    hud.call("displayShopkeepDialogue", [damagedDialogue[Math.random() * damagedDialogue.length], "angry", null]);
+
+	animation.play("angry", true);
+	if (angrySound != null)
+		angrySound.play();
+	state.components.getComponent("shop_manager").call("displayShopkeepDamagedDialogue");
+
+	// Kill the entity if it's a projectile
+	if (entity.getComponent("projectile") != null)
+		entity.kill();
 }

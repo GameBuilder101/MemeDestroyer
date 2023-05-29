@@ -13,10 +13,10 @@ import gbc.sound.AssetSoundRegistry;
 class DialogueBox extends FlxSpriteGroup implements IOverlay
 {
 	/** How long it takes to type a single character. **/
-	static inline final TYPE_DELAY:Float = 0.06;
+	static inline final TYPE_DELAY:Float = 0.03;
 
 	/** How long to wait after typing all characters. **/
-	static inline final CLOSE_DELAY:Float = 3.0;
+	static inline final CLOSE_DELAY:Float = 4.0;
 
 	var background:AssetSprite;
 	var portrait:AssetSprite;
@@ -88,12 +88,12 @@ class DialogueBox extends FlxSpriteGroup implements IOverlay
 		FlxTween.cancelTweensOf(background);
 		background.alpha = 0.0;
 		background.visible = true;
-		FlxTween.tween(background, {alpha: 1.0}, 0.2, {onComplete: onCompleteFadeIn});
+		FlxTween.tween(background, {alpha: 1.0}, 0.1, {onComplete: onCompleteFadeIn});
 
 		FlxTween.cancelTweensOf(portrait);
 		portrait.scale.x = 0.0;
 		portrait.visible = true;
-		FlxTween.tween(portrait, {"scale.x": 1.0}, 0.2);
+		FlxTween.tween(portrait, {"scale.x": 1.0}, 0.1);
 	}
 
 	/** Called when the fade-in is finished. **/
@@ -126,8 +126,8 @@ class DialogueBox extends FlxSpriteGroup implements IOverlay
 	{
 		name.visible = false;
 		dialogue.visible = false;
-		FlxTween.tween(background, {alpha: 0.0}, 0.2, {onComplete: onCompleteFadeOut});
-		FlxTween.tween(portrait, {"scale.x": 0.0}, 0.2);
+		FlxTween.tween(background, {alpha: 0.0}, 0.1, {onComplete: onCompleteFadeOut});
+		FlxTween.tween(portrait, {"scale.x": 0.0}, 0.1);
 	}
 
 	/** Called when the fade-out is finished. **/

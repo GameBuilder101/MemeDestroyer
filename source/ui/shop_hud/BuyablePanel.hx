@@ -5,8 +5,8 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import gbc.graphics.AssetSprite;
 
-/** A panel used to display information about an item to purchase. **/
-class ItemPanel extends FlxSpriteGroup implements IIndicator
+/** A panel used to display information about a buyable entity. **/
+class BuyablePanel extends FlxSpriteGroup implements IIndicator
 {
 	public var panel(default, null):AssetSprite;
 
@@ -23,7 +23,7 @@ class ItemPanel extends FlxSpriteGroup implements IIndicator
 		super(x, y);
 		scrollFactor.set(0.0, 0.0);
 
-		panel = new AssetSprite(0.0, 0.0, null, "ui/shop_hud/sprites/item_panel");
+		panel = new AssetSprite(0.0, 0.0, null, "ui/shop_hud/sprites/buyable_panel");
 		add(panel);
 
 		label = new FlxText(12.0, 14.0, panel.width - 24.0);
@@ -36,7 +36,7 @@ class ItemPanel extends FlxSpriteGroup implements IIndicator
 		moneyIcon = new AssetSprite(0.0, 12.0, null, "ui/_shared/sprites/money_icon");
 		moneyIcon.x = panel.width - moneyIcon.width - 8.0;
 		add(moneyIcon);
-		cost = new FlxText(12.0, 14.0, panel.width - moneyIcon.width - 20.0);
+		cost = new FlxText(12.0, 14.0, panel.width - moneyIcon.width - 24.0);
 		cost.setFormat("Edit Undo BRK", 26, FlxColor.WHITE, RIGHT, SHADOW, FlxColor.BLACK);
 		add(cost);
 	}

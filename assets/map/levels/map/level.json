@@ -20,7 +20,9 @@
                         3,
                         1
                     ],
-                    "prerequisite": -1
+                    "prerequisites": [
+                        -1
+                    ]
                 },
                 {
                     "id": "levels/waffle_house",
@@ -35,11 +37,13 @@
                         0,
                         -1
                     ],
-                    "prerequisite": 0
+                    "prerequisites": [
+                        0
+                    ]
                 },
                 {
                     "id": "levels/void_of_trolling",
-                    "spotEntityID": "entities/level_spot",
+                    "spotEntityID": "entities/transcended_level_spot",
                     "position": [
                         295.0,
                         1730.0
@@ -50,7 +54,9 @@
                         -1,
                         -1
                     ],
-                    "prerequisite": 0
+                    "prerequisites": [
+                        0
+                    ]
                 },
                 {
                     "id": "levels/interstate_shop",
@@ -65,7 +71,9 @@
                         -1,
                         -1
                     ],
-                    "prerequisite": 0
+                    "prerequisites": [
+                        0
+                    ]
                 },
                 {
                     "id": "levels/ohio",
@@ -80,7 +88,9 @@
                         -1,
                         6
                     ],
-                    "prerequisite": 0
+                    "prerequisites": [
+                        0
+                    ]
                 },
                 {
                     "id": "levels/squid_game",
@@ -95,7 +105,9 @@
                         -1,
                         -1
                     ],
-                    "prerequisite": 4
+                    "prerequisites": [
+                        4
+                    ]
                 },
                 {
                     "id": "levels/battle_shop",
@@ -110,7 +122,9 @@
                         4,
                         7
                     ],
-                    "prerequisite": 4
+                    "prerequisites": [
+                        4
+                    ]
                 },
                 {
                     "id": "levels/brazil",
@@ -125,7 +139,9 @@
                         9,
                         8
                     ],
-                    "prerequisite": 4
+                    "prerequisites": [
+                        4
+                    ]
                 },
                 {
                     "id": "levels/brazilian_shop",
@@ -140,11 +156,13 @@
                         7,
                         -1
                     ],
-                    "prerequisite": 7
+                    "prerequisites": [
+                        7
+                    ]
                 },
                 {
                     "id": "levels/odorous_swamp",
-                    "spotEntityID": "entities/level_spot",
+                    "spotEntityID": "entities/transcended_level_spot",
                     "position": [
                         310.0,
                         1300.0
@@ -155,7 +173,9 @@
                         -1,
                         -1
                     ],
-                    "prerequisite": 7
+                    "prerequisites": [
+                        7
+                    ]
                 },
                 {
                     "id": "levels/the_backrooms",
@@ -170,7 +190,9 @@
                         -1,
                         -1
                     ],
-                    "prerequisite": 7
+                    "prerequisites": [
+                        7
+                    ]
                 },
                 {
                     "id": "levels/liminal_shop",
@@ -185,7 +207,9 @@
                         12,
                         -1
                     ],
-                    "prerequisite": 10
+                    "prerequisites": [
+                        10
+                    ]
                 },
                 {
                     "id": "levels/area_51",
@@ -200,7 +224,9 @@
                         -1,
                         11
                     ],
-                    "prerequisite": 10
+                    "prerequisites": [
+                        10
+                    ]
                 },
                 {
                     "id": "levels/illuminati_hq",
@@ -215,11 +241,13 @@
                         14,
                         -1
                     ],
-                    "prerequisite": 10
+                    "prerequisites": [
+                        10
+                    ]
                 },
                 {
                     "id": "levels/the_skeld",
-                    "spotEntityID": "entities/level_spot",
+                    "spotEntityID": "entities/transcended_level_spot",
                     "position": [
                         160.0,
                         918.0
@@ -230,7 +258,9 @@
                         -1,
                         13
                     ],
-                    "prerequisite": 13
+                    "prerequisites": [
+                        13
+                    ]
                 },
                 {
                     "id": "levels/conspirators_shop",
@@ -245,7 +275,9 @@
                         16,
                         -1
                     ],
-                    "prerequisite": 13
+                    "prerequisites": [
+                        13
+                    ]
                 },
                 {
                     "id": "levels/windows_xp",
@@ -260,11 +292,13 @@
                         17,
                         18
                     ],
-                    "prerequisite": 13
+                    "prerequisites": [
+                        13
+                    ]
                 },
                 {
                     "id": "levels/wow_exe",
-                    "spotEntityID": "entities/level_spot",
+                    "spotEntityID": "entities/transcended_level_spot",
                     "position": [
                         75.0,
                         710.0
@@ -275,11 +309,13 @@
                         -1,
                         -1
                     ],
-                    "prerequisite": 16
+                    "prerequisites": [
+                        16
+                    ]
                 },
                 {
                     "id": "levels/familiar_underpass",
-                    "spotEntityID": "entities/level_spot",
+                    "spotEntityID": "entities/transcended_level_spot",
                     "position": [
                         365.0,
                         775.0
@@ -290,11 +326,13 @@
                         16,
                         -1
                     ],
-                    "prerequisite": 16
+                    "prerequisites": [
+                        16
+                    ]
                 },
                 {
                     "id": "levels/precipice_of_the_memeiverse",
-                    "spotEntityID": "entities/level_spot",
+                    "spotEntityID": "entities/transcended_level_spot",
                     "position": [
                         295.0,
                         170.0
@@ -305,13 +343,19 @@
                         -1,
                         -1
                     ],
-                    "prerequisite": 16
+                    "prerequisites": [
+                        16
+                    ]
                 }
             ]
         },
         {
             "name": "mainThemeID",
             "value": "levels/map/music/main_theme"
+        },
+        {
+            "name": "finalLevelThemeID",
+            "value": "levels/map/music/final_level_theme"
         }
     ],
     "backgroundSpriteID": "levels/map/sprites/main",

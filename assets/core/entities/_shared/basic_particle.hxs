@@ -1,0 +1,13 @@
+// Requires variables spawnSoundID:String
+
+function onLoaded()
+{
+	if (spawnSoundID != null)
+		AssetSoundRegistry.getAsset(spawnSoundID).play();
+}
+
+function onUpdate(elapsed:Float)
+{
+	if (animation.finished)
+		state.removeEntity(this, true, true);
+}

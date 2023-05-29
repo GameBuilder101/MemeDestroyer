@@ -1,19 +1,11 @@
 // Component caches
-var health:GameScript;
 var equipper:GameScript;
 
 function onAddedToPlay()
 {
-	health = getComponent("health");
 	equipper = getComponent("equipper");
 
-	var data:Dynamic = GameSaver.instance.getGameData("playerMaxHealth");
-	if (data != null)
-		health.call("setMaxHealth", [data]);
-	data = GameSaver.instance.getGameData("playerMaxInvFrames");
-	if (data != null)
-		health.call("setMaxInvFrames", [data]);
-	data = GameSaver.instance.getGameData("playerInventory");
+	var data:Dynamic = GameSaver.instance.getGameData("playerInventory");
 	if (data != null)
 	{
 		var item:Entity;
@@ -29,9 +21,6 @@ function onAddedToPlay()
 
 function onRemovedFromPlay()
 {
-	GameSaver.instance.setGameData("playerMaxHealth", health.call("getMaxHealth"));
-	GameSaver.instance.setGameData("playerMaxInvFrames", health.call("getMaxInvFrames"));
-
 	var playerInventory:Array<String> = [];
 	var item:Entity;
 	for (i in 0...equipper.call("getInventorySize"))

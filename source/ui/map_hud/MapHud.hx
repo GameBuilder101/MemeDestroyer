@@ -18,7 +18,7 @@ class MapHud extends FlxTypedGroup<FlxSprite>
 
 	public var inventory(default, null):Inventory;
 
-	public var moneyIndicator(default, null):MoneyIndicator;
+	public var moneyIndicator(default, null):IconIndicator;
 
 	var levelPanelAppearSound:AssetSound;
 
@@ -28,7 +28,7 @@ class MapHud extends FlxTypedGroup<FlxSprite>
 
 		levelPanel = new LevelPanel();
 		levelPanel.screenCenter();
-		levelPanel.setPosition(levelPanel.x, 0.0);
+		levelPanel.setPosition(levelPanel.x, -levelPanel.height);
 		levelPanel.visible = false; // The level panel starts hidden by default
 		levelPanelAppearSound = AssetSoundRegistry.getAsset("ui/_shared/sounds/panel_appear");
 
@@ -41,7 +41,7 @@ class MapHud extends FlxTypedGroup<FlxSprite>
 		inventory = new Inventory(6.0, FlxG.height - 48.0);
 		add(inventory);
 
-		moneyIndicator = new MoneyIndicator(0.0, 0.0);
+		moneyIndicator = new IconIndicator(0.0, 0.0, "ui/_shared/sprites/money_icon", "ui/_shared/sounds/error");
 		moneyIndicator.setPosition(FlxG.width - moneyIndicator.width - 6.0, FlxG.height - moneyIndicator.height - 6.0);
 		add(moneyIndicator);
 

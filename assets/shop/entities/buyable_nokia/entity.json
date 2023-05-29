@@ -1,0 +1,32 @@
+{
+    "name": "Nokia",
+    "tags": [],
+    "components": [
+        "entities/_shared/interactable",
+        "entities/_shared/buyable",
+        "entities/_shared/buyable_item"
+    ],
+    "variables": [
+        {
+            "name": "description",
+            "value": "Like thowing an indestructible brick. Fires slowly, but does high damage. 40 max ammo."
+        },
+        {
+            "name": "cost",
+            "value": 20
+        },
+        {
+            "name": "buySoundID",
+            "value": "entities/_shared/sounds/buy"
+        },
+        {
+            "name": "shopkeepBuyDialogue",
+            "value": "A fine choice! A suspiciously indestructible phone... Probably cursed with evil meme magic."
+        },
+        {
+            "name": "itemID",
+            "value": "items/nokia"
+        }
+    ],
+    "spriteID": "items/nokia/sprites/main"
+}

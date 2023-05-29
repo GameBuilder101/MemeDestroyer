@@ -1,0 +1,10 @@
+{
+    "name": "Level (Transcended Meme)",
+    "tags": [],
+    "components": [
+        "entities/level_spot/spot"
+    ],
+    "variables": [],
+    "spriteID": "entities/transcended_level_spot/sprites/main",
+    "sortingPriority": -16
+}

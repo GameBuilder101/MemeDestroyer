@@ -15,7 +15,7 @@ class CombatHud extends FlxTypedGroup<FlxSprite>
 
 	public var inventory(default, null):Inventory;
 
-	public var ammoIndicator(default, null):AmmoIndicator;
+	public var ammoIndicator(default, null):IconIndicator;
 
 	public var dialogueBox(default, null):DialogueBox;
 
@@ -28,6 +28,12 @@ class CombatHud extends FlxTypedGroup<FlxSprite>
 	public function new()
 	{
 		super();
+
+		// Add the dialogue box first so it appears below everything else
+		dialogueBox = new DialogueBox(0.0, 0.0);
+		dialogueBox.screenCenter();
+		dialogueBox.y = FlxG.height * 0.6;
+		add(dialogueBox);
 
 		// Add the player health
 		playerHealth = new HealthNotches();
@@ -47,15 +53,9 @@ class CombatHud extends FlxTypedGroup<FlxSprite>
 		add(inventory);
 
 		// Add the ammo indicator
-		ammoIndicator = new AmmoIndicator(0.0, 0.0);
+		ammoIndicator = new IconIndicator(0.0, 0.0, "ui/combat_hud/sprites/ammo_icon", "ui/_shared/sounds/error");
 		ammoIndicator.setPosition(FlxG.width - ammoIndicator.width - 6.0, FlxG.height - ammoIndicator.height - 6.0);
 		add(ammoIndicator);
-
-		// Add the dialogue box
-		dialogueBox = new DialogueBox(0.0, 0.0);
-		dialogueBox.screenCenter();
-		dialogueBox.y = FlxG.height * 0.6;
-		add(dialogueBox);
 
 		// Add the title overlay
 		titleOverlay = new TitleOverlay(0.0, 0.0);

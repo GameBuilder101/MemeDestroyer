@@ -1,5 +1,5 @@
 {
-    "name": "Shopkeep",
+    "name": "The Purveyor",
     "tags": [],
     "components": [
         "entities/shopkeep/ai"
@@ -10,12 +10,8 @@
             "value": "hostile"
         },
         {
-            "name": "damagedDialogue",
-            "value": [
-                "Hey! Watch where you're firing.",
-                "Watch it, bud.",
-                "Don't bother attacking me."
-            ]
+            "name": "angrySoundID",
+            "value": "levels/_shared/sounds/spawn"
         }
     ],
     "spriteID": "entities/shopkeep/sprites/main"

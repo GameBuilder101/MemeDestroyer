@@ -2,8 +2,8 @@ package ui.combat_hud;
 
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
+import flixel.ui.FlxBar;
 import flixel.util.FlxColor;
-import flixel_fixed.ui.FlxBar;
 import gbc.graphics.AssetSprite;
 import gbc.graphics.AssetSpriteRegistry;
 import gbc.sound.AssetSound;

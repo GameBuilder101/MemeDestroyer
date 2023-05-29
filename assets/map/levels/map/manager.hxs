@@ -1,4 +1,4 @@
-// Requires variables levels:Array<Dynamic>, mainThemeID:String
+// Requires variables levels:Array<Dynamic>, mainThemeID:String, finalLevelThemeID:String
 
 var hud:MapHud;
 
@@ -127,6 +127,9 @@ function onUpdate(elapsed:Float)
 
 	hud.startLevelText.text = "Press \"" + Controls.interact.getDisplayName(0) + "\" to start";
 	hud.startLevelText.alpha = arrowAnimPercent; // Also animate start level text
+
+	var money:Int = GameSaver.instance.getGameData("money");
+	hud.moneyIndicator.setValues(money, money);
 }
 
 // Checks for player movement input
@@ -166,7 +169,7 @@ function startEntering()
 function startMoving(prevLevel:Int)
 {
 	moving = true;
-	playerController.call("moveTo", [new Point(spots[currentLevel].x, spots[currentLevel].y)]);
+	playerController.call("moveTo", [new Point(spots[currentLevel].x, spots[currentLevel].y), prevLevel < levels.length - 1 && currentLevel < levels.length - 1]);
 
 	// Disable the previous spot
 	spots[prevLevel].getComponent("spot").call("setInteractable", [false]);
@@ -178,6 +181,12 @@ function startMoving(prevLevel:Int)
 
 	hud.hideLevelPanel();
 	hud.startLevelText.visible = false;
+
+	// Change the music when at the final level spot
+	if (currentLevel >= levels.length - 1)
+		MusicManager.transition(AssetMusicRegistry.getAsset(finalLevelThemeID), 3.0);
+	else if (prevLevel >= levels.length - 1)
+		MusicManager.transition(AssetMusicRegistry.getAsset(mainThemeID), 3.0);
 }
 
 // Stops the movement animation from one spot to another

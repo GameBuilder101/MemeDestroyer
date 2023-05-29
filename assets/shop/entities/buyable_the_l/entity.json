@@ -1,0 +1,32 @@
+{
+    "name": "The L",
+    "tags": [],
+    "components": [
+        "entities/_shared/interactable",
+        "entities/_shared/buyable",
+        "entities/_shared/buyable_item"
+    ],
+    "variables": [
+        {
+            "name": "description",
+            "value": "Literally the letter L. Weak overall, but has decent speed. Infinite ammo."
+        },
+        {
+            "name": "cost",
+            "value": 0
+        },
+        {
+            "name": "buySoundID",
+            "value": "entities/_shared/sounds/buy"
+        },
+        {
+            "name": "shopkeepBuyDialogue",
+            "value": "Make them take the L!"
+        },
+        {
+            "name": "itemID",
+            "value": "items/the_l"
+        }
+    ],
+    "spriteID": "items/the_l/sprites/main"
+}

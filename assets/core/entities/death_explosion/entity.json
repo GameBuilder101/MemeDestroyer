@@ -2,8 +2,14 @@
     "name": "Explosion",
     "tags": [],
     "components": [
-        "entities/death_explosion/animation"
+        "entities/_shared/basic_particle"
     ],
-    "variables": [],
-    "spriteID": "entities/death_explosion/sprites/main"
+    "variables": [
+        {
+            "name": "spawnSoundID",
+            "value": "entities/death_explosion/sounds/spawn"
+        }
+    ],
+    "spriteID": "entities/death_explosion/sprites/main",
+    "sortingPriority": 16
 }

@@ -1,0 +1,17 @@
+{
+    "name": "",
+    "components": [
+        "levels/init/manager"
+    ],
+    "variables": [
+        {
+            "name": "initialLevel",
+            "value": "levels/map"
+        },
+        {
+            "name": "initialMoney",
+            "value": 0
+        }
+    ],
+    "initialSpawns": []
+}

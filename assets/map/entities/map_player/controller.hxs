@@ -1,4 +1,5 @@
 var moving:Bool;
+var isRunning:Bool;
 var movePosition:Point;
 var initialPosition:Point;
 
@@ -20,7 +21,7 @@ function onUpdate(elapsed:Float)
 	var position = new Point(this.x, this.y);
 	var angle:Float = position.radiansTo(movePosition);
 	var direction:Point = new Point(FlxMath.fastCos(angle), FlxMath.fastSin(angle));
-	movement.call("move", [direction, false, elapsed]);
+	movement.call("move", [direction, isRunning, elapsed]);
 	// If the entity has moved beyond the target position
 	if (position.dist(initialPosition) > movePosition.dist(initialPosition))
 	{
@@ -31,9 +32,10 @@ function onUpdate(elapsed:Float)
 	}
 }
 
-function moveTo(position:Point)
+function moveTo(position:Point, running:Bool)
 {
 	moving = true;
+	isRunning = running;
 	movePosition = position;
 	initialPosition = new Point(this.x, this.y);
 }

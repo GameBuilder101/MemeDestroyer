@@ -21,6 +21,16 @@
             ]
         },
         {
+            "name": "run",
+            "atlasPrefix": "move",
+            "frameRate": 8,
+            "looped": true,
+            "offset": [
+                16.0,
+                16.0
+            ]
+        },
+        {
             "name": "die",
             "atlasPrefix": "die",
             "frameRate": 4,
