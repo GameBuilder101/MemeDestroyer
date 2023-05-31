@@ -23,6 +23,8 @@ class Controls extends Saver<Array<Dynamic>>
 	public static var interact(default, null):OverridableAction;
 	public static var equip(default, null):OverridableAction;
 
+	public static var pause(default, null):OverridableAction;
+
 	static var actions:Array<OverridableAction>;
 
 	function new()
@@ -46,6 +48,9 @@ class Controls extends Saver<Array<Dynamic>>
 		actions.push(interact);
 		equip = new OverridableAction("equip", "Equip", JUST_PRESSED, 1, [F], [DPAD_RIGHT]);
 		actions.push(equip);
+
+		pause = new OverridableAction("pause", "Pause", PRESSED, 1, [ESCAPE], [START]);
+		actions.push(pause);
 
 		super();
 	}

@@ -8,10 +8,14 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import gbc.assets.LibraryManager;
 import gbc.graphics.AssetSprite;
 import gbc.graphics.AssetSpriteRegistry;
+import gbc.graphics.TransitionDataRegistry;
 import gbc.sound.AssetMusicRegistry;
+import gbc.sound.AssetSoundRegistry;
 import gbc.sound.MusicManager;
+import lime.system.System;
 
 class TitleState extends FlxTransitionableState
 {
@@ -19,7 +23,16 @@ class TitleState extends FlxTransitionableState
 
 	public var embers(default, null):FlxEmitter;
 
+	var glow:AssetSprite;
+
 	public var logo(default, null):AssetSprite;
+
+	/** Used to indicate the version of the game. **/
+	public var versionText:FlxText;
+
+	public var newButton(default, null):StandardButton;
+	public var loadButton(default, null):StandardButton;
+	public var quitButton(default, null):StandardButton;
 
 	static inline final INTRO_DURATION:Float = 9.7;
 	static inline final INTRO_CREDIT_APPEAR_TIME:Float = 2.45;
@@ -54,6 +67,11 @@ class TitleState extends FlxTransitionableState
 		embers.lifespan.set(1.5);
 		add(embers);
 
+		glow = new AssetSprite(0.0, 0.0, null, "ui/title/sprites/glow");
+		glow.y = FlxG.height - glow.height;
+		add(glow);
+		FlxTween.tween(glow, {alpha: 0.1}, 1.0, {ease: FlxEase.quadInOut, type: PINGPONG});
+
 		logo = new AssetSprite(0.0, 0.0, null, "ui/title/sprites/logo");
 		logo.x = FlxG.width - logo.width;
 		logo.scrollFactor.set(0.0, 0.0);
@@ -62,6 +80,19 @@ class TitleState extends FlxTransitionableState
 			ease: FlxEase.quadInOut,
 			type: PINGPONG
 		});
+
+		versionText = new FlxText(8.0, FlxG.height - 16.0, FlxG.width - 16.0, "Version " + LibraryManager.registry.get("core").version);
+		versionText.setFormat("Edit Undo BRK", 10, FlxColor.WHITE, LEFT);
+		versionText.alpha = 0.5;
+		versionText.scrollFactor.set(0.0, 0.0);
+		add(versionText);
+
+		newButton = new StandardButton(0.0, 44.0, "ui/title/sprites/button", "New Game", LEFT, newGame);
+		add(newButton);
+		loadButton = new StandardButton(newButton.x, newButton.y + newButton.height + 8.0, "ui/title/sprites/button", "Load Game", LEFT, loadGame);
+		add(loadButton);
+		quitButton = new StandardButton(loadButton.x, loadButton.y + loadButton.height + 8.0, "ui/title/sprites/button", "Quit", LEFT, quitGame);
+		add(quitButton);
 
 		introCredit = new FlxText(0.0, FlxG.height / 2.0 - 32.0, FlxG.width);
 		introCredit.setFormat("Edit Undo BRK", 24, FlxColor.WHITE, CENTER, SHADOW, FlxColor.BLACK);
@@ -78,10 +109,32 @@ class TitleState extends FlxTransitionableState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-
 		// Continuously emit the ember particles
 		if (!embers.emitting)
 			embers.start(false);
+	}
+
+	/** Starts the new game transition. **/
+	public function newGame()
+	{
+		transOut = TransitionDataRegistry.getAsset("transitions/start_game");
+		MusicManager.fadeOut(0.0);
+		AssetSoundRegistry.getAsset("ui/title/sounds/start_game").play();
+		FlxG.switchState(new PlayState("levels/init"));
+	}
+
+	public function loadGame() {}
+
+	/** Starts the quit game transition. **/
+	public function quitGame()
+	{
+		transOut = TransitionDataRegistry.getAsset("transitions/quit_game");
+		MusicManager.fadeOut(transOut.duration);
+		AssetSoundRegistry.getAsset("ui/title/sounds/quit_game").play();
+		transitionOut(function()
+		{
+			System.exit(0);
+		});
 	}
 
 	public function startIntro()
@@ -92,6 +145,10 @@ class TitleState extends FlxTransitionableState
 		});
 
 		logo.visible = false;
+		versionText.visible = false;
+		newButton.visible = false;
+		loadButton.visible = false;
+		quitButton.visible = false;
 
 		// Start the background zoomed-in at the bottom and scroll upwards
 		FlxTween.cancelTweensOf(background);
@@ -126,6 +183,10 @@ class TitleState extends FlxTransitionableState
 
 		// Reset other elements
 		logo.visible = true;
+		versionText.visible = true;
+		newButton.visible = true;
+		loadButton.visible = true;
+		quitButton.visible = true;
 
 		// Reset the background
 		background.scale.set(1.03, 1.03);

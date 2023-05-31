@@ -162,7 +162,7 @@ function startEntering()
 	FlxTween.tween(FlxG.camera, {zoom: 2.0}, 2.0);
 
 	MusicManager.fadeOut(0.0);
-	AssetSoundRegistry.getAsset("levels/map/sounds/start_level").play();
+	AssetSoundRegistry.getAsset("ui/title/sounds/start_game").play();
 }
 
 // Starts the movement animation from one spot to another

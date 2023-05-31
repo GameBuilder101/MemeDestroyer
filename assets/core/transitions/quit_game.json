@@ -1,0 +1,9 @@
+{
+    "type": "fade",
+    "color": "#000000",
+    "duration": 2.0,
+    "direction": [
+        0.0,
+        0.0
+    ]
+}

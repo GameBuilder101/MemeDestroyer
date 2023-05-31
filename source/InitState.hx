@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.addons.transition.FlxTransitionableState;
+import flixel.util.FlxTimer;
 import gbc.graphics.AssetSprite;
 import gbc.graphics.AssetSpriteRegistry;
 import gbc.graphics.TransitionDataRegistry;
@@ -24,6 +25,10 @@ class InitState extends FlxState
 		FlxTransitionableState.defaultTransIn = TransitionDataRegistry.getAsset("transitions/default_in");
 		FlxTransitionableState.defaultTransOut = TransitionDataRegistry.getAsset("transitions/default_out");
 
-		FlxG.switchState(new TitleState());
+		// Give the game a moment to start
+		new FlxTimer().start(1.0, function(timer:FlxTimer)
+		{
+			FlxG.switchState(new TitleState());
+		});
 	}
 }

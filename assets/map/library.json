@@ -1,23 +1,23 @@
 {
     "name": "Map",
     "description": "Map assets",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "dependencies": [
         {
             "id": "core",
-            "version": "1.0.0"
+            "version": "0.1.0"
         },
         {
             "id": "combat_level",
-            "version": "1.0.0"
+            "version": "0.1.0"
         },
         {
             "id": "shop",
-            "version": "1.0.0"
+            "version": "0.1.0"
         },
         {
             "id": "transcended_boss",
-            "version": "1.0.0"
+            "version": "0.1.0"
         }
     ]
 }

@@ -1,11 +1,11 @@
 {
     "name": "Shop",
     "description": "Shop assets",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "dependencies": [
         {
             "id": "core",
-            "version": "1.0.0"
+            "version": "0.1.0"
         }
     ]
 }
