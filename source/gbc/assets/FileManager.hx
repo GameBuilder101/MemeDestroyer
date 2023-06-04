@@ -6,6 +6,7 @@ import openfl.display.BitmapData;
 import openfl.media.Sound;
 import sys.FileSystem;
 import sys.io.File;
+import sys.io.FileOutput;
 
 /** Retrieves common asset/file types via sys.FileSystem and sys.io.File. **/
 class FileManager
@@ -27,7 +28,9 @@ class FileManager
 	**/
 	public static inline function writeRaw(path:String, contents:String)
 	{
-		File.write(path).writeString(contents);
+		var output:FileOutput = File.write(path);
+		output.writeString(contents);
+		output.close();
 	}
 
 	/** @param path The path excluding the file extension. **/

@@ -25,6 +25,9 @@ class InitState extends FlxState
 		FlxTransitionableState.defaultTransIn = TransitionDataRegistry.getAsset("transitions/default_in");
 		FlxTransitionableState.defaultTransOut = TransitionDataRegistry.getAsset("transitions/default_out");
 
+		// Must be done here so that FlxG has time to initialize
+		Settings.instance = new Settings();
+
 		// Give the game a moment to start
 		new FlxTimer().start(1.0, function(timer:FlxTimer)
 		{

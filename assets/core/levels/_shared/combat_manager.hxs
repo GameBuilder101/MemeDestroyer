@@ -44,6 +44,8 @@ function onLoaded()
 
 function onUpdate(elapsed:Float)
 {
+	state.allowPausing = !hud.dialogueBox.displaying;
+
 	// Health UI
 	if (playerHealth != null)
 		hud.playerHealth.setValues(playerHealth.call("getHealth"), playerHealth.call("getMaxHealth"));

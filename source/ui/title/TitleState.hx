@@ -33,6 +33,10 @@ class TitleState extends FlxTransitionableState
 	public var newButton(default, null):StandardButton;
 	public var loadButton(default, null):StandardButton;
 	public var quitButton(default, null):StandardButton;
+	public var globalVolumeSlider(default, null):GlobalVolumeSlider;
+
+	public var saveScreen(default, null):SaveScreen;
+	public var cancelSaveButton(default, null):StandardButton;
 
 	static inline final INTRO_DURATION:Float = 9.7;
 	static inline final INTRO_CREDIT_APPEAR_TIME:Float = 2.45;
@@ -89,10 +93,17 @@ class TitleState extends FlxTransitionableState
 
 		newButton = new StandardButton(0.0, 44.0, "ui/title/sprites/button", "New Game", LEFT, newGame);
 		add(newButton);
-		loadButton = new StandardButton(newButton.x, newButton.y + newButton.height + 8.0, "ui/title/sprites/button", "Load Game", LEFT, loadGame);
+		loadButton = new StandardButton(newButton.x, newButton.y + newButton.height + 8.0, "ui/title/sprites/button", "Load Game", LEFT, openLoadMenu);
 		add(loadButton);
 		quitButton = new StandardButton(loadButton.x, loadButton.y + loadButton.height + 8.0, "ui/title/sprites/button", "Quit", LEFT, quitGame);
 		add(quitButton);
+		globalVolumeSlider = new GlobalVolumeSlider(quitButton.x, quitButton.y + quitButton.height + 8.0);
+		add(globalVolumeSlider);
+
+		cancelSaveButton = new StandardButton(0.0, 0.0, "ui/_shared/sprites/button", "Back", CENTER, openStandardMenu);
+		cancelSaveButton.screenCenter();
+		cancelSaveButton.y = FlxG.height - 48.0;
+		add(cancelSaveButton);
 
 		introCredit = new FlxText(0.0, FlxG.height / 2.0 - 32.0, FlxG.width);
 		introCredit.setFormat("Edit Undo BRK", 24, FlxColor.WHITE, CENTER, SHADOW, FlxColor.BLACK);
@@ -103,38 +114,80 @@ class TitleState extends FlxTransitionableState
 		introTimer = new FlxTimer();
 		introCreditTimer = new FlxTimer();
 
+		openStandardMenu();
 		startIntro();
 	}
 
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
 		// Continuously emit the ember particles
 		if (!embers.emitting)
 			embers.start(false);
+
+		if (Controls.pause.check())
+			skipIntro();
 	}
 
 	/** Starts the new game transition. **/
 	public function newGame()
 	{
 		transOut = TransitionDataRegistry.getAsset("transitions/start_game");
+
+		// Zoom in the camera while transitioning
+		FlxTween.tween(FlxG.camera, {zoom: 1.5}, 2.0);
+
 		MusicManager.fadeOut(0.0);
-		AssetSoundRegistry.getAsset("ui/title/sounds/start_game").play();
+		AssetSoundRegistry.getAsset("ui/_shared/sounds/start_game").play();
+
+		// Loads in data for a new game
+		GameSaver.instance.loadNewGame();
 		FlxG.switchState(new PlayState("levels/init"));
 	}
-
-	public function loadGame() {}
 
 	/** Starts the quit game transition. **/
 	public function quitGame()
 	{
 		transOut = TransitionDataRegistry.getAsset("transitions/quit_game");
+
 		MusicManager.fadeOut(transOut.duration);
 		AssetSoundRegistry.getAsset("ui/title/sounds/quit_game").play();
+
 		transitionOut(function()
 		{
 			System.exit(0);
 		});
+	}
+
+	function openStandardMenu()
+	{
+		logo.visible = true;
+		newButton.visible = true;
+		loadButton.visible = true;
+		quitButton.visible = true;
+		globalVolumeSlider.visible = true;
+
+		if (saveScreen != null)
+		{
+			remove(saveScreen, true);
+			saveScreen.destroy();
+			saveScreen = null;
+		}
+		cancelSaveButton.visible = false;
+	}
+
+	function openLoadMenu()
+	{
+		logo.visible = false;
+		newButton.visible = false;
+		loadButton.visible = false;
+		quitButton.visible = false;
+		globalVolumeSlider.visible = false;
+
+		saveScreen = new SaveScreen(0.0, 0.0, LOAD);
+		add(saveScreen);
+		cancelSaveButton.visible = true;
 	}
 
 	public function startIntro()
@@ -149,6 +202,7 @@ class TitleState extends FlxTransitionableState
 		newButton.visible = false;
 		loadButton.visible = false;
 		quitButton.visible = false;
+		globalVolumeSlider.visible = false;
 
 		// Start the background zoomed-in at the bottom and scroll upwards
 		FlxTween.cancelTweensOf(background);
@@ -175,18 +229,14 @@ class TitleState extends FlxTransitionableState
 		});
 	}
 
-	public function endIntro()
+	function endIntro()
 	{
 		introTimer.cancel();
 
 		FlxG.camera.flash(FlxColor.WHITE, 0.1);
 
 		// Reset other elements
-		logo.visible = true;
-		versionText.visible = true;
-		newButton.visible = true;
-		loadButton.visible = true;
-		quitButton.visible = true;
+		openStandardMenu();
 
 		// Reset the background
 		background.scale.set(1.03, 1.03);
@@ -199,6 +249,14 @@ class TitleState extends FlxTransitionableState
 		// Reset the intro credit
 		introCreditTimer.cancel();
 		introCredit.visible = false;
+	}
+
+	public function skipIntro()
+	{
+		if (!introTimer.active)
+			return;
+		FlxG.sound.music.time = INTRO_DURATION * 1000.0; // Multiply by 1000 since the time is in milliseconds
+		endIntro();
 	}
 
 	/** Returns true if the intro animation is playing. **/

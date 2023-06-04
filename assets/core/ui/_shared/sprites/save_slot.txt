@@ -1,0 +1,4 @@
+empty_idle0 = 0 0 512 80
+empty_highlight0 = 0 80 512 80
+idle0 = 0 160 512 80
+highlight0 = 0 240 512 80

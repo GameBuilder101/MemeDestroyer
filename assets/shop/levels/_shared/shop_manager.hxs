@@ -33,6 +33,8 @@ function onLoaded()
 
 function onUpdate(elapsed:Float)
 {
+	state.allowPausing = !hud.dialogueBox.displaying;
+
 	if (playerEquipper != null)
 	{
 		for (i in 0...playerEquipper.call("getInventorySize"))

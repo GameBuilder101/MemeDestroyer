@@ -4,6 +4,8 @@ import gbc.Saver;
 import gbc.assets.FileManager;
 import sys.FileSystem;
 
+using DateTools;
+
 /** Used to save/load game data for a playthrough. **/
 class GameSaver extends Saver<GameSave>
 {
@@ -27,8 +29,8 @@ class GameSaver extends Saver<GameSave>
 	override function save(path:String = null)
 	{
 		if (path == null || path == "")
-			path = SAVES_DIRECTORY + "/0";
-		data.date = Date.now() + "";
+			path = "save";
+		data.date = Date.now().format("%F %r") + "";
 		super.save(path);
 	}
 
@@ -36,7 +38,7 @@ class GameSaver extends Saver<GameSave>
 	{
 		if (path == null || path == "")
 		{
-			path = SAVES_DIRECTORY + "/0";
+			path = "save";
 			currentID = 0;
 		}
 		super.load(path);
@@ -83,6 +85,8 @@ class GameSaver extends Saver<GameSave>
 	/** Saves the game using an ID. **/
 	public inline function saveGame(id:Int)
 	{
+		if (!FileSystem.exists(SAVES_DIRECTORY))
+			FileSystem.createDirectory(SAVES_DIRECTORY);
 		save(SAVES_DIRECTORY + "/" + id);
 	}
 
@@ -91,6 +95,12 @@ class GameSaver extends Saver<GameSave>
 	{
 		load(SAVES_DIRECTORY + "/" + id);
 		currentID = id;
+	}
+
+	/** Loads the game from a new save game. **/
+	public function loadNewGame()
+	{
+		data = getDefaultData();
 	}
 
 	/** Returns the IDs of all saves in the save directory. **/

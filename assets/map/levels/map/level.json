@@ -317,7 +317,7 @@
                     "id": "levels/familiar_underpass",
                     "spotEntityID": "entities/transcended_level_spot",
                     "position": [
-                        365.0,
+                        360.0,
                         775.0
                     ],
                     "connections": [

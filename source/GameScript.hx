@@ -15,6 +15,7 @@ class GameScript extends Script
 		set("CombatHud", ui.combat_hud.CombatHud);
 		set("ShopHud", ui.shop_hud.ShopHud);
 		set("MapHud", ui.map_hud.MapHud);
+		set("Settings", Settings);
 		set("Controls", Controls);
 		set("GameSaver", GameSaver);
 	}

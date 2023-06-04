@@ -10,6 +10,7 @@ import gbc.scripting.ComponentSystem;
 import gbc.scripting.Script;
 import level.Level;
 import level.LevelRegistry;
+import ui.pause_menu.PauseMenuState;
 
 /** The play state can load a level and contains entities. **/
 class PlayState extends FlxTransitionableState
@@ -38,6 +39,12 @@ class PlayState extends FlxTransitionableState
 
 	/** For miscellaneous effect sprites. **/
 	var effects:FlxGroup;
+
+	/** Set false to disable the pause menu. **/
+	public var allowPausing(default, null):Bool = true;
+
+	/** Used to prevent the pause menu from opening right after closing. **/
+	var pauseCooldown:Float;
 
 	public function new(levelID:String)
 	{
@@ -80,6 +87,18 @@ class PlayState extends FlxTransitionableState
 			// Make further-down things appear on top (to immitate depth)
 			return FlxSort.byValues(order, entity1.y + entity1.mainSprite.height, entity2.y + entity2.mainSprite.height);
 		});
+
+		if (pauseCooldown > 0.0)
+		{
+			pauseCooldown -= elapsed;
+			if (pauseCooldown < 0.0)
+				pauseCooldown = 0.0;
+		}
+		else if (allowPausing && Controls.pause.check()) // Open the pause menu when the input is triggered
+		{
+			openSubState(new PauseMenuState());
+			pauseCooldown = 0.1;
+		}
 	}
 
 	override function destroy()
