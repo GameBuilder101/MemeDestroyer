@@ -26,6 +26,10 @@
             "value": "#c10abb"
         }
     ],
+    "worldBoundsSize": [
+        640.0,
+        384.0
+    ],
     "backgroundSpriteID": "levels/ohio/sprites/main",
     "initialSpawns": []
 }

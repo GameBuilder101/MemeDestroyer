@@ -138,9 +138,11 @@ class Script
 		set("FlxMath", flixel.math.FlxMath);
 		set("FlxRect", flixel.math.FlxRect);
 		set("FlxText", flixel.text.FlxText);
+		set("FlxTextBorderStyle", flixel.text.FlxText.FlxTextBorderStyle);
 		set("FlxEase", flixel.tweens.FlxEase);
 		set("FlxTween", flixel.tweens.FlxTween);
 		set("FlxGradient", flixel.util.FlxGradient);
+		set("FlxTimer", flixel.util.FlxTimer);
 
 		// Add useful functions
 

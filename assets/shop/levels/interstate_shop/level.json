@@ -51,6 +51,10 @@
             "value": "#ffffff"
         }
     ],
+    "worldBoundsSize": [
+        640.0,
+        384.0
+    ],
     "backgroundSpriteID": "levels/interstate_shop/sprites/main",
     "initialSpawns": [
         {

@@ -39,6 +39,10 @@
             "value": "#ace24e"
         }
     ],
+    "worldBoundsSize": [
+        640.0,
+        384.0
+    ],
     "backgroundSpriteID": "levels/overworld/sprites/main",
     "initialSpawns": [
         {

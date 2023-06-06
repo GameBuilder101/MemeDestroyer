@@ -1,0 +1,17 @@
+{
+    "animations": [
+        {
+            "name": "first_line",
+            "atlasPrefix": "first_line",
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "second_line",
+            "atlasPrefix": "second_line",
+            "frameRate": 4,
+            "looped": true
+        }
+    ],
+    "defaultAnim": "first_line"
+}

@@ -133,10 +133,13 @@ class PlayState extends FlxTransitionableState
 			});
 		}
 
+		FlxG.worldBounds.set(0.0, 0.0, level.worldBoundsSize[0], level.worldBoundsSize[1]);
+
 		// Load the background sprite
-		if (level.backgroundSpriteID != null)
+		background.setPosition(0.0, 0.0);
+		background.visible = level.backgroundSpriteID != null;
+		if (background.visible)
 			background.loadFromID(level.backgroundSpriteID);
-		FlxG.worldBounds.set(background.x, background.y, background.width, background.height);
 
 		// Remove existing entities
 		for (entity in entities.members)

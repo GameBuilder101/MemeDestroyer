@@ -17,6 +17,10 @@
             "value": "#ff0000"
         }
     ],
+    "worldBoundsSize": [
+        640.0,
+        384.0
+    ],
     "backgroundSpriteID": "levels/precipice_of_the_memeiverse/sprites/main",
     "initialSpawns": []
 }

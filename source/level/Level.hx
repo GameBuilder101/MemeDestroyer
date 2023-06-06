@@ -5,6 +5,7 @@ typedef LevelData =
 	name:String,
 	components:Array<String>,
 	variables:Array<Dynamic>,
+	worldBoundsSize:Array<Float>,
 	backgroundSpriteID:String,
 	initialSpawns:Array<LevelSpawn>
 }

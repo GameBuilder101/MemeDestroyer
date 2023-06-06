@@ -1,8 +1,253 @@
-// Requires variables initialLevel:String, initialMoney:Int
+// Requires variables initialLevelID:String, initialBackgroundSpriteID:String, initialItemID:String, initialMoney:Int
+
+var introPhase:Int = -1;
+var introTimer:FlxTimer;
+
+var introFade:FlxSprite;
+var introText:AssetSprite;
+var introHint:FlxText;
+var introHintSound:AssetSound;
+
+var hud:CombatHud;
+
+var player:Entity;
+var playerEquipper:GameScript = null;
+
+var item:Entity;
+var itemBackdrop:AssetSprite;
 
 function onLoaded()
 {
-    GameSaver.instance.setGameData("money", initialMoney);
+    introTimer = new FlxTimer();
 
-    state.loadLevel(null, initialLevel);
+    // Play the intro only if it hasn't been yet
+	var data:Dynamic = GameSaver.instance.getGameData("playedIntro");
+	if (data != null && data)
+		state.loadLevel(null, "levels/map");
+	else
+    {
+        initGameData();
+        startIntro();
+    }
+	GameSaver.instance.setGameData("playedIntro", true);
+}
+
+function onUnloaded()
+{
+    if (playingIntro())
+        endIntro();
+}
+
+function onUpdate(elapsed:Float)
+{
+    // Inventory UI
+	if (hud != null && playerEquipper != null)
+	{
+		for (i in 0...playerEquipper.call("getInventorySize"))
+			hud.inventory.setItemInSlot(i, playerEquipper.call("getInventoryItem", [i]));
+		hud.inventory.setSelectedSlot(playerEquipper.call("getSelectedItemIndex"));
+
+        hud.ammoIndicator.visible = false;
+	}
+
+    // Once a phase is complete, start the next
+    switch (introPhase)
+    {
+        case 0:
+            if (introText.alpha <= 0.0)
+            {
+                introPhase++;
+
+                hud.visible = true;
+
+	            player = state.spawn("entities/player");
+	            playerEquipper = player.getComponent("equipper");
+	            player.screenCenter();
+
+                for (i in 0...playerEquipper.call("getInventorySize"))
+		            hud.inventory.addSlot();
+
+                FlxTween.tween(introFade, {alpha: 0.0}, 3.0);
+            }
+        case 1:
+            if (introFade.alpha <= 0.0)
+            {
+                introPhase++;
+
+                introHint.text = "Press " + Controls.moveUp.getDisplayName(1) + ", " + Controls.moveLeft.getDisplayName(1) + ", " + Controls.moveDown.getDisplayName(1) + ", " + Controls.moveRight.getDisplayName(1) + " to move";
+                introHint.alpha = 1.0;
+                introHintSound.play();
+            }
+        case 2:
+            if (Controls.moveUp.check() || Controls.moveDown.check() || Controls.moveLeft.check() || Controls.moveRight.check())
+            {
+                introPhase++;
+
+                FlxTween.tween(introHint, {alpha: 0.0}, 1.0);
+            }
+        case 3:
+            if (introHint.alpha <= 0.0)
+            {
+                introPhase++;
+
+                introHint.text = "Press " + Controls.dodge.getDisplayName(0) + " to dodge";
+                introHint.alpha = 1.0;
+                introHintSound.play();
+            }
+        case 4:
+            if (Controls.dodge.check())
+            {
+                introPhase++;
+
+                FlxTween.tween(introHint, {alpha: 0.0}, 1.0);
+            }
+        case 5:
+            if (introHint.alpha <= 0.0)
+            {
+                introPhase++;
+
+                state.background.loadFromID("levels/init/sprites/item_background");
+                state.background.screenCenter();
+                state.background.visible = true;
+                AssetSoundRegistry.getAsset("levels/init/sounds/item_background_appear").play();
+
+                item = state.spawn(initialItemID);
+	            item.screenCenter();
+                item.y -= 16.0;
+
+                introHint.text = "Press " + Controls.interact.getDisplayName(0) + " to pick up weapon";
+                introHint.alpha = 1.0;
+                introHintSound.play();
+            }
+        case 6:
+            if (!item.visible)
+            {
+                introPhase++;
+
+                state.background.visible = false;
+                AssetSoundRegistry.getAsset("levels/init/sounds/item_background_appear").play();
+
+                FlxTween.tween(introHint, {alpha: 0.0}, 1.0);
+            }
+        case 7:
+            if (introHint.alpha <= 0.0)
+            {
+                introPhase++;
+
+                introHint.text = "Press left mouse to shoot";
+                introHint.alpha = 1.0;
+                introHintSound.play();
+            }
+        case 8:
+            if (state.getEntity("projectile") != null)
+            {
+                introPhase++;
+
+                FlxTween.tween(introHint, {alpha: 0.0}, 1.0);
+            }
+        case 9:
+            if (introHint.alpha <= 0.0)
+            {
+                introPhase++;
+
+                introHint.text = "Press " + Controls.equip.getDisplayName(0) + " to switch equipped weapon";
+                introHint.alpha = 1.0;
+                introHintSound.play();
+            }
+        case 10:
+            if (Controls.equip.check())
+                introPhase++;
+        case 11:
+            if (playerEquipper.call("getInventoryItem", [playerEquipper.call("getSelectedItemIndex")]) != null) // Wait until the player re-selects the item
+            {
+                introPhase++;
+
+                FlxTween.tween(introHint, {alpha: 0.0}, 1.0);
+
+                state.background.setPosition(0.0, 0.0);
+                state.background.loadFromID(initialBackgroundSpriteID);
+                state.background.alpha = 0.0;
+                state.background.visible = true;
+                FlxTween.tween(state.background, {alpha: 1.0}, 3.0);
+            }
+        case 12:
+            if (state.background.alpha >= 1.0) // End the intro after the background fades in
+            {
+                FlxG.camera.flash(colorString("#ffffff"), 0.1);
+                endIntro();
+                state.loadLevel(null, initialLevelID);
+            }
+    }
+}
+
+// Initializes game data with default values for the start of the game
+function initGameData()
+{
+    GameSaver.instance.setGameData("money", initialMoney);
+}
+
+function startIntro()
+{
+    // Set up the temporary intro HUD
+    hud = new CombatHud();
+    hud.visible = false;
+    state.add(hud);
+
+    introFade = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, colorString("#000000"));
+    introFade.scrollFactor.set(0.0, 0.0);
+    state.add(introFade);
+
+    introText = new AssetSprite(0.0, 0.0, null, "levels/init/sprites/intro_text");
+    introText.scrollFactor.set(0.0, 0.0);
+    introText.screenCenter();
+    introText.visible = false;
+    state.add(introText);
+
+    introHint = new FlxText(0.0, FlxG.height - 64.0, FlxG.width);
+    introHint.setFormat("Edit Undo BRK", 20, colorString("#ff0000"), "center", FlxTextBorderStyle.SHADOW, colorString("#000000"));
+    introHint.scrollFactor.set(0.0, 0.0);
+    introHint.alpha = 0.0;
+    state.add(introHint);
+    introHintSound = AssetSoundRegistry.getAsset("ui/_shared/sounds/button_pressed");
+
+    introPhase = 0;
+    state.allowPausing = false;
+    introTimer.start(9.4, function() {
+        introText.visible = true;
+        FlxTween.shake(introText, 0.005, 6.7);
+        introTimer.start(1.7, function() {
+            introText.animation.play("second_line");
+            introTimer.start(2.0, function() {
+                FlxTween.tween(introText, {alpha: 0.0}, 3.0);
+            });
+        });
+    });
+
+    AssetSoundRegistry.getAsset("levels/init/sounds/intro").play();
+}
+
+function endIntro()
+{
+    state.remove(introFade, true);
+    introFade.destroy();
+    state.remove(introText, true);
+    introText.destroy();
+    state.remove(introHint, true);
+    introHint.destroy();
+
+    state.remove(hud, true);
+    hud = null;
+    state.remove(player, true);
+    player = null;
+    playerEquipper = null;
+
+    introPhase = -1;
+    state.allowPausing = true;
+    introTimer.cancel();
+}
+
+// Returns true if playing the intro
+function playingIntro():Bool
+{
+    return introPhase >= 0;
 }

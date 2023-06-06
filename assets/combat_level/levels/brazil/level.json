@@ -26,6 +26,10 @@
             "value": "#ff4900"
         }
     ],
+    "worldBoundsSize": [
+        640.0,
+        384.0
+    ],
     "backgroundSpriteID": "levels/brazil/sprites/main",
     "initialSpawns": []
 }

@@ -26,6 +26,10 @@
             "value": "#42ff00"
         }
     ],
+    "worldBoundsSize": [
+        640.0,
+        384.0
+    ],
     "backgroundSpriteID": "levels/area_51/sprites/main",
     "initialSpawns": []
 }

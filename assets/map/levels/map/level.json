@@ -358,6 +358,10 @@
             "value": "levels/map/music/final_level_theme"
         }
     ],
+    "worldBoundsSize": [
+        640.0,
+        2048.0
+    ],
     "backgroundSpriteID": "levels/map/sprites/main",
     "initialSpawns": []
 }

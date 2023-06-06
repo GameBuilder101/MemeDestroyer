@@ -17,6 +17,10 @@
             "value": "#54dada"
         }
     ],
+    "worldBoundsSize": [
+        640.0,
+        384.0
+    ],
     "backgroundSpriteID": "levels/the_skeld/sprites/main",
     "initialSpawns": []
 }

@@ -26,6 +26,10 @@
             "value": "#e4d11c"
         }
     ],
+    "worldBoundsSize": [
+        640.0,
+        384.0
+    ],
     "backgroundSpriteID": "levels/waffle_house/sprites/main",
     "initialSpawns": []
 }

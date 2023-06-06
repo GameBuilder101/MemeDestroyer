@@ -5,13 +5,25 @@
     ],
     "variables": [
         {
-            "name": "initialLevel",
-            "value": "levels/map"
+            "name": "initialLevelID",
+            "value": "levels/overworld"
+        },
+        {
+            "name": "initialBackgroundSpriteID",
+            "value": "levels/overworld/sprites/main"
+        },
+        {
+            "name": "initialItemID",
+            "value": "items/the_l"
         },
         {
             "name": "initialMoney",
             "value": 0
         }
+    ],
+    "worldBoundsSize": [
+        640.0,
+        384.0
     ],
     "initialSpawns": []
 }

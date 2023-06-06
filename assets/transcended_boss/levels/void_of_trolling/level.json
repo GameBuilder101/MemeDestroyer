@@ -17,6 +17,10 @@
             "value": "#ffffff"
         }
     ],
+    "worldBoundsSize": [
+        640.0,
+        384.0
+    ],
     "backgroundSpriteID": "levels/void_of_trolling/sprites/main",
     "initialSpawns": []
 }

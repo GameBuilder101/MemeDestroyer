@@ -17,6 +17,10 @@
             "value": "#7cc612"
         }
     ],
+    "worldBoundsSize": [
+        640.0,
+        384.0
+    ],
     "backgroundSpriteID": "levels/odorous_swamp/sprites/main",
     "initialSpawns": []
 }
