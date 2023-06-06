@@ -1,6 +1,5 @@
 package ui.combat_hud;
 
-import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -12,8 +11,6 @@ import gbc.sound.AssetSoundRegistry;
 /** A countdown overlay that plays a Mortal-Combat-esque animation. **/
 class CountdownOverlay extends FlxSpriteGroup implements IOverlay
 {
-	public static final SHAKE_INTENSITY = 3.0;
-
 	var sprites:Array<AssetSprite> = [];
 	var sounds:Array<AssetSound> = [];
 
@@ -54,26 +51,6 @@ class CountdownOverlay extends FlxSpriteGroup implements IOverlay
 		delayTimer = new FlxTimer();
 	}
 
-	override function update(elapsed:Float)
-	{
-		super.update(elapsed);
-		if (currentSprite != sprites.length - 1) // Only shake the final sprite
-			return;
-
-		// Randomly shake the current sprite, making sure it doesn't go too far
-		var sprite:AssetSprite = sprites[currentSprite];
-		sprite.x += FlxG.random.float(-SHAKE_INTENSITY * sprite.width, SHAKE_INTENSITY * sprite.width) * elapsed;
-		if (sprite.x < -sprite.width / 10.0 + x)
-			sprite.x = -sprite.width / 10.0 + x;
-		else if (sprite.x > sprite.width / 10.0 + x)
-			sprite.x = sprite.width / 10.0 + x;
-		sprite.y += FlxG.random.float(-SHAKE_INTENSITY * sprite.height, SHAKE_INTENSITY * sprite.height) * elapsed;
-		if (sprite.y < -sprite.height / 10.0 + y)
-			sprite.y = -sprite.height / 10.0 + y;
-		else if (sprite.y > sprite.height / 10.0 + y)
-			sprite.y = sprite.height / 10.0 + y;
-	}
-
 	public function display(args:Dynamic, onComplete:Void->Void)
 	{
 		this.onComplete = onComplete;
@@ -101,6 +78,9 @@ class CountdownOverlay extends FlxSpriteGroup implements IOverlay
 		sprites[index].setPosition(x, y);
 		sprites[index].visible = true;
 		FlxTween.tween(sprites[index], {"scale.x": 1.0, "scale.y": 1.0}, 0.5, {ease: FlxEase.expoOut, onComplete: onCompleteAnimateSprite});
+
+		if (index >= sprites.length - 1) // Shake the final sprite
+			FlxTween.shake(sprites[index], 0.035, delayDuration + 1.0);
 
 		if (index < sounds.length)
 			sounds[index].play();

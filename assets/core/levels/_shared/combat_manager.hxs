@@ -20,13 +20,26 @@ var deathTransitioning:Bool = false;
 
 function onLoaded()
 {
-	hud = new CombatHud();
+	for (member in state.members) // Re-use any existing combat HUD if one can be found
+	{
+		if (Std.is(member, CombatHud))
+		{
+			hud = member;
+			break;
+		}
+	}
+	if (hud == null)
+		hud = new CombatHud();
 	state.add(hud);
 
-	player = state.spawn("entities/player");
+	player = state.getEntity("player"); // Re-use any existing player if one can be found
+	if (player == null)
+	{
+		player = state.spawn("entities/player");
+		player.screenCenter();
+	}
 	playerHealth = player.getComponent("health");
 	playerEquipper = player.getComponent("equipper");
-	player.screenCenter();
 
 	hud.playerHealth.setLabel(player.name);
 	hud.playerHealth.setIndicatorColor(colorString(playerHealth.get("healthColor")));

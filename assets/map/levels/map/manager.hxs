@@ -28,6 +28,9 @@ var mainTheme:AssetMusic;
 
 function onLoaded()
 {
+	// Clear the asset cache for memory management purposes
+	LibraryManager.clearAssetCache();
+
 	hud = new MapHud();
 	state.add(hud);
 

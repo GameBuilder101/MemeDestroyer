@@ -7,7 +7,7 @@
     "variables": [
         {
             "name": "fallSpeed",
-            "value": 400.0
+            "value": 350.0
         }
     ],
     "spriteID": "entities/death_grave/sprites/main"

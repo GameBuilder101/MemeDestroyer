@@ -1,4 +1,4 @@
-// Requires variables initialLevelID:String, initialBackgroundSpriteID:String, initialItemID:String, initialMoney:Int
+// Requires variables initialLevelID:String, initialBackgroundSpriteID:String, initialItemID:String, initialItemBuyableID:String, initialMoney:Int
 
 var introPhase:Int = -1;
 var introTimer:FlxTimer;
@@ -183,6 +183,7 @@ function onUpdate(elapsed:Float)
 // Initializes game data with default values for the start of the game
 function initGameData()
 {
+    GameSaver.instance.setGameData("bought" + initialItemBuyableID, true);
     GameSaver.instance.setGameData("money", initialMoney);
 }
 
@@ -235,11 +236,9 @@ function endIntro()
     state.remove(introHint, true);
     introHint.destroy();
 
-    state.remove(hud, true);
-    hud = null;
-    state.remove(player, true);
-    player = null;
-    playerEquipper = null;
+    // Remove slots since the next level might try and add them back
+    for (i in 0...playerEquipper.call("getInventorySize"))
+		hud.inventory.removeSlot();
 
     introPhase = -1;
     state.allowPausing = true;

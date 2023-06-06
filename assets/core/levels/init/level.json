@@ -17,6 +17,10 @@
             "value": "items/the_l"
         },
         {
+            "name": "initialItemBuyableID",
+            "value": "entities/buyable_the_l"
+        },
+        {
             "name": "initialMoney",
             "value": 0
         }

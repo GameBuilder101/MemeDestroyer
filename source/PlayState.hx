@@ -141,10 +141,6 @@ class PlayState extends FlxTransitionableState
 		if (background.visible)
 			background.loadFromID(level.backgroundSpriteID);
 
-		// Remove existing entities
-		for (entity in entities.members)
-			removeEntity(entity);
-
 		// Create initial spawns, but don't yet add them (since onAddedToPlay should only get called after the level is created)
 		var initialEntities:Array<Entity> = [];
 		for (spawn in level.initialSpawns)
