@@ -127,8 +127,6 @@ class Script
 	/** Set any engine-related variables that the script can use. **/
 	function setEngineVars()
 	{
-		set("Application", Application);
-		set("FlxBasic", flixel.FlxBasic);
 		set("FlxG", FlxG);
 		set("FlxObject", flixel.FlxObject);
 		set("FlxSprite", FlxSprite);
@@ -176,7 +174,6 @@ class Script
 		set("LibraryManager", gbc.assets.LibraryManager);
 		set("AssetSprite", gbc.graphics.AssetSprite);
 		set("AssetSpriteRegistry", gbc.graphics.AssetSpriteRegistry);
-		set("ShaderTypeRegistry", gbc.graphics.ShaderTypeRegistry);
 		set("TransitionDataRegistry", gbc.graphics.TransitionDataRegistry);
 		set("AssetMusic", gbc.sound.AssetMusic);
 		set("AssetMusicRegistry", gbc.sound.AssetMusicRegistry);

@@ -9,6 +9,8 @@ var boss:Entity;
 var bossHealth:GameScript = null;
 var currentRound:Int = -1;
 
+var nextRoundTimer:FlxTimer;
+
 var spawnParticle:AssetSprite;
 var spawnSound:AssetSound;
 
@@ -46,6 +48,8 @@ function onLoaded()
 	hud.showPlayerHealth();
 	for (i in 0...playerEquipper.call("getInventorySize"))
 		hud.inventory.addSlot();
+
+	nextRoundTimer = new FlxTimer();
 
 	spawnParticle = new AssetSprite(0.0, 0.0, null, "levels/_shared/sprites/spawn_particle");
 	spawnParticle.visible = false;
@@ -121,7 +125,9 @@ function start()
 {
 	if (getIsPlaying()) // If already playing
 		end();
-	nextRound(); // Start the first round
+	// Start the first round
+	currentRound = 0;
+	spawnRoundBoss();
 
 	MusicManager.transition(mainTheme, 0.0);
 }
@@ -147,6 +153,13 @@ function nextRound()
 		return;
 	}
 
+	hud.hideBossHealth();
+	nextRoundTimer.start(2.5, spawnRoundBoss);
+}
+
+// Spawns the boss for the current round
+function spawnRoundBoss()
+{
 	boss = state.levelSpawn(bosses[currentRound].spawn);
 	bossHealth = boss.getComponent("health");
 

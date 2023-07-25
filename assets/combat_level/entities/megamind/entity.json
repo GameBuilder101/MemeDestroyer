@@ -1,0 +1,69 @@
+{
+    "name": "Megamind",
+    "tags": [
+        "boss"
+    ],
+    "components": [
+        "entities/_shared/health",
+        "entities/_shared/shooter",
+        "entities/_shared/damager",
+        "entities/_shared/base_ai",
+        "entities/megamind/ai",
+        "entities/_shared/movement"
+    ],
+    "variables": [
+        {
+            "name": "footstepSoundID",
+            "value": ""
+        },
+        {
+            "name": "footstepDelay",
+            "value": 1.0
+        },
+        {
+            "name": "initialMaxHealth",
+            "value": 150.0
+        },
+        {
+            "name": "initialInvFrames",
+            "value": 0.25
+        },
+        {
+            "name": "roundHealth",
+            "value": false
+        },
+        {
+            "name": "healthColor",
+            "value": "#6b82b3"
+        },
+        {
+            "name": "team",
+            "value": "hostile"
+        },
+        {
+            "name": "hurtSoundID",
+            "value": "entities/megamind/sounds/hurt"
+        },
+        {
+            "name": "dieSoundID",
+            "value": "entities/megamind/sounds/die"
+        },
+        {
+            "name": "contactDamage",
+            "value": -1.0
+        },
+        {
+            "name": "turnSpeed",
+            "value": 180.0
+        },
+        {
+            "name": "walkSpeed",
+            "value": 100.0
+        }
+    ],
+    "hitboxSize": [
+        48.0,
+        64.0
+    ],
+    "spriteID": "entities/megamind/sprites/main"
+}

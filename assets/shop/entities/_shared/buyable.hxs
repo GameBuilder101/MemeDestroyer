@@ -47,7 +47,7 @@ function onInteracted(entity:Entity)
     callAll("onBought"); // Notify other components that this buyable was bought
     callAll("onUnlocked"); // Notify other components that this buyable is now unlocked
 
-    state.spawn("entities/buy_particle", this.x, this.y);
+    state.spawn("entities/poof_particle", this.x, this.y);
     AssetSoundRegistry.getAsset(buySoundID).play();
 
     // Display buy dialogue

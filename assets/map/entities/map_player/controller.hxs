@@ -3,12 +3,22 @@ var isRunning:Bool;
 var movePosition:Point;
 var initialPosition:Point;
 
+// Used to shake the main sprite since otherwise the asset-sprite anim offsets override the shake anim offsets
+var shakeMainSprite:AssetSprite;
+
 // Component caches
 var movement:GameScript;
 
 function onLoaded()
 {
 	movement = getComponent("movement");
+
+	shakeMainSprite = new AssetSprite(this.x, this.y, null, "entities/player/sprites/main");
+	shakeMainSprite.update();
+	shakeMainSprite.animation.stop();
+	shakeMainSprite.animation.name = null;
+	shakeMainSprite.visible = false;
+	this.add(shakeMainSprite);
 
 	this.add(new AssetSprite(this.x, this.y, null, "entities/player/sprites/hands"));
 }
@@ -34,6 +44,10 @@ function onUpdate(elapsed:Float)
 
 function moveTo(position:Point, running:Bool)
 {
+	FlxTween.cancelTweensOf(shakeMainSprite);
+	this.mainSprite.visible = true;
+	shakeMainSprite.visible = false;
+
 	moving = true;
 	isRunning = running;
 	movePosition = position;
@@ -44,4 +58,18 @@ function moveTo(position:Point, running:Bool)
 function getMoving():Bool
 {
 	return moving;
+}
+
+// Plays a quick shake animation. Used mainly for map error messages
+function shake()
+{
+	if (moving)
+		return;
+	this.mainSprite.visible = false;
+	shakeMainSprite.visible = true;
+	FlxTween.shake(shakeMainSprite, 0.1, 0.25, 1, {onComplete: function()
+	{
+		this.mainSprite.visible = true;
+		shakeMainSprite.visible = false;
+	}});
 }

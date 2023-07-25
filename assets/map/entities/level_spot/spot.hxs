@@ -1,10 +1,13 @@
+// Requires variables unlockSoundID:String
+
 // Used to identify this spot
 var spotID:Int;
 
 var interactable:Bool;
 
 var targetLevel;
-var locked:Bool;
+var locked:Bool = true;
+var setInitialLocked:Bool;
 
 function onUpdate(elapsed:Float)
 {
@@ -50,12 +53,18 @@ function getTarget()
 // Sets the locked state and updates the color
 function setLocked(value:Bool)
 {
+    var prevLocked:Bool = locked;
     locked = value;
 
     if (locked) // The locked sprite is un-colored
     {
         this.mainSprite.color = colorString("#ffffff");
         return;
+    }
+    else if (prevLocked && setInitialLocked) // If just un-locked (and not just starting-out as locked)
+    {
+        state.spawn("entities/poof_particle", 0.0, 0.0);
+        AssetSoundRegistry.getAsset(unlockSoundID).play();
     }
     
     // Set the sprite color to the level color (if it has one)
@@ -67,4 +76,11 @@ function setLocked(value:Bool)
             break;
         }
     }
+
+    setInitialLocked = true;
+}
+
+function getLocked():Bool
+{
+    return locked;
 }

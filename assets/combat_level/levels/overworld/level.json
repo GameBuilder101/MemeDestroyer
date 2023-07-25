@@ -19,6 +19,18 @@
                         "randomizeY": false
                     },
                     "playSpawnEffects": true
+                },
+                {
+                    "spawn": {
+                        "id": "entities/megamind",
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "randomizeX": true,
+                        "randomizeY": false
+                    },
+                    "playSpawnEffects": true
                 }
             ]
         },

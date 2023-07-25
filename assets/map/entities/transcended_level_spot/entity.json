@@ -4,7 +4,12 @@
     "components": [
         "entities/level_spot/spot"
     ],
-    "variables": [],
+    "variables": [
+        {
+            "name": "unlockSoundID",
+            "value": "entities/level_spot/sounds/unlock"
+        }
+    ],
     "spriteID": "entities/transcended_level_spot/sprites/main",
     "sortingPriority": -16
 }

@@ -20,9 +20,7 @@
                         3,
                         1
                     ],
-                    "prerequisites": [
-                        -1
-                    ]
+                    "prerequisites": []
                 },
                 {
                     "id": "levels/waffle_house",
@@ -97,7 +95,7 @@
                     "spotEntityID": "entities/level_spot",
                     "position": [
                         78.0,
-                        1478.0
+                        1470.0
                     ],
                     "connections": [
                         -1,
@@ -345,7 +343,8 @@
                     ],
                     "prerequisites": [
                         16
-                    ]
+                    ],
+                    "requiredTranscendedMemes": 4
                 }
             ]
         },

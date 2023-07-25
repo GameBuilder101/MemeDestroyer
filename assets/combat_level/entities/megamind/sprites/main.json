@@ -1,0 +1,35 @@
+{
+    "animations": [
+        {
+            "name": "idle",
+            "atlasPrefix": "idle",
+            "frameRate": 4,
+            "looped": true,
+            "offset": [
+                16.0,
+                0.0
+            ]
+        },
+        {
+            "name": "walk",
+            "atlasPrefix": "idle",
+            "frameRate": 4,
+            "looped": true,
+            "offset": [
+                16.0,
+                0.0
+            ]
+        },
+        {
+            "name": "attack",
+            "atlasPrefix": "attack",
+            "frameRate": 8,
+            "looped": true,
+            "offset": [
+                16.0,
+                0.0
+            ]
+        }
+    ],
+    "defaultAnim": "idle"
+}

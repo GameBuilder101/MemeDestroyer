@@ -23,6 +23,8 @@ var arrowAnimDir:Int = 1;
 var currentLevel:Int = 0;
 var spots:Array;
 
+var errorSound:AssetSound;
+
 // The main theme music for the level
 var mainTheme:AssetMusic;
 
@@ -47,8 +49,22 @@ function onLoaded()
 		spotComponent = spot.getComponent("spot");
 		spotComponent.call("setSpotID", [i]);
 		spotComponent.call("setTarget", [level.id]);
-		spotComponent.call("setLocked", [false]);
-		spots.push(spot);
+
+		// Lock the level spot if one of the prerequisites are not beat
+		var lock:Bool = false;
+		var data:Dynamic;
+		for (prerequisite in level.prerequisites)
+		{
+			data = GameSaver.instance.getGameData("beatLevel" + prerequisite);
+			if (data == null || !data)
+			{
+				lock = true;
+				break;
+			}
+		}
+		spotComponent.call("setLocked", [lock]);
+
+		spots.push(spotComponent);
 		i++;
 	}
 
@@ -77,8 +93,10 @@ function onLoaded()
 	if (data != null)
 		currentLevel = data;
 
-	player.setPosition(spots[currentLevel].x, spots[currentLevel].y); // Start the player at the initial spot
+	player.setPosition(spots[currentLevel].get("this").x, spots[currentLevel].get("this").y); // Start the player at the initial spot
 	stopMoving(); // Update the initial spot visuals
+
+	errorSound = AssetSoundRegistry.getAsset("ui/_shared/sounds/error");
 
 	mainTheme = AssetMusicRegistry.getAsset(mainThemeID);
 	MusicManager.transition(mainTheme, 1.0);
@@ -123,10 +141,14 @@ function onUpdate(elapsed:Float)
 		arrowAnimPercent = 0.4;
 		arrowAnimDir *= -1;
 	}
-	upArrow.alpha = arrowAnimPercent;
-	downArrow.alpha = arrowAnimPercent;
-	leftArrow.alpha = arrowAnimPercent;
-	rightArrow.alpha = arrowAnimPercent;
+	if (upArrow.alpha >= 0.4) // A value less than 4 is used to indicate a locked arrow
+		upArrow.alpha = arrowAnimPercent;
+	if (downArrow.alpha >= 0.4)
+		downArrow.alpha = arrowAnimPercent;
+	if (leftArrow.alpha >= 0.4)
+		leftArrow.alpha = arrowAnimPercent;
+	if (rightArrow.alpha >= 0.4)
+		rightArrow.alpha = arrowAnimPercent;
 
 	hud.startLevelText.text = "Press \"" + Controls.interact.getDisplayName(0) + "\" to start";
 	hud.startLevelText.alpha = arrowAnimPercent; // Also animate start level text
@@ -147,6 +169,21 @@ function movementCheck(elapsed:Float)
 		currentLevel = levels[currentLevel].connections[2];
 	else if (Controls.moveRight.check() && levels[currentLevel].connections[3] >= 0)
 		currentLevel = levels[currentLevel].connections[3];
+
+	// If the player can't move to that spot
+	if (spots[currentLevel].call("getLocked"))
+	{
+		if (!hud.displayingMessage)
+		{
+			if (levels[currentLevel].requiredTranscendedMemes != null)
+				hud.displayMessage("Must defeat " + levels[currentLevel].requiredTranscendedMemes + " transcended memes to proceed");
+			else
+				hud.displayMessage("Must beat current level to proceed");
+			playerController.call("shake");
+			errorSound.play();
+		}
+		currentLevel = prevLevel; // Reset the current level back
+	}
 
 	if (currentLevel != prevLevel) // If the player made a move input
 		startMoving(prevLevel);
@@ -172,10 +209,10 @@ function startEntering()
 function startMoving(prevLevel:Int)
 {
 	moving = true;
-	playerController.call("moveTo", [new Point(spots[currentLevel].x, spots[currentLevel].y), prevLevel < levels.length - 1 && currentLevel < levels.length - 1]);
+	playerController.call("moveTo", [new Point(spots[currentLevel].get("this").x, spots[currentLevel].get("this").y), prevLevel < levels.length - 1 && currentLevel < levels.length - 1]);
 
 	// Disable the previous spot
-	spots[prevLevel].getComponent("spot").call("setInteractable", [false]);
+	spots[prevLevel].call("setInteractable", [false]);
 
 	upArrow.visible = false;
 	downArrow.visible = false;
@@ -197,18 +234,31 @@ function stopMoving()
 {
 	moving = false;
 
-	spots[currentLevel].getComponent("spot").call("setInteractable", [true]);
-	var target = spots[currentLevel].getComponent("spot").call("getTarget");
-	var color = spots[currentLevel].mainSprite.color;
+	spots[currentLevel].call("setInteractable", [true]);
+	var target = spots[currentLevel].call("getTarget");
+	var color = spots[currentLevel].get("this").mainSprite.color;
 
+	// Display arrows and change alpha depending on connections and which spots are unlocked
 	upArrow.visible = levels[currentLevel].connections[0] >= 0;
 	upArrow.color = color;
+	upArrow.alpha = 1.0;
+	if (upArrow.visible && spots[levels[currentLevel].connections[0]].call("getLocked"))
+		upArrow.alpha = 0.2;
 	downArrow.visible = levels[currentLevel].connections[1] >= 0;
 	downArrow.color = color;
+	downArrow.alpha = 1.0;
+	if (downArrow.visible && spots[levels[currentLevel].connections[1]].call("getLocked"))
+		downArrow.alpha = 0.2;
 	leftArrow.visible = levels[currentLevel].connections[2] >= 0;
 	leftArrow.color = color;
+	leftArrow.alpha = 1.0;
+	if (leftArrow.visible && spots[levels[currentLevel].connections[2]].call("getLocked"))
+		leftArrow.alpha = 0.2;
 	rightArrow.visible = levels[currentLevel].connections[3] >= 0;
 	rightArrow.color = color;
+	rightArrow.alpha = 1.0;
+	if (rightArrow.visible && spots[levels[currentLevel].connections[3]].call("getLocked"))
+		rightArrow.alpha = 0.2;
 
 	var canGetHighScore:Bool = false;
 	for (component in target.components)
