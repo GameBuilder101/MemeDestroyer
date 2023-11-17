@@ -85,7 +85,7 @@ class TitleState extends FlxTransitionableState
 			type: PINGPONG
 		});
 
-		versionText = new FlxText(8.0, FlxG.height - 16.0, FlxG.width - 16.0, "Version " + LibraryManager.registry.get("core").version);
+		versionText = new FlxText(8.0, FlxG.height - 16.0, FlxG.width - 16.0, "Version " + LibraryManager.registry.get("assets").version);
 		versionText.setFormat("Edit Undo BRK", 10, FlxColor.WHITE, LEFT);
 		versionText.alpha = 0.5;
 		versionText.scrollFactor.set(0.0, 0.0);
@@ -209,8 +209,7 @@ class TitleState extends FlxTransitionableState
 		background.scale.set(3.0, 3.0);
 		background.updateHitbox();
 		background.x = (FlxG.width - background.width) / 2.0;
-		FlxTween.linearMotion(background, background.x, FlxG.height - background.height, background.x, (FlxG.height - background.height) * 0.5,
-			INTRO_DURATION);
+		FlxTween.linearMotion(background, background.x, FlxG.height - background.height, background.x, (FlxG.height - background.height) * 0.5, INTRO_DURATION);
 
 		// Start the intro credit text hidden, and change at specific points
 		introCredit.visible = false;

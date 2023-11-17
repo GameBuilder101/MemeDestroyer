@@ -30,8 +30,6 @@ class AssetSpriteRegistry extends Registry<AssetSpriteData>
 			data.desc.blend = BlendMode.NORMAL;
 		return {
 			graphic: data.graphic,
-			sparrowAtlas: data.sparrowAtlas,
-			spriteSheetPacker: data.spriteSheetPacker,
 			animations: data.desc.animations,
 			defaultAnim: data.desc.defaultAnim,
 			flipX: data.desc.flipX,
@@ -47,10 +45,6 @@ class AssetSpriteRegistry extends Registry<AssetSpriteData>
 
 	public function export(item:AssetSpriteData, path:String)
 	{
-		if (item.sparrowAtlas != null)
-			FileManager.writeXML(path, item.sparrowAtlas);
-		if (item.spriteSheetPacker != null)
-			FileManager.writeText(path, item.spriteSheetPacker);
 		var desc:String = Json.stringify({
 			animations: item.animations,
 			defaultAnim: item.defaultAnim,
@@ -70,8 +64,6 @@ class AssetSpriteRegistry extends Registry<AssetSpriteData>
 	{
 		return parse({
 			graphic: FileManager.getGraphic(path),
-			sparrowAtlas: FileManager.getXML(path),
-			spriteSheetPacker: FileManager.getText(path),
 			desc: FileManager.getParsedJson(path)
 		});
 	}

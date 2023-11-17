@@ -3,12 +3,18 @@ package gbc.assets;
 import haxe.Json;
 import sys.io.File;
 
+using StringTools;
+
 class LibraryRegistry extends Registry<Library>
 {
 	public function parse(data:Dynamic):Library
 	{
 		if (data == null)
 			return null;
+		if (data.name == null)
+			data.name = "";
+		if (data.description == null)
+			data.description = "";
 		return new Library(data.name, data.description, data.version, data.dependencies);
 	}
 

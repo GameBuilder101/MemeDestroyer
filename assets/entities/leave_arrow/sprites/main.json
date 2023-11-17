@@ -1,0 +1,23 @@
+{
+    "animations": [
+        {
+            "name": "idle",
+            "frames": [
+                [ 0, 0, 32, 64 ],
+                [ 32, 0, 32, 64 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "interactable",
+            "frames": [
+                [ 0, 64, 32, 64 ],
+                [ 32, 64, 32, 64 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        }
+    ],
+    "defaultAnim": "idle"
+}

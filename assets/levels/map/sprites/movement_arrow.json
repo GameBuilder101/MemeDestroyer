@@ -1,0 +1,52 @@
+{
+    "animations": [
+        {
+            "name": "up",
+            "frames": [
+                [ 0, 0, 96, 96 ]
+            ],
+            "frameRate": 8,
+            "looped": true,
+            "offset": [
+                32.0,
+                24.0
+            ]
+        },
+        {
+            "name": "down",
+            "frames": [
+                [ 96, 0, 96, 96 ]
+            ],
+            "frameRate": 8,
+            "looped": true,
+            "offset": [
+                32.0,
+                24.0
+            ]
+        },
+        {
+            "name": "left",
+            "frames": [
+                [ 0, 96, 96, 96 ]
+            ],
+            "frameRate": 8,
+            "looped": true,
+            "offset": [
+                32.0,
+                24.0
+            ]
+        },
+        {
+            "name": "right",
+            "frames": [
+                [ 96, 96, 96, 96 ]
+            ],
+            "frameRate": 8,
+            "looped": true,
+            "offset": [
+                32.0,
+                24.0
+            ]
+        }
+    ]
+}

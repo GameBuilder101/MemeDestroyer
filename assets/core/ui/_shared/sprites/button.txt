@@ -1,3 +1,0 @@
-idle0 = 0 0 288 32
-highlight0 = 0 32 288 32
-pressed0 = 0 64 288 32

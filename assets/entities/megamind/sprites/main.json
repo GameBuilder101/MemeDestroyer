@@ -1,0 +1,44 @@
+{
+    "animations": [
+        {
+            "name": "idle",
+            "frames": [
+                [ 0, 0, 64, 64 ],
+                [ 64, 0, 64, 64 ]
+            ],
+            "frameRate": 4,
+            "looped": true,
+            "offset": [
+                16.0,
+                0.0
+            ]
+        },
+        {
+            "name": "walk",
+            "frames": [
+                [ 0, 0, 64, 64 ],
+                [ 64, 0, 64, 64 ]
+            ],
+            "frameRate": 4,
+            "looped": true,
+            "offset": [
+                16.0,
+                0.0
+            ]
+        },
+        {
+            "name": "attack",
+            "frames": [
+                [ 0, 64, 64, 64 ],
+                [ 64, 64, 64, 64 ]
+            ],
+            "frameRate": 8,
+            "looped": true,
+            "offset": [
+                16.0,
+                0.0
+            ]
+        }
+    ],
+    "defaultAnim": "idle"
+}

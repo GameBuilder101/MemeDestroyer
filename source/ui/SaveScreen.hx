@@ -10,7 +10,6 @@ import flixel.util.FlxColor;
 import gbc.graphics.TransitionDataRegistry;
 import gbc.sound.AssetSound;
 import gbc.sound.AssetSoundRegistry;
-import gbc.sound.AssetSoundRegistry;
 import gbc.sound.MusicManager;
 
 /** A screen which can either save over or load from a saved game. **/

@@ -1,0 +1,31 @@
+{
+    "animations": [
+        {
+            "name": "idle",
+            "frames": [
+                [ 0, 0, 64, 32 ]
+            ],
+            "frameRate": 8,
+            "looped": true,
+            "offset": [
+                16.0,
+                0.0
+            ]
+        },
+        {
+            "name": "land",
+            "frames": [
+                [ 0, 32, 64, 32 ],
+                [ 0, 64, 64, 32 ],
+                [ 0, 96, 64, 32 ]
+            ],
+            "frameRate": 8,
+            "looped": false,
+            "offset": [
+                16.0,
+                0.0
+            ]
+        }
+    ],
+    "defaultAnim": "idle"
+}

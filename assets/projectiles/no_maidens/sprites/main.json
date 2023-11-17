@@ -1,0 +1,21 @@
+{
+    "animations": [
+        {
+            "name": "team_friendly",
+            "frames": [
+                [ 0, 0, 64, 32 ]
+            ],
+            "frameRate": 8,
+            "looped": true
+        },
+        {
+            "name": "team_hostile",
+            "frames": [
+                [ 64, 0, 64, 32 ]
+            ],
+            "frameRate": 8,
+            "looped": true
+        }
+    ],
+    "antialiasing": false
+}

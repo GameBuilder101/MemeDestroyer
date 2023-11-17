@@ -1,7 +1,0 @@
-locked0 = 0 0 64 64
-idle0 = 64 0 64 64
-idle1 = 128 0 64 64
-idle2 = 0 64 64 64
-interactable0 = 64 64 64 64
-interactable1 = 128 64 64 64
-interactable2 = 0 128 64 64

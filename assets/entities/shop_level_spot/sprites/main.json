@@ -1,0 +1,45 @@
+{
+    "animations": [
+        {
+            "name": "locked",
+            "frames": [
+                [ 0, 0, 64, 64 ]
+            ],
+            "frameRate": 8,
+            "looped": true,
+            "offset": [
+                16.0,
+                8.0
+            ]
+        },
+        {
+            "name": "idle",
+            "frames": [
+                [ 64, 0, 64, 64 ],
+                [ 128, 0, 64, 64 ],
+                [ 0, 64, 64, 64 ]
+            ],
+            "frameRate": 8,
+            "looped": true,
+            "offset": [
+                16.0,
+                8.0
+            ]
+        },
+        {
+            "name": "interactable",
+            "frames": [
+                [ 64, 64, 64, 64 ],
+                [ 128, 64, 64, 64 ],
+                [ 0, 128, 64, 64 ]
+            ],
+            "frameRate": 8,
+            "looped": true,
+            "offset": [
+                16.0,
+                8.0
+            ]
+        }
+    ],
+    "defaultAnim": "locked"
+}

@@ -1,0 +1,16 @@
+{
+    "animations": [
+        {
+            "name": "idle",
+            "frames": [
+                [ 0, 0, 256, 160 ],
+                [ 256, 0, 256, 160 ],
+                [ 0, 160, 256, 160 ],
+                [ 256, 160, 256, 160 ]
+            ],
+            "frameRate": 8,
+            "looped": true
+        }
+    ],
+    "defaultAnim": "idle"
+}

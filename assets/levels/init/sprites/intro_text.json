@@ -1,0 +1,21 @@
+{
+    "animations": [
+        {
+            "name": "first_line",
+            "frames": [
+                [ 0, 0, 640, 128 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "second_line",
+            "frames": [
+                [ 0, 128, 640, 128 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        }
+    ],
+    "defaultAnim": "first_line"
+}

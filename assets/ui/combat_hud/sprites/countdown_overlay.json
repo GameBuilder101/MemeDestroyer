@@ -1,0 +1,37 @@
+{
+    "animations": [
+        {
+            "name": "three",
+            "frames": [
+                [ 0, 0, 192, 128 ]
+            ],
+            "frameRate": 16,
+            "looped": true
+        },
+        {
+            "name": "two",
+            "frames": [
+                [ 192, 0, 192, 128 ]
+            ],
+            "frameRate": 16,
+            "looped": true
+        },
+        {
+            "name": "one",
+            "frames": [
+                [ 0, 128, 192, 128 ]
+            ],
+            "frameRate": 16,
+            "looped": true
+        },
+        {
+            "name": "fight",
+            "frames": [
+                [ 192, 128, 192, 128 ]
+            ],
+            "frameRate": 16,
+            "looped": true
+        }
+    ],
+    "defaultAnim": "three"
+}

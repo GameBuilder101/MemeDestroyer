@@ -1,0 +1,29 @@
+{
+    "animations": [
+        {
+            "name": "idle",
+            "frames": [
+                [ 0, 0, 16, 32 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "highlight",
+            "frames": [
+                [ 16, 0, 16, 32 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "pressed",
+            "frames": [
+                [ 32, 0, 16, 32 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        }
+    ],
+    "defaultAnim": "idle"
+}

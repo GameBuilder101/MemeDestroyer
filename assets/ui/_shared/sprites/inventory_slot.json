@@ -1,0 +1,21 @@
+{
+    "animations": [
+        {
+            "name": "idle",
+            "frames": [
+                [ 0, 0, 48, 48 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "selected",
+            "frames": [
+                [ 48, 0, 48, 48 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        }
+    ],
+    "defaultAnim": "idle"
+}

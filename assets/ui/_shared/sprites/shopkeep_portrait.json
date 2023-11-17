@@ -1,0 +1,38 @@
+{
+    "animations": [
+        {
+            "name": "idle_normal",
+            "frames": [
+                [ 0, 0, 64, 64 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "speaking_normal",
+            "frames": [
+                [ 0, 0, 64, 64 ],
+                [ 64, 0, 64, 64 ]
+            ],
+            "frameRate": 8,
+            "looped": true
+        },
+        {
+            "name": "idle_angry",
+            "frames": [
+                [ 0, 64, 64, 64 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "speaking_angry",
+            "frames": [
+                [ 0, 64, 64, 64 ]
+            ],
+            "frameRate": 8,
+            "looped": true
+        }
+    ],
+    "defaultAnim": "idle_normal"
+}

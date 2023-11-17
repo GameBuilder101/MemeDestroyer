@@ -1,0 +1,15 @@
+{
+    "name": "Warning Glint",
+    "tags": [],
+    "components": [
+        "entities/_shared/basic_particle"
+    ],
+    "variables": [
+        {
+            "name": "spawnSoundID",
+            "value": "entities/warning_glint_particle/sounds/spawn"
+        }
+    ],
+    "spriteID": "entities/warning_glint_particle/sprites/main",
+    "sortingPriority": 16
+}

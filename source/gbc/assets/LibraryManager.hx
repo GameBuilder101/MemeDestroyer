@@ -11,12 +11,21 @@ class LibraryManager
 	public static var all(default, null):Array<Library> = [];
 
 	/** Reloads all libraries. **/
-	public static function reloadAll()
+	public static function reloadAll(treatAssetsAsLibrary:Bool = false)
 	{
 		registry.clearCache();
 		all = [];
-		for (id in FileSystem.readDirectory(registry.source))
-			all.push(registry.get(id));
+		if (treatAssetsAsLibrary)
+		{
+			registry.source = "";
+			all.push(registry.get("assets"));
+		}
+		else
+		{
+			registry.source = "assets";
+			for (id in FileSystem.readDirectory(registry.source))
+				all.push(registry.get(id));
+		}
 
 		/* Sort libraries based on dependency. If a library has no dependencies, it should be last.
 			If a library depends on another, it should be before that one */

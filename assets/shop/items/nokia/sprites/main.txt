@@ -1,4 +1,0 @@
-idle0 = 0 0 64 64
-idle1 = 64 0 64 64
-interactable0 = 0 64 64 64
-interactable1 = 64 64 64 64

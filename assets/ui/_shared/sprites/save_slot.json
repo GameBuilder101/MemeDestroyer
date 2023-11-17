@@ -1,0 +1,37 @@
+{
+    "animations": [
+        {
+            "name": "empty_idle",
+            "frames": [
+                [ 0, 0, 512, 80 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "empty_highlight",
+            "frames": [
+                [ 0, 80, 512, 80 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "idle",
+            "frames": [
+                [ 0, 160, 512, 80 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "highlight",
+            "frames": [
+                [ 0, 240, 512, 80 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        }
+    ],
+    "defaultAnim": "empty_idle"
+}

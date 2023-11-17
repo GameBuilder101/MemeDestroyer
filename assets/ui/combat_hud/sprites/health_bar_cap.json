@@ -1,0 +1,31 @@
+{
+    "animations": [
+        {
+            "name": "idle",
+            "frames": [
+                [ 0, 0, 32, 32 ]
+            ],
+            "frameRate": 4,
+            "looped": true
+        },
+        {
+            "name": "heal",
+            "frames": [
+                [ 0, 0, 32, 32 ]
+            ],
+            "frameRate": 16,
+            "looped": false
+        },
+        {
+            "name": "hurt",
+            "frames": [
+                [ 32, 0, 32, 32 ],
+                [ 0, 32, 32, 32 ],
+                [ 32, 32, 32, 32 ]
+            ],
+            "frameRate": 16,
+            "looped": false
+        }
+    ],
+    "defaultAnim": "idle"
+}

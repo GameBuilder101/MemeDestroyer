@@ -1,0 +1,212 @@
+// Requires variables inventorySize:Int, riposteDuration:Float, riposteColor:String, hud:CombatHud
+
+var inventory:Array<Entity>;
+// The currently-selected item index
+var selectedIndex:Int = 0;
+
+// The currently-equipped item
+var equipped:Entity;
+// The currently-equipped item component
+var equippedItem:GameScript;
+
+// The default hands sprite
+var hands:AssetSprite;
+
+// Used for riposte frames
+var currentRiposteTime:Float = 0.0;
+var playedRiposteUseEffects:Bool = false;
+var riposteParticle:AssetSprite;
+var riposteTriggerSound:AssetSound;
+var riposteUseSound:AssetSound;
+
+// Component caches
+var health:GameScript;
+
+function onLoaded()
+{
+	health = getComponent("health");
+
+	inventory = [];
+	for (i in 0...inventorySize)
+		inventory.push(null);
+
+	hands = new AssetSprite(this.x, this.y, null, "entities/player/sprites/hands");
+	this.add(hands);
+
+	riposteParticle = new AssetSprite(0.0, 0.0, null, "entities/player/sprites/riposte_particle");
+	riposteParticle.visible = false;
+	this.add(riposteParticle);
+
+	riposteTriggerSound = AssetSoundRegistry.getAsset("entities/player/sounds/riposte_trigger");
+	riposteUseSound = AssetSoundRegistry.getAsset("entities/player/sounds/riposte_use");
+}
+
+function onUpdate(elapsed:Float)
+{
+	// Cycle the selected/equipped item
+	if (Controls.equip.check())
+	{
+		unequip();
+		selectedIndex++;
+		if (selectedIndex >= inventorySize)
+			selectedIndex = 0;
+		equip(selectedIndex);
+	}	
+
+	// Riposte functionality
+	if (currentRiposteTime > 0.0)
+	{
+		currentRiposteTime -= elapsed;
+		if (currentRiposteTime < 0.0)
+			currentRiposteTime = 0.0;
+	}
+
+	riposteParticle.visible = !riposteParticle.animation.finished;
+
+	if (hands.animation.finished && hands.animation.exists("idle"))
+		hands.animation.play("idle");
+
+	// Don't allow item usage when dead
+	if (health != null && !health.call("getIsAlive"))
+		return;
+
+	if (equippedItem != null)
+	{
+		/* Hands sprite animation modes/angles must be done here so that flipping is
+			detected properly */
+		switch (equippedItem.call("getHeldSpriteMode"))
+		{
+			default:
+				hands.angle = 0.0;
+			case "rotating":
+				hands.angle = FlxAngle.angleBetweenPoint(this, FlxG.mouse.getPosition(), true);
+				hands.flipX = this.flipX;
+				if (this.flipX)
+					hands.angle -= 180.0;
+		}
+
+		// Use input
+		if (Controls.checkFire())
+			attemptUse(elapsed);
+	}
+}
+
+function getInventorySize():Int
+{
+	return inventorySize;
+}
+
+function getInventoryItem(index:Int):Entity
+{
+	return inventory[index];
+}
+
+function getSelectedItemIndex():Int
+{
+	return selectedIndex;
+}
+
+// Sets the item at the given inventory index
+function addToInventory(index:Int, entity:Entity)
+{
+	if (inventory[index] != null) // Remove the current item from the slot
+		removeFromInventory(index);
+	entity.visible = false;
+	state.removeEntity(entity, false);
+	entity.setPosition(this.x, this.y);
+	this.add(entity);
+	inventory[index] = entity;
+
+	if (index == selectedIndex) // Equip the item if that is the selected one
+		equip(index);
+}
+
+// Removes the item at the given inventory index
+function removeFromInventory(index:Int)
+{
+	var item:Entity = inventory[index];
+	if (item == equipped) // Unequip the item if equipped
+		unequip();
+	inventory[index] = null;
+	this.remove(item);
+	item.setPosition(this.x, this.y);
+	item.flipX = false;
+	state.addEntity(item);
+	item.visible = true;
+}
+
+function addToInventorySelected(entity:Entity)
+{
+	addToInventory(selectedIndex, entity);
+}
+
+// Equips the item at the given inventory index
+function equip(index:Int)
+{
+	if (inventory[index] == null)
+		return;
+	equipped = inventory[index];
+	equippedItem = equipped.getComponent("item");
+	equippedItem.call("onEquip", [this]);
+}
+
+// Unequips the currently-equipped item
+function unequip()
+{
+	if (equipped == null)
+		return;
+	equipped = null;
+	equippedItem.call("onUnequip");
+	equippedItem = null;
+
+	hands.loadFromID("entities/player/sprites/hands");
+	hands.angle = 0.0;
+}
+
+function getEquippedItem():Entity
+{
+	return equipped;
+}
+
+// Attempts to use the equipped item
+function attemptUse(elapsed:Float)
+{
+	if (!equippedItem.call("getCanUse")) // Return if can't be used
+		return;
+	equippedItem.call("onUse", [elapsed, currentRiposteTime > 0.0]);
+	if (currentRiposteTime > 0.0 && !playedRiposteUseEffects)
+	{
+		playedRiposteUseEffects = true;
+		riposteParticle.animation.play("use", true);
+		riposteParticle.visible = true;
+		riposteUseSound.play();
+	}
+}
+
+function getHands():AssetSprite
+{
+	return hands;
+}
+
+// Enables the frames where a riposte can be triggered
+function triggerRiposte()
+{
+	currentRiposteTime = riposteDuration;
+	playedRiposteUseEffects = false;
+	riposteParticle.animation.play("trigger", true);
+	riposteParticle.visible = true;
+	riposteTriggerSound.play();
+
+	if (hud != null)
+		hud.showFlashOverlay(colorString(riposteColor));
+}
+
+function onOverlap(tag:String, entity:Entity)
+{
+	if (tag != "damager"
+		|| !health.call("getInvulnerable")
+		|| currentRiposteTime > 0.0
+		|| entity.getComponent("damager").get("team") == team)
+		return;
+	triggerRiposte(); // Trigger a riposte when invulnerable and touching a damager
+}

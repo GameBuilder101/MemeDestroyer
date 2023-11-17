@@ -1,16 +1,18 @@
 package gbc.graphics;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRect;
+import flixel.system.FlxAssets;
 import flixel.util.FlxColor;
 import openfl.display.BlendMode;
 
 typedef AssetSpriteData =
 {
 	graphic:FlxGraphic,
-	sparrowAtlas:String,
-	spriteSheetPacker:String,
 	animations:Array<AssetSpriteAnimation>,
 	defaultAnim:String,
 	flipX:Bool,
@@ -26,7 +28,7 @@ typedef AssetSpriteData =
 typedef AssetSpriteAnimation =
 {
 	name:String,
-	atlasPrefix:String,
+	frames:Array<Array<Int>>,
 	indices:Array<Int>,
 	frameRate:Int,
 	looped:Bool,
@@ -52,11 +54,9 @@ class AssetSprite extends FlxSprite
 	/** Loads all values from the given data. **/
 	public function load(data:AssetSpriteData)
 	{
-		// Load the graphic/spritesheet
-		if (data.sparrowAtlas != null)
-			frames = FlxAtlasFrames.fromSparrow(data.graphic, data.sparrowAtlas);
-		else if (data.spriteSheetPacker != null)
-			frames = FlxAtlasFrames.fromSpriteSheetPacker(data.graphic, data.spriteSheetPacker);
+		// Load the graphic/spritesheet by the data provided in the animation frames
+		if (data.animations.length > 0)
+			frames = getFramesFromAnimations(data.graphic, data.animations);
 		else
 			loadGraphic(data.graphic);
 
@@ -68,9 +68,9 @@ class AssetSprite extends FlxSprite
 		for (anim in data.animations)
 		{
 			if (anim.indices != null && anim.indices.length > 0)
-				animation.addByIndices(anim.name, anim.atlasPrefix, anim.indices, "", anim.frameRate, anim.looped);
+				animation.addByIndices(anim.name, anim.name, anim.indices, "", anim.frameRate, anim.looped);
 			else
-				animation.addByPrefix(anim.name, anim.atlasPrefix, anim.frameRate, anim.looped);
+				animation.addByPrefix(anim.name, anim.name, anim.frameRate, anim.looped);
 
 			if (anim.offset != null)
 				animOffsets.set(anim.name, anim.offset);
@@ -118,5 +118,30 @@ class AssetSprite extends FlxSprite
 			var offset:Array<Float> = animOffsets[animation.name];
 			this.offset.set(offset[0], offset[1]);
 		}
+	}
+
+	/** Creates an FlxAtlasFrames from the animations list of an asset sprite. **/
+	private static function getFramesFromAnimations(source:FlxGraphicAsset, animations:Array<AssetSpriteAnimation>):FlxAtlasFrames
+	{
+		var graphic:FlxGraphic = FlxG.bitmap.add(source);
+		if (graphic == null)
+			return null;
+
+		// No need to parse data again
+		var frames = FlxAtlasFrames.findFrame(graphic);
+		if (frames != null)
+			return frames;
+		frames = new FlxAtlasFrames(graphic);
+
+		// Add the frames from the animations
+		for (anim in animations)
+		{
+			for (i in 0...anim.frames.length)
+			{
+				var rect:FlxRect = FlxRect.get(anim.frames[i][0], anim.frames[i][1], anim.frames[i][2], anim.frames[i][3]);
+				frames.addAtlasFrame(rect, new FlxPoint(rect.width, rect.height), new FlxPoint(), anim.name + i, 0);
+			}
+		}
+		return frames;
 	}
 }

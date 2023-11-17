@@ -4,6 +4,8 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
+import gbc.graphics.AssetSprite;
 
 class CombatHud extends FlxTypedGroup<FlxSprite>
 {
@@ -25,11 +27,19 @@ class CombatHud extends FlxTypedGroup<FlxSprite>
 
 	public var deathOverlay(default, null):NotificationOverlay;
 
+	public var flashOverlay(default, null):AssetSprite;
+
 	public function new()
 	{
 		super();
 
-		// Add the dialogue box first so it appears below everything else
+		// Add the flash overlay
+		flashOverlay = new AssetSprite(0.0, 0.0, null, "ui/combat_hud/sprites/flash_overlay");
+		flashOverlay.alpha = 0.0;
+		flashOverlay.visible = false;
+		add(flashOverlay);
+
+		// Add the dialogue box
 		dialogueBox = new DialogueBox(0.0, 0.0);
 		dialogueBox.screenCenter();
 		dialogueBox.y = FlxG.height * 0.6;
@@ -119,6 +129,21 @@ class CombatHud extends FlxTypedGroup<FlxSprite>
 			onComplete: function(tween:FlxTween)
 			{
 				bossHealth.visible = false;
+			}
+		});
+	}
+
+	/** Plays an animation to flash the screen with a sprite. **/
+	public function showFlashOverlay(color:FlxColor)
+	{
+		flashOverlay.color = color;
+		flashOverlay.alpha = 1.0;
+		flashOverlay.visible = true;
+		FlxTween.cancelTweensOf(flashOverlay);
+		FlxTween.tween(flashOverlay, {alpha: 0.0}, 0.3, {
+			onComplete: function(tween:FlxTween)
+			{
+				flashOverlay.visible = false;
 			}
 		});
 	}

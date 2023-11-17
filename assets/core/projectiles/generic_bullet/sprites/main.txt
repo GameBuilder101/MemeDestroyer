@@ -1,4 +1,0 @@
-team_friendly_normal0 = 0 0 32 32
-team_hostile_normal0 = 32 0 32 32
-team_friendly_riposte0 = 0 32 32 32
-team_hostile_riposte0 = 32 32 32 32

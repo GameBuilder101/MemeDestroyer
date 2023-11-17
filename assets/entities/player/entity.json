@@ -1,0 +1,85 @@
+{
+    "name": "Meme Destroyer",
+    "tags": [
+        "player"
+    ],
+    "components": [
+        "entities/_shared/health",
+        "entities/_shared/shooter",
+        "entities/player/equipper",
+        "entities/player/controller",
+        "entities/_shared/movement",
+        "entities/player/saver"
+    ],
+    "variables": [
+        {
+            "name": "footstepDelay",
+            "value": 0.5
+        },
+        {
+            "name": "initialMaxHealth",
+            "value": 5.0
+        },
+        {
+            "name": "initialInvFrames",
+            "value": 1.0
+        },
+        {
+            "name": "roundHealth",
+            "value": true
+        },
+        {
+            "name": "healthColor",
+            "value": "#ff0000"
+        },
+        {
+            "name": "team",
+            "value": "friendly"
+        },
+        {
+            "name": "hurtSoundID",
+            "value": "entities/player/sounds/hurt"
+        },
+        {
+            "name": "dieSoundID",
+            "value": "entities/player/sounds/die"
+        },
+        {
+            "name": "inventorySize",
+            "value": 2
+        },
+        {
+            "name": "riposteDuration",
+            "value": 0.5
+        },
+        {
+            "name": "riposteColor",
+            "value": "#ffff00"
+        },
+        {
+            "name": "dodgeSpeed",
+            "value": 2000.0
+        },
+        {
+            "name": "dodgeDuration",
+            "value": 0.15
+        },
+        {
+            "name": "dodgeCool",
+            "value": 0.25
+        },
+        {
+            "name": "walkSpeed",
+            "value": 180.0
+        },
+        {
+            "name": "footstepSoundID",
+            "value": "entities/player/sounds/footstep"
+        }
+    ],
+    "hitboxSize": [
+        32.0,
+        48.0
+    ],
+    "spriteID": "entities/player/sprites/main"
+}
